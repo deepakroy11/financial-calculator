@@ -11,9 +11,16 @@ import {
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { formatCurrency } from "../../lib/calculators";
 
-export default function HRACalculator() {
+interface HRACalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function HRACalculator({
+  onCalculatorSelect,
+}: HRACalculatorProps) {
   const [basicSalary, setBasicSalary] = useState("");
   const [hraReceived, setHraReceived] = useState("");
   const [rentPaid, setRentPaid] = useState("");
@@ -169,6 +176,13 @@ export default function HRACalculator() {
           } of basic salary, (3) Rent paid minus 10% of basic salary. You can claim ${formatCurrency(
             result.annualHraExemption
           )} as HRA exemption annually.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="hra"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

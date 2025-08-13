@@ -4,9 +4,16 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateRD, formatCurrency } from "../../lib/calculators";
 
-export default function RDCalculator() {
+interface RDCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function RDCalculator({
+  onCalculatorSelect,
+}: RDCalculatorProps) {
   const [monthlyDeposit, setMonthlyDeposit] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
@@ -110,6 +117,13 @@ export default function RDCalculator() {
           )} monthly for ${tenure} years at ${rate}% interest, you will receive ${formatCurrency(
             result.maturityAmount
           )} at maturity.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="rd"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

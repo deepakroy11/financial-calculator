@@ -184,33 +184,31 @@ export default function RelatedCalculators({
 
   return (
     <Card
-      className="w-full max-w-3xl mx-auto mt-8 shadow-xl border-0"
+      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255, 255, 255, 0.2)",
-        borderRadius: "20px",
+        borderRadius: "16px",
+        background: "white",
       }}
     >
       <CardContent className="p-6">
         <Typography
           variant="h6"
           component="h3"
-          className="mb-4 font-bold text-center bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent"
+          className="mb-4 font-bold text-gray-800"
         >
           Related Calculators
         </Typography>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {relatedCalculators.map((calculator) => {
             const IconComponent = iconMap[calculator.icon];
             return (
               <div
                 key={calculator.id}
                 onClick={() => onCalculatorSelect(calculator.id)}
-                className="flex items-center p-4 rounded-xl bg-gradient-to-r from-gray-50 to-blue-50 hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-200 hover:shadow-md border border-gray-100"
+                className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all duration-200 hover:shadow-sm border border-gray-200 hover:border-blue-200"
               >
-                <Box className="mr-3 p-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                <Box className="mr-3 p-2 rounded-lg bg-blue-600 text-white">
                   {IconComponent && <IconComponent size={16} />}
                 </Box>
                 <div className="flex-1">
@@ -228,7 +226,7 @@ export default function RelatedCalculators({
                   label="Try"
                   size="small"
                   sx={{
-                    background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                    backgroundColor: "#2563eb",
                     color: "white",
                     fontWeight: 500,
                     fontSize: "0.7rem",

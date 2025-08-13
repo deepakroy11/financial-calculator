@@ -4,9 +4,16 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateFD, formatCurrency } from "../../lib/calculators";
 
-export default function FDCalculator() {
+interface FDCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function FDCalculator({
+  onCalculatorSelect,
+}: FDCalculatorProps) {
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
@@ -110,6 +117,13 @@ export default function FDCalculator() {
           )} at ${rate}% for ${tenure} years will mature to ${formatCurrency(
             result.maturityAmount
           )}, earning ${formatCurrency(result.interest)} in interest.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="fd"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

@@ -21,45 +21,41 @@ export default function ResultCard({
 }: ResultCardProps) {
   return (
     <Card
-      className="w-full max-w-3xl mx-auto mt-8 shadow-2xl border-0"
+      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        background:
-          "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255, 255, 255, 0.2)",
-        borderRadius: "20px",
+        borderRadius: "16px",
+        background: "white",
       }}
     >
-      <CardContent className="p-8">
-        <div className="text-center mb-6">
-          <Typography
-            variant="h5"
-            component="h3"
-            className="font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent"
-          >
-            {title}
-          </Typography>
-        </div>
+      <CardContent className="p-6">
+        <Typography
+          variant="h6"
+          component="h3"
+          className="mb-4 font-bold text-gray-800"
+        >
+          {title}
+        </Typography>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {results.map((result, index) => (
             <Box
               key={index}
-              className={`flex justify-between items-center p-5 rounded-2xl transition-all duration-200 hover:scale-105 ${
+              className={`flex justify-between items-center p-4 rounded-xl transition-all duration-200 ${
                 result.highlight
-                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 shadow-lg"
-                  : "bg-white/70 border border-gray-200 shadow-md"
+                  ? "bg-blue-50 border-2 border-blue-200"
+                  : "bg-gray-50 border border-gray-200"
               }`}
             >
-              <Typography variant="h6" className="font-semibold text-gray-700">
+              <Typography
+                variant="body1"
+                className="font-semibold text-gray-700"
+              >
                 {result.label}
               </Typography>
               <Typography
-                variant="h5"
+                variant="h6"
                 className={`font-bold ${
-                  result.highlight
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-                    : "text-gray-800"
+                  result.highlight ? "text-blue-600" : "text-gray-800"
                 }`}
               >
                 {result.value}
@@ -69,11 +65,11 @@ export default function ResultCard({
         </div>
 
         {explanation && (
-          <Box className="mt-6 p-5 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl border border-gray-200">
+          <Box className="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
             <div className="flex items-start">
-              <div className="mr-3 mt-1">
+              <div className="mr-3 mt-0.5">
                 <svg
-                  className="w-5 h-5 text-blue-500"
+                  className="w-5 h-5 text-blue-600"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -85,7 +81,7 @@ export default function ResultCard({
                 </svg>
               </div>
               <Typography
-                variant="body1"
+                variant="body2"
                 className="text-gray-700 leading-relaxed"
               >
                 {explanation}

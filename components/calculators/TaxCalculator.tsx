@@ -11,9 +11,16 @@ import {
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateIncomeTax, formatCurrency } from "../../lib/calculators";
 
-export default function TaxCalculator() {
+interface TaxCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function TaxCalculator({
+  onCalculatorSelect,
+}: TaxCalculatorProps) {
   const [income, setIncome] = useState("");
   const [regime, setRegime] = useState<"old" | "new">("new");
   const [result, setResult] = useState<any>(null);
@@ -118,6 +125,13 @@ export default function TaxCalculator() {
           } tax regime, your total tax liability is ${formatCurrency(
             result.totalTax
           )} on an annual income of ${formatCurrency(parseFloat(income))}.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="tax"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

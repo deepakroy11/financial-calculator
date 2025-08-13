@@ -4,9 +4,16 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { formatCurrency } from "../../lib/calculators";
 
-export default function CompoundInterestCalculator() {
+interface CompoundInterestCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function CompoundInterestCalculator({
+  onCalculatorSelect,
+}: CompoundInterestCalculatorProps) {
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [time, setTime] = useState("");
@@ -128,6 +135,13 @@ export default function CompoundInterestCalculator() {
           )} at ${rate}% annual interest compounded ${compoundFreq} times per year for ${time} years will grow to ${formatCurrency(
             result.amount
           )}.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="compound-interest"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

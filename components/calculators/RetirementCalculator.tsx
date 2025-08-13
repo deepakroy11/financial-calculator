@@ -4,9 +4,16 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateRetirement, formatCurrency } from "../../lib/calculators";
 
-export default function RetirementCalculator() {
+interface RetirementCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function RetirementCalculator({
+  onCalculatorSelect,
+}: RetirementCalculatorProps) {
   const [currentAge, setCurrentAge] = useState("");
   const [retirementAge, setRetirementAge] = useState("");
   const [monthlyExpenses, setMonthlyExpenses] = useState("");
@@ -164,6 +171,13 @@ export default function RetirementCalculator() {
           )}. Start investing ${formatCurrency(
             result.monthlySIP
           )} monthly to achieve this goal.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="retirement"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

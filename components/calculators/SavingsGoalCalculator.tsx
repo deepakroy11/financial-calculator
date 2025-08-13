@@ -4,9 +4,16 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateSavingsGoal, formatCurrency } from "../../lib/calculators";
 
-export default function SavingsGoalCalculator() {
+interface SavingsGoalCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function SavingsGoalCalculator({
+  onCalculatorSelect,
+}: SavingsGoalCalculatorProps) {
   const [targetAmount, setTargetAmount] = useState("");
   const [currentSavings, setCurrentSavings] = useState("");
   const [timeframe, setTimeframe] = useState("");
@@ -139,6 +146,13 @@ export default function SavingsGoalCalculator() {
           )} in ${timeframe} years, you need to invest ${formatCurrency(
             result.monthlySIP
           )} monthly at ${expectedReturn}% annual return.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="savings-goal"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>

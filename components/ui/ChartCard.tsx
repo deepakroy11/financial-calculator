@@ -119,19 +119,17 @@ export default function ChartCard({
 
   return (
     <Card
-      className="w-full max-w-3xl mx-auto mt-8 shadow-xl border-0"
+      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255, 255, 255, 0.2)",
-        borderRadius: "20px",
+        borderRadius: "16px",
+        background: "white",
       }}
     >
       <CardContent className="p-6">
         <Typography
           variant="h6"
           component="h3"
-          className="mb-4 font-bold text-center bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"
+          className="mb-4 font-bold text-gray-800"
         >
           {title}
         </Typography>

@@ -22,56 +22,51 @@ export default function CalculatorCard({
 }: CalculatorCardProps) {
   return (
     <Card
-      className="w-full max-w-3xl mx-auto shadow-2xl border-0"
+      className="w-full shadow-lg border border-gray-200"
       sx={{
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255, 255, 255, 0.2)",
-        borderRadius: "20px",
+        borderRadius: "16px",
+        background: "white",
       }}
     >
-      <CardContent className="p-8">
-        <div className="text-center mb-8">
+      <CardContent className="p-6">
+        <div className="mb-6">
           <Typography
-            variant="h4"
+            variant="h5"
             component="h2"
-            className="mb-3 font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            className="mb-2 font-bold text-gray-800"
           >
             {title}
           </Typography>
-          <Typography
-            variant="body1"
-            className="text-gray-600 leading-relaxed max-w-2xl mx-auto"
-          >
+          <Typography variant="body2" className="text-gray-600 leading-relaxed">
             {description}
           </Typography>
         </div>
 
-        <div className="space-y-6 mb-8">{children}</div>
+        <div className="space-y-4 mb-6">{children}</div>
 
-        <Box className="flex gap-4 flex-col sm:flex-row">
+        <Box className="flex gap-3 flex-col sm:flex-row">
           <Button
             variant="contained"
             onClick={onCalculate}
             disabled={isCalculating}
-            className="flex-1 py-4 text-lg font-semibold"
+            className="flex-1 py-3 text-base font-semibold"
             size="large"
             sx={{
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              backgroundColor: "#2563eb",
               borderRadius: "12px",
               textTransform: "none",
-              boxShadow: "0 8px 32px rgba(102, 126, 234, 0.3)",
+              boxShadow: "0 4px 12px rgba(37, 99, 235, 0.3)",
               "&:hover": {
-                background: "linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%)",
-                boxShadow: "0 12px 40px rgba(102, 126, 234, 0.4)",
-                transform: "translateY(-2px)",
+                backgroundColor: "#1d4ed8",
+                boxShadow: "0 6px 16px rgba(37, 99, 235, 0.4)",
+                transform: "translateY(-1px)",
               },
-              transition: "all 0.3s ease",
+              transition: "all 0.2s ease",
             }}
           >
             {isCalculating ? (
               <div className="flex items-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                 Calculating...
               </div>
             ) : (
@@ -81,20 +76,20 @@ export default function CalculatorCard({
           <Button
             variant="outlined"
             onClick={onReset}
-            className="flex-1 py-4 text-lg font-semibold"
+            className="flex-1 py-3 text-base font-semibold"
             size="large"
             sx={{
-              borderColor: "#e2e8f0",
-              color: "#64748b",
+              borderColor: "#d1d5db",
+              color: "#6b7280",
               borderRadius: "12px",
               textTransform: "none",
-              borderWidth: "2px",
+              borderWidth: "1px",
               "&:hover": {
-                borderColor: "#cbd5e1",
-                backgroundColor: "#f8fafc",
-                transform: "translateY(-2px)",
+                borderColor: "#9ca3af",
+                backgroundColor: "#f9fafb",
+                transform: "translateY(-1px)",
               },
-              transition: "all 0.3s ease",
+              transition: "all 0.2s ease",
             }}
           >
             Reset

@@ -4,12 +4,19 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import {
   calculateCreditCardInterest,
   formatCurrency,
 } from "../../lib/calculators";
 
-export default function CreditCardCalculator() {
+interface CreditCardCalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function CreditCardCalculator({
+  onCalculatorSelect,
+}: CreditCardCalculatorProps) {
   const [outstandingAmount, setOutstandingAmount] = useState("");
   const [minPayment, setMinPayment] = useState("");
   const [interestRate, setInterestRate] = useState("");
@@ -126,6 +133,13 @@ export default function CreditCardCalculator() {
           } months to pay off your debt, and you'll pay ${formatCurrency(
             result.totalInterest
           )} in interest.`}
+        />
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="credit-card"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>
