@@ -19,6 +19,19 @@ import {
   FaCreditCard,
   FaCoins,
   FaChartPie,
+  FaCar,
+  FaUser,
+  FaShieldAlt,
+  FaCertificate,
+  FaChartArea,
+  FaBuilding,
+  FaMoneyBillWave,
+  FaFileInvoiceDollar,
+  FaFirstAid,
+  FaBriefcase,
+  FaPercentage,
+  FaArrowUp,
+  FaChartBar,
 } from "react-icons/fa";
 import { MdSavings, MdAccountBalance } from "react-icons/md";
 import { CalculatorCategory } from "../types/calculator";
@@ -30,11 +43,15 @@ import TaxCalculator from "../components/calculators/TaxCalculator";
 import RetirementCalculator from "../components/calculators/RetirementCalculator";
 import CreditCardCalculator from "../components/calculators/CreditCardCalculator";
 import SavingsGoalCalculator from "../components/calculators/SavingsGoalCalculator";
+import PPFCalculator from "../components/calculators/PPFCalculator";
+import HRACalculator from "../components/calculators/HRACalculator";
+import CompoundInterestCalculator from "../components/calculators/CompoundInterestCalculator";
+import Footer from "../components/ui/Footer";
 
 const categories: CalculatorCategory[] = [
   {
     id: "loans",
-    name: "Loans",
+    name: "Loans & Mortgages",
     icon: "FaHome",
     calculators: [
       {
@@ -44,11 +61,32 @@ const categories: CalculatorCategory[] = [
         icon: "FaCalculator",
         category: "loans",
       },
+      {
+        id: "home-loan",
+        name: "Home Loan Calculator",
+        description: "Calculate home loan EMI with prepayment options",
+        icon: "FaHome",
+        category: "loans",
+      },
+      {
+        id: "car-loan",
+        name: "Car Loan Calculator",
+        description: "Calculate auto loan EMI and total cost",
+        icon: "FaCar",
+        category: "loans",
+      },
+      {
+        id: "personal-loan",
+        name: "Personal Loan Calculator",
+        description: "Calculate personal loan EMI and eligibility",
+        icon: "FaUser",
+        category: "loans",
+      },
     ],
   },
   {
     id: "investments",
-    name: "Investments",
+    name: "Investments & Returns",
     icon: "FaChartLine",
     calculators: [
       {
@@ -72,11 +110,32 @@ const categories: CalculatorCategory[] = [
         icon: "MdAccountBalance",
         category: "investments",
       },
+      {
+        id: "ppf",
+        name: "PPF Calculator",
+        description: "Calculate Public Provident Fund returns",
+        icon: "FaShieldAlt",
+        category: "investments",
+      },
+      {
+        id: "nsc",
+        name: "NSC Calculator",
+        description: "Calculate National Savings Certificate returns",
+        icon: "FaCertificate",
+        category: "investments",
+      },
+      {
+        id: "mutual-fund",
+        name: "Mutual Fund Calculator",
+        description: "Calculate mutual fund returns and growth",
+        icon: "FaChartArea",
+        category: "investments",
+      },
     ],
   },
   {
     id: "taxes",
-    name: "Taxes",
+    name: "Tax Planning",
     icon: "FaCoins",
     calculators: [
       {
@@ -84,6 +143,27 @@ const categories: CalculatorCategory[] = [
         name: "Income Tax Calculator",
         description: "Calculate income tax for old vs new regime",
         icon: "FaCoins",
+        category: "taxes",
+      },
+      {
+        id: "hra",
+        name: "HRA Calculator",
+        description: "Calculate House Rent Allowance exemption",
+        icon: "FaBuilding",
+        category: "taxes",
+      },
+      {
+        id: "capital-gains",
+        name: "Capital Gains Tax",
+        description: "Calculate capital gains tax on investments",
+        icon: "FaMoneyBillWave",
+        category: "taxes",
+      },
+      {
+        id: "tds",
+        name: "TDS Calculator",
+        description: "Calculate Tax Deducted at Source",
+        icon: "FaFileInvoiceDollar",
         category: "taxes",
       },
     ],
@@ -114,6 +194,48 @@ const categories: CalculatorCategory[] = [
         icon: "FaCreditCard",
         category: "savings",
       },
+      {
+        id: "emergency-fund",
+        name: "Emergency Fund Calculator",
+        description: "Calculate ideal emergency fund corpus",
+        icon: "FaFirstAid",
+        category: "savings",
+      },
+    ],
+  },
+  {
+    id: "business",
+    name: "Business & Investment",
+    icon: "FaBriefcase",
+    calculators: [
+      {
+        id: "compound-interest",
+        name: "Compound Interest",
+        description: "Calculate compound interest growth",
+        icon: "FaPercentage",
+        category: "business",
+      },
+      {
+        id: "simple-interest",
+        name: "Simple Interest",
+        description: "Calculate simple interest on investments",
+        icon: "FaCalculator",
+        category: "business",
+      },
+      {
+        id: "inflation",
+        name: "Inflation Calculator",
+        description: "Calculate impact of inflation on money",
+        icon: "FaArrowUp",
+        category: "business",
+      },
+      {
+        id: "roi",
+        name: "ROI Calculator",
+        description: "Calculate Return on Investment",
+        icon: "FaChartBar",
+        category: "business",
+      },
     ],
   },
 ];
@@ -127,6 +249,19 @@ const iconMap: { [key: string]: any } = {
   FaCreditCard,
   FaCoins,
   FaChartPie,
+  FaCar,
+  FaUser,
+  FaShieldAlt,
+  FaCertificate,
+  FaChartArea,
+  FaBuilding,
+  FaMoneyBillWave,
+  FaFileInvoiceDollar,
+  FaFirstAid,
+  FaBriefcase,
+  FaPercentage,
+  FaArrowUp,
+  FaChartBar,
   MdSavings,
   MdAccountBalance,
 };
@@ -139,23 +274,59 @@ export default function Home() {
   const renderCalculator = () => {
     switch (selectedCalculator) {
       case "emi":
-        return <EMICalculator />;
+      case "home-loan":
+      case "car-loan":
+      case "personal-loan":
+        return <EMICalculator onCalculatorSelect={setSelectedCalculator} />;
       case "sip":
-        return <SIPCalculator />;
+      case "mutual-fund":
+        return <SIPCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "fd":
-        return <FDCalculator />;
+        return <FDCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "rd":
-        return <RDCalculator />;
+        return <RDCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "ppf":
+        return <PPFCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "tax":
-        return <TaxCalculator />;
+        return <TaxCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "hra":
+        return <HRACalculator onCalculatorSelect={setSelectedCalculator} />;
       case "retirement":
-        return <RetirementCalculator />;
+        return (
+          <RetirementCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
       case "credit-card":
-        return <CreditCardCalculator />;
+        return (
+          <CreditCardCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
       case "savings-goal":
-        return <SavingsGoalCalculator />;
+      case "emergency-fund":
+        return (
+          <SavingsGoalCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
+      case "compound-interest":
+        return (
+          <CompoundInterestCalculator
+            onCalculatorSelect={setSelectedCalculator}
+          />
+        );
+      case "simple-interest":
+        return (
+          <CompoundInterestCalculator
+            onCalculatorSelect={setSelectedCalculator}
+          />
+        );
       default:
-        return null;
+        return (
+          <div className="text-center py-12">
+            <Typography variant="h5" className="text-gray-600 mb-4">
+              Calculator Coming Soon!
+            </Typography>
+            <Typography variant="body1" className="text-gray-500">
+              This calculator is under development and will be available soon.
+            </Typography>
+          </div>
+        );
     }
   };
 
@@ -215,7 +386,7 @@ export default function Home() {
             </Typography>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <div className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium shadow-lg">
-                8+ Calculators
+                20+ Calculators
               </div>
               <div className="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-full text-sm font-medium shadow-lg">
                 Indian Tax Compliant
@@ -227,7 +398,7 @@ export default function Home() {
           </div>
         </Box>
 
-        {categories.map((category, categoryIndex) => (
+        {categories.map((category) => (
           <Box key={category.id} className="mb-16">
             <Box className="flex items-center mb-8 justify-center">
               <div className="flex items-center bg-white/80 backdrop-blur-sm rounded-full px-6 py-4 shadow-xl border border-white/20">
@@ -245,7 +416,7 @@ export default function Home() {
               </div>
             </Box>
 
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
               {category.calculators.map((calculator, index) => {
                 const IconComponent = iconMap[calculator.icon];
                 const gradients = [
@@ -257,11 +428,15 @@ export default function Home() {
                   "from-purple-500 to-indigo-600",
                   "from-teal-500 to-green-600",
                   "from-red-500 to-pink-600",
+                  "from-cyan-500 to-blue-600",
+                  "from-violet-500 to-purple-600",
+                  "from-emerald-500 to-teal-600",
+                  "from-rose-500 to-pink-600",
                 ];
                 const gradient = gradients[index % gradients.length];
 
                 return (
-                  <Grid item xs={12} sm={6} md={4} key={calculator.id}>
+                  <Grid item xs={12} sm={6} lg={3} key={calculator.id}>
                     <Card
                       className="h-full cursor-pointer card-hover bg-white/80 backdrop-blur-sm border-0 shadow-xl"
                       onClick={() => setSelectedCalculator(calculator.id)}
@@ -269,23 +444,24 @@ export default function Home() {
                         background: "rgba(255, 255, 255, 0.9)",
                         backdropFilter: "blur(10px)",
                         border: "1px solid rgba(255, 255, 255, 0.2)",
+                        minHeight: "200px",
                       }}
                     >
-                      <CardContent className="p-6 relative overflow-hidden">
+                      <CardContent className="p-5 relative overflow-hidden h-full flex flex-col">
                         <div
-                          className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${gradient} opacity-10 rounded-full -mr-10 -mt-10`}
+                          className={`absolute top-0 right-0 w-16 h-16 bg-gradient-to-br ${gradient} opacity-10 rounded-full -mr-8 -mt-8`}
                         ></div>
 
-                        <Box className="flex items-center mb-4">
+                        <Box className="flex items-center mb-3">
                           <Box
-                            className={`mr-4 p-3 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg`}
+                            className={`mr-3 p-2.5 rounded-xl bg-gradient-to-r ${gradient} text-white shadow-lg`}
                           >
-                            {IconComponent && <IconComponent size={24} />}
+                            {IconComponent && <IconComponent size={20} />}
                           </Box>
                           <Typography
                             variant="h6"
                             component="h3"
-                            className="font-bold text-gray-800"
+                            className="font-bold text-gray-800 text-sm leading-tight"
                           >
                             {calculator.name}
                           </Typography>
@@ -293,14 +469,14 @@ export default function Home() {
 
                         <Typography
                           variant="body2"
-                          className="text-gray-600 mb-6 leading-relaxed"
+                          className="text-gray-600 mb-4 leading-relaxed flex-grow text-sm"
                         >
                           {calculator.description}
                         </Typography>
 
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center mt-auto">
                           <Chip
-                            label={category.name}
+                            label={category.name.split(" ")[0]}
                             size="small"
                             sx={{
                               background: `linear-gradient(135deg, ${
@@ -310,16 +486,27 @@ export default function Home() {
                                   ? "#10b981, #14b8a6"
                                   : gradient.includes("orange")
                                   ? "#f97316, #ef4444"
-                                  : "#ec4899, #f43f5e"
+                                  : gradient.includes("pink")
+                                  ? "#ec4899, #f43f5e"
+                                  : gradient.includes("indigo")
+                                  ? "#6366f1, #8b5cf6"
+                                  : gradient.includes("purple")
+                                  ? "#8b5cf6, #a855f7"
+                                  : gradient.includes("teal")
+                                  ? "#14b8a6, #10b981"
+                                  : gradient.includes("red")
+                                  ? "#ef4444, #ec4899"
+                                  : "#3b82f6, #8b5cf6"
                               })`,
                               color: "white",
                               fontWeight: 500,
                               border: "none",
+                              fontSize: "0.7rem",
                             }}
                           />
                           <div className="text-gray-400">
                             <svg
-                              className="w-5 h-5"
+                              className="w-4 h-4"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -342,6 +529,7 @@ export default function Home() {
           </Box>
         ))}
       </Container>
+      <Footer />
     </div>
   );
 }

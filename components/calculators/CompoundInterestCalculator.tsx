@@ -1,0 +1,135 @@
+"use client";
+
+import { useState } from "react";
+import CalculatorCard from "../ui/CalculatorCard";
+import InputField from "../ui/InputField";
+import ResultCard from "../ui/ResultCard";
+import { formatCurrency } from "../../lib/calculators";
+
+export default function CompoundInterestCalculator() {
+  const [principal, setPrincipal] = useState("");
+  const [rate, setRate] = useState("");
+  const [time, setTime] = useState("");
+  const [compoundFreq, setCompoundFreq] = useState("4");
+  const [result, setResult] = useState<any>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!principal || parseFloat(principal) <= 0) {
+      newErrors.principal = "Please enter a valid principal amount";
+    }
+    if (!rate || parseFloat(rate) <= 0 || parseFloat(rate) > 50) {
+      newErrors.rate = "Please enter a valid interest rate (0-50%)";
+    }
+    if (!time || parseFloat(time) <= 0 || parseFloat(time) > 50) {
+      newErrors.time = "Please enter a valid time period (1-50 years)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleCalculate = () => {
+    if (!validate()) return;
+
+    const p = parseFloat(principal);
+    const r = parseFloat(rate) / 100;
+    const t = parseFloat(time);
+    const n = parseFloat(compoundFreq);
+
+    const amount = p * Math.pow(1 + r / n, n * t);
+    const compoundInterest = amount - p;
+
+    setResult({
+      amount: Math.round(amount),
+      compoundInterest: Math.round(compoundInterest),
+      principal: Math.round(p),
+    });
+  };
+
+  const handleReset = () => {
+    setPrincipal("");
+    setRate("");
+    setTime("");
+    setCompoundFreq("4");
+    setResult(null);
+    setErrors({});
+  };
+
+  return (
+    <div>
+      <CalculatorCard
+        title="Compound Interest Calculator"
+        description="Calculate the compound interest and final amount on your investment with different compounding frequencies."
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+      >
+        <InputField
+          label="Principal Amount"
+          value={principal}
+          onChange={setPrincipal}
+          placeholder="Enter principal amount"
+          suffix="₹"
+          error={errors.principal}
+          required
+        />
+        <InputField
+          label="Annual Interest Rate"
+          value={rate}
+          onChange={setRate}
+          placeholder="Enter interest rate"
+          suffix="%"
+          error={errors.rate}
+          required
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <InputField
+            label="Time Period"
+            value={time}
+            onChange={setTime}
+            placeholder="Enter time period"
+            suffix="years"
+            error={errors.time}
+            required
+          />
+          <InputField
+            label="Compounding Frequency"
+            value={compoundFreq}
+            onChange={setCompoundFreq}
+            placeholder="Times per year"
+            suffix="times/year"
+            required
+          />
+        </div>
+      </CalculatorCard>
+
+      {result && (
+        <ResultCard
+          title="Compound Interest Results"
+          results={[
+            {
+              label: "Final Amount",
+              value: formatCurrency(result.amount),
+              highlight: true,
+            },
+            {
+              label: "Principal Amount",
+              value: formatCurrency(result.principal),
+            },
+            {
+              label: "Compound Interest Earned",
+              value: formatCurrency(result.compoundInterest),
+            },
+          ]}
+          explanation={`Your investment of ${formatCurrency(
+            parseFloat(principal)
+          )} at ${rate}% annual interest compounded ${compoundFreq} times per year for ${time} years will grow to ${formatCurrency(
+            result.amount
+          )}.`}
+        />
+      )}
+    </div>
+  );
+}

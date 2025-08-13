@@ -4,9 +4,17 @@ import { useState } from "react";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
+import ChartCard from "../ui/ChartCard";
+import RelatedCalculators from "../ui/RelatedCalculators";
 import { calculateEMI, formatCurrency } from "../../lib/calculators";
 
-export default function EMICalculator() {
+interface EMICalculatorProps {
+  onCalculatorSelect?: (calculatorId: string) => void;
+}
+
+export default function EMICalculator({
+  onCalculatorSelect,
+}: EMICalculatorProps) {
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
@@ -39,7 +47,38 @@ export default function EMICalculator() {
       parseFloat(tenure)
     );
 
-    setResult(emiResult);
+    // Generate year-wise data for chart
+    const yearlyData = [];
+    let remainingPrincipal = parseFloat(principal);
+    const monthlyEmi = emiResult.emi;
+    const monthlyRate = parseFloat(rate) / (12 * 100);
+
+    for (let year = 1; year <= Math.ceil(parseFloat(tenure) / 12); year++) {
+      let yearlyInterest = 0;
+      let yearlyPrincipal = 0;
+
+      for (
+        let month = 1;
+        month <= 12 && (year - 1) * 12 + month <= parseFloat(tenure);
+        month++
+      ) {
+        const interestPayment = remainingPrincipal * monthlyRate;
+        const principalPayment = monthlyEmi - interestPayment;
+
+        yearlyInterest += interestPayment;
+        yearlyPrincipal += principalPayment;
+        remainingPrincipal -= principalPayment;
+      }
+
+      yearlyData.push({
+        year: `Year ${year}`,
+        principal: Math.round(yearlyPrincipal),
+        interest: Math.round(yearlyInterest),
+        balance: Math.round(Math.max(0, remainingPrincipal)),
+      });
+    }
+
+    setResult({ ...emiResult, yearlyData });
   };
 
   const handleReset = () => {
@@ -110,6 +149,39 @@ export default function EMICalculator() {
           )} every month for ${tenure} months. The total interest over the loan period will be ${formatCurrency(
             result.totalInterest
           )}.`}
+        />
+      )}
+
+      {result && result.yearlyData && (
+        <>
+          <ChartCard
+            title="Principal vs Interest Payment Over Time"
+            data={result.yearlyData}
+            type="bar"
+            dataKey="principal"
+            xAxisKey="year"
+          />
+
+          <ChartCard
+            title="Loan Breakdown"
+            data={[
+              {
+                name: "Principal Amount",
+                value: result.totalAmount - result.totalInterest,
+              },
+              { name: "Total Interest", value: result.totalInterest },
+            ]}
+            type="pie"
+            dataKey="value"
+            colors={["#0088FE", "#FF8042"]}
+          />
+        </>
+      )}
+
+      {onCalculatorSelect && (
+        <RelatedCalculators
+          currentCalculator="emi"
+          onCalculatorSelect={onCalculatorSelect}
         />
       )}
     </div>
