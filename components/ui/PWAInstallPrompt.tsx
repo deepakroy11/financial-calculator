@@ -75,12 +75,18 @@ export default function PWAInstallPrompt() {
 
   const handleDismiss = () => {
     setShowInstallPrompt(false);
-    // Hide for this session
-    sessionStorage.setItem("pwa-prompt-dismissed", "true");
+    // Hide for this session (only in browser)
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("pwa-prompt-dismissed", "true");
+    }
   };
 
   // Don't show if already installed or dismissed this session
-  if (isInstalled || sessionStorage.getItem("pwa-prompt-dismissed")) {
+  if (
+    isInstalled ||
+    (typeof window !== "undefined" &&
+      sessionStorage.getItem("pwa-prompt-dismissed"))
+  ) {
     return null;
   }
 

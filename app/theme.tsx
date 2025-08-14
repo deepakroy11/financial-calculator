@@ -40,19 +40,38 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [darkMode, setDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode) {
-      setDarkMode(JSON.parse(savedMode));
+    setMounted(true);
+    // Only access localStorage after component mounts (client-side)
+    if (typeof window !== "undefined") {
+      const savedMode = localStorage.getItem("darkMode");
+      if (savedMode) {
+        setDarkMode(JSON.parse(savedMode));
+      }
     }
   }, []);
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
-    localStorage.setItem("darkMode", JSON.stringify(newMode));
+    // Only access localStorage if we're in the browser
+    if (typeof window !== "undefined") {
+      localStorage.setItem("darkMode", JSON.stringify(newMode));
+    }
   };
+
+  // Prevent hydration mismatch by not rendering until mounted
+  if (!mounted) {
+    return (
+      <ThemeContext.Provider
+        value={{ darkMode: false, toggleDarkMode: () => {} }}
+      >
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </ThemeContext.Provider>
+    );
+  }
 
   // Create theme dynamically based on darkMode
   const dynamicTheme = createTheme({
