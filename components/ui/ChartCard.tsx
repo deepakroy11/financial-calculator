@@ -25,7 +25,7 @@ interface ChartCardProps {
   colors?: string[];
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
+const COLORS = ["#1f7a99", "#10b981", "#f59e0b", "#ef4444", "#3b82f6"];
 
 export default function ChartCard({
   title,
@@ -107,7 +107,7 @@ export default function ChartCard({
                   "Amount",
                 ]}
               />
-              <Bar dataKey={dataKey} fill="#8884d8" />
+              <Bar dataKey={dataKey} fill="#1f7a99" />
             </BarChart>
           </ResponsiveContainer>
         );
@@ -119,17 +119,28 @@ export default function ChartCard({
 
   return (
     <Card
-      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        borderRadius: "16px",
-        background: "white",
+        width: "100%",
+        mt: 3,
+        borderRadius: 4,
+        backgroundColor: "background.paper",
+        border: 1,
+        borderColor: "divider",
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
       }}
     >
-      <CardContent className="p-6">
+      <CardContent sx={{ p: 3 }}>
         <Typography
           variant="h6"
           component="h3"
-          className="mb-4 font-bold text-gray-800"
+          sx={{
+            mb: 2,
+            fontWeight: 700,
+            color: "text.primary",
+          }}
         >
           {title}
         </Typography>

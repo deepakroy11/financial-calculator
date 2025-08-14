@@ -17,12 +17,12 @@
 
 /* Light theme */
 :root {
-  --bg-primary: #f8fafc;
+  --bg-primary: #fefcf7; /* Warm cream background */
   --bg-secondary: #ffffff;
-  --bg-tertiary: #f1f5f9;
+  --bg-tertiary: #faf8f3; /* Slightly warmer tertiary */
   --text-primary: #1e293b;
   --text-secondary: #64748b;
-  --border-color: #e2e8f0;
+  --border-color: #e8e5df; /* Warmer border */
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.15);
 }
@@ -49,16 +49,21 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   transition: all 0.3s ease;
-  /* Light theme gradient background */
+  /* Light theme gradient background with warm cream base */
   background-image: radial-gradient(
       circle at 25% 25%,
-      rgba(31, 122, 153, 0.05) 0%,
+      rgba(31, 122, 153, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 75% 75%,
-      rgba(245, 158, 11, 0.05) 0%,
+      rgba(245, 158, 11, 0.06) 0%,
       transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 248, 235, 0.3) 0%,
+      transparent 70%
     );
 }
 
@@ -270,4 +275,47 @@ body::before {
       rgba(16, 185, 129, 0.08) 0%,
       transparent 50%
     );
+}
+/* Enhanced dark theme support for form elements */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .MuiOutlinedInput-root {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .MuiInputLabel-root {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .MuiInputLabel-root.Mui-focused {
+  color: var(--primary-color) !important;
+}
+
+/* Fix for input field suffix visibility in dark theme */
+[data-theme="dark"] .MuiInputAdornment-root {
+  color: var(--text-primary) !important;
+}
+
+/* Ensure proper contrast for all interactive elements */
+[data-theme="dark"] .MuiChip-root {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+/* Fix for toggle buttons in dark theme */
+[data-theme="dark"] .MuiToggleButton-root {
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .MuiToggleButton-root.Mui-selected {
+  background-color: var(--primary-color) !important;
+  color: white !important;
 }

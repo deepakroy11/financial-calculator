@@ -6,7 +6,9 @@ import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
 import ChartCard from "../ui/ChartCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
+import DurationToggle from "../ui/DurationToggle";
 import { calculateSIP, formatCurrency } from "../../lib/calculators";
+import { Box } from "@mui/material";
 
 interface SIPCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -18,6 +20,7 @@ export default function SIPCalculator({
   const [monthlyAmount, setMonthlyAmount] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
+  const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -31,8 +34,11 @@ export default function SIPCalculator({
     if (!rate || parseFloat(rate) <= 0 || parseFloat(rate) > 50) {
       newErrors.rate = "Please enter a valid expected return (0-50%)";
     }
-    if (!tenure || parseFloat(tenure) <= 0 || parseFloat(tenure) > 50) {
-      newErrors.tenure = "Please enter a valid investment period (1-50 years)";
+    const maxTenure = durationUnit === "years" ? 50 : 600; // 50 years or 600 months
+    const tenureLabel = durationUnit === "years" ? "years" : "months";
+
+    if (!tenure || parseFloat(tenure) <= 0 || parseFloat(tenure) > maxTenure) {
+      newErrors.tenure = `Please enter a valid investment period (1-${maxTenure} ${tenureLabel})`;
     }
 
     setErrors(newErrors);
@@ -42,18 +48,23 @@ export default function SIPCalculator({
   const handleCalculate = () => {
     if (!validate()) return;
 
+    // Convert tenure to years for calculation
+    const tenureInYears =
+      durationUnit === "months" ? parseFloat(tenure) / 12 : parseFloat(tenure);
+
     const sipResult = calculateSIP(
       parseFloat(monthlyAmount),
       parseFloat(rate),
-      parseFloat(tenure)
+      tenureInYears
     );
 
     // Generate year-wise growth data for chart
     const yearlyData = [];
     const monthlyRate = parseFloat(rate) / (12 * 100);
     const monthlyInvestment = parseFloat(monthlyAmount);
+    const totalYears = Math.ceil(tenureInYears);
 
-    for (let year = 1; year <= parseFloat(tenure); year++) {
+    for (let year = 1; year <= totalYears; year++) {
       const months = year * 12;
       const futureValue =
         monthlyInvestment *
@@ -107,15 +118,22 @@ export default function SIPCalculator({
           error={errors.rate}
           required
         />
-        <InputField
-          label="Investment Period"
-          value={tenure}
-          onChange={setTenure}
-          placeholder="Enter investment period"
-          suffix="years"
-          error={errors.tenure}
-          required
-        />
+        <Box>
+          <DurationToggle
+            value={durationUnit}
+            onChange={setDurationUnit}
+            label="Duration Unit"
+          />
+          <InputField
+            label="Investment Period"
+            value={tenure}
+            onChange={setTenure}
+            placeholder={`Enter investment period in ${durationUnit}`}
+            suffix={durationUnit}
+            error={errors.tenure}
+            required
+          />
+        </Box>
       </CalculatorCard>
 
       {result && (

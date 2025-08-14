@@ -30,7 +30,7 @@ export const theme = createTheme({
       dark: "#d97706",
     },
     background: {
-      default: "#f8fafc",
+      default: "#fefcf7" /* Warm cream background */,
       paper: "#ffffff",
     },
   },
@@ -90,7 +90,9 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         contrastText: "#ffffff",
       },
       background: {
-        default: darkMode ? "#0f172a" : "#f8fafc",
+        default: darkMode
+          ? "#0f172a"
+          : "#fefcf7" /* Warm cream for light theme */,
         paper: darkMode ? "#1e293b" : "#ffffff",
       },
       text: {

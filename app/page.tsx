@@ -47,6 +47,12 @@ import SavingsGoalCalculator from "../components/calculators/SavingsGoalCalculat
 import PPFCalculator from "../components/calculators/PPFCalculator";
 import HRACalculator from "../components/calculators/HRACalculator";
 import CompoundInterestCalculator from "../components/calculators/CompoundInterestCalculator";
+import NSCCalculator from "../components/calculators/NSCCalculator";
+import CapitalGainsCalculator from "../components/calculators/CapitalGainsCalculator";
+import TDSCalculator from "../components/calculators/TDSCalculator";
+import SimpleInterestCalculator from "../components/calculators/SimpleInterestCalculator";
+import InflationCalculator from "../components/calculators/InflationCalculator";
+import ROICalculator from "../components/calculators/ROICalculator";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import PWAInstallPrompt from "../components/ui/PWAInstallPrompt";
@@ -315,10 +321,24 @@ export default function Home() {
         );
       case "simple-interest":
         return (
-          <CompoundInterestCalculator
+          <SimpleInterestCalculator
             onCalculatorSelect={setSelectedCalculator}
           />
         );
+      case "nsc":
+        return <NSCCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "capital-gains":
+        return (
+          <CapitalGainsCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
+      case "tds":
+        return <TDSCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "inflation":
+        return (
+          <InflationCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
+      case "roi":
+        return <ROICalculator onCalculatorSelect={setSelectedCalculator} />;
       default:
         return (
           <div className="text-center py-12">

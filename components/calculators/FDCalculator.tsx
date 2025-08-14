@@ -5,7 +5,9 @@ import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
+import DurationToggle from "../ui/DurationToggle";
 import { calculateFD, formatCurrency } from "../../lib/calculators";
+import { Box } from "@mui/material";
 
 interface FDCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -17,6 +19,7 @@ export default function FDCalculator({
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
+  const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -29,8 +32,16 @@ export default function FDCalculator({
     if (!rate || parseFloat(rate) <= 0 || parseFloat(rate) > 20) {
       newErrors.rate = "Please enter a valid interest rate (0-20%)";
     }
-    if (!tenure || parseFloat(tenure) <= 0 || parseFloat(tenure) > 10) {
-      newErrors.tenure = "Please enter a valid tenure (0.1-10 years)";
+    const maxTenure = durationUnit === "years" ? 10 : 120; // 10 years or 120 months
+    const tenureLabel = durationUnit === "years" ? "years" : "months";
+    const minTenure = durationUnit === "years" ? 0.1 : 1;
+
+    if (
+      !tenure ||
+      parseFloat(tenure) < minTenure ||
+      parseFloat(tenure) > maxTenure
+    ) {
+      newErrors.tenure = `Please enter a valid tenure (${minTenure}-${maxTenure} ${tenureLabel})`;
     }
 
     setErrors(newErrors);
@@ -40,10 +51,14 @@ export default function FDCalculator({
   const handleCalculate = () => {
     if (!validate()) return;
 
+    // Convert tenure to years for calculation
+    const tenureInYears =
+      durationUnit === "months" ? parseFloat(tenure) / 12 : parseFloat(tenure);
+
     const fdResult = calculateFD(
       parseFloat(principal),
       parseFloat(rate),
-      parseFloat(tenure)
+      tenureInYears
     );
 
     setResult(fdResult);
@@ -83,15 +98,22 @@ export default function FDCalculator({
           error={errors.rate}
           required
         />
-        <InputField
-          label="Tenure"
-          value={tenure}
-          onChange={setTenure}
-          placeholder="Enter tenure in years"
-          suffix="years"
-          error={errors.tenure}
-          required
-        />
+        <Box>
+          <DurationToggle
+            value={durationUnit}
+            onChange={setDurationUnit}
+            label="Tenure Unit"
+          />
+          <InputField
+            label="Tenure"
+            value={tenure}
+            onChange={setTenure}
+            placeholder={`Enter tenure in ${durationUnit}`}
+            suffix={durationUnit}
+            error={errors.tenure}
+            required
+          />
+        </Box>
       </CalculatorCard>
 
       {result && (

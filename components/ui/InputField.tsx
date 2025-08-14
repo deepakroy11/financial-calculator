@@ -1,6 +1,6 @@
 "use client";
 
-import { TextField } from "@mui/material";
+import { TextField, Box } from "@mui/material";
 import { ChangeEvent } from "react";
 
 interface InputFieldProps {
@@ -29,7 +29,7 @@ export default function InputField({
   };
 
   return (
-    <div className="w-full">
+    <Box sx={{ mb: 3 }}>
       <TextField
         fullWidth
         label={label}
@@ -42,9 +42,25 @@ export default function InputField({
         required={required}
         InputProps={{
           endAdornment: suffix ? (
-            <span className="text-gray-500 text-sm font-medium bg-gray-100 px-2 py-1 rounded">
+            <Box
+              component="span"
+              sx={{
+                color: "text.primary",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                backgroundColor: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "rgba(0, 0, 0, 0.05)",
+                border: 1,
+                borderColor: "divider",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 1,
+              }}
+            >
               {suffix}
-            </span>
+            </Box>
           ) : null,
         }}
         variant="outlined"
@@ -52,34 +68,34 @@ export default function InputField({
         sx={{
           "& .MuiOutlinedInput-root": {
             borderRadius: "12px",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            backdropFilter: "blur(10px)",
+            backgroundColor: "background.paper",
             "& fieldset": {
-              borderColor: "#e2e8f0",
+              borderColor: "divider",
               borderWidth: "2px",
             },
             "&:hover fieldset": {
-              borderColor: "#cbd5e1",
+              borderColor: "primary.light",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#667eea",
+              borderColor: "primary.main",
               borderWidth: "2px",
             },
           },
           "& .MuiInputLabel-root": {
-            color: "#64748b",
+            color: "text.secondary",
             fontWeight: 500,
             "&.Mui-focused": {
-              color: "#667eea",
+              color: "primary.main",
             },
           },
           "& .MuiOutlinedInput-input": {
             padding: "16px 14px",
             fontSize: "16px",
             fontWeight: 500,
+            color: "text.primary",
           },
         }}
       />
-    </div>
+    </Box>
   );
 }

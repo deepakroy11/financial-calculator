@@ -151,6 +151,62 @@ const allCalculators: RelatedCalculator[] = [
     category: "savings",
   },
   {
+    id: "credit-card",
+    name: "Credit Card Calculator",
+    description: "Credit card payoff calculator",
+    icon: "FaCreditCard",
+    category: "savings",
+  },
+  {
+    id: "compound-interest",
+    name: "Compound Interest",
+    description: "Compound interest calculator",
+    icon: "FaPercentage",
+    category: "business",
+  },
+  {
+    id: "simple-interest",
+    name: "Simple Interest",
+    description: "Simple interest calculator",
+    icon: "FaCalculator",
+    category: "business",
+  },
+  {
+    id: "nsc",
+    name: "NSC Calculator",
+    description: "National Savings Certificate",
+    icon: "FaCertificate",
+    category: "investments",
+  },
+  {
+    id: "capital-gains",
+    name: "Capital Gains Tax",
+    description: "Capital gains calculator",
+    icon: "FaMoneyBillWave",
+    category: "taxes",
+  },
+  {
+    id: "tds",
+    name: "TDS Calculator",
+    description: "Tax deducted at source",
+    icon: "FaFileInvoiceDollar",
+    category: "taxes",
+  },
+  {
+    id: "inflation",
+    name: "Inflation Calculator",
+    description: "Inflation impact calculator",
+    icon: "FaArrowUp",
+    category: "business",
+  },
+  {
+    id: "roi",
+    name: "ROI Calculator",
+    description: "Return on investment",
+    icon: "FaChartBar",
+    category: "savings",
+  },
+  {
     id: "compound-interest",
     name: "Compound Interest",
     description: "Compound interest calculator",
@@ -184,58 +240,118 @@ export default function RelatedCalculators({
 
   return (
     <Card
-      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        borderRadius: "16px",
-        background: "white",
+        width: "100%",
+        mt: 3,
+        borderRadius: 4,
+        backgroundColor: "background.paper",
+        border: 1,
+        borderColor: "divider",
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
       }}
     >
-      <CardContent className="p-6">
+      <CardContent sx={{ p: 3 }}>
         <Typography
           variant="h6"
           component="h3"
-          className="mb-4 font-bold text-gray-800"
+          sx={{
+            mb: 2,
+            fontWeight: 700,
+            color: "text.primary",
+          }}
         >
           Related Calculators
         </Typography>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 2,
+          }}
+        >
           {relatedCalculators.map((calculator) => {
             const IconComponent = iconMap[calculator.icon];
             return (
-              <div
+              <Box
                 key={calculator.id}
                 onClick={() => onCalculatorSelect(calculator.id)}
-                className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 cursor-pointer transition-all duration-200 hover:shadow-sm border border-gray-200 hover:border-blue-200"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  p: 2,
+                  borderRadius: 3,
+                  backgroundColor: "action.hover",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease-in-out",
+                  border: 1,
+                  borderColor: "divider",
+                  "&:hover": {
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === "dark"
+                        ? "rgba(31, 122, 153, 0.1)"
+                        : "rgba(31, 122, 153, 0.05)",
+                    borderColor: "primary.main",
+                    transform: "translateY(-1px)",
+                    boxShadow: 1,
+                  },
+                }}
               >
-                <Box className="mr-3 p-2 rounded-lg bg-blue-600 text-white">
+                <Box
+                  sx={{
+                    mr: 2,
+                    p: 1.5,
+                    borderRadius: 2,
+                    backgroundColor: "primary.main",
+                    color: "primary.contrastText",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   {IconComponent && <IconComponent size={16} />}
                 </Box>
-                <div className="flex-1">
+                <Box sx={{ flex: 1 }}>
                   <Typography
                     variant="subtitle2"
-                    className="font-semibold text-gray-800"
+                    sx={{
+                      fontWeight: 600,
+                      color: "text.primary",
+                      mb: 0.5,
+                    }}
                   >
                     {calculator.name}
                   </Typography>
-                  <Typography variant="caption" className="text-gray-600">
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "text.secondary",
+                      display: "block",
+                    }}
+                  >
                     {calculator.description}
                   </Typography>
-                </div>
+                </Box>
                 <Chip
                   label="Try"
                   size="small"
                   sx={{
-                    backgroundColor: "#1f7a99",
-                    color: "white",
+                    backgroundColor: "primary.main",
+                    color: "primary.contrastText",
                     fontWeight: 500,
                     fontSize: "0.7rem",
+                    "&:hover": {
+                      backgroundColor: "primary.dark",
+                    },
                   }}
                 />
-              </div>
+              </Box>
             );
           })}
-        </div>
+        </Box>
       </CardContent>
     </Card>
   );

@@ -5,7 +5,9 @@ import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
+import DurationToggle from "../ui/DurationToggle";
 import { formatCurrency } from "../../lib/calculators";
+import { Box } from "@mui/material";
 
 interface CompoundInterestCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -17,6 +19,7 @@ export default function CompoundInterestCalculator({
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [time, setTime] = useState("");
+  const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [compoundFreq, setCompoundFreq] = useState("4");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -30,8 +33,11 @@ export default function CompoundInterestCalculator({
     if (!rate || parseFloat(rate) <= 0 || parseFloat(rate) > 50) {
       newErrors.rate = "Please enter a valid interest rate (0-50%)";
     }
-    if (!time || parseFloat(time) <= 0 || parseFloat(time) > 50) {
-      newErrors.time = "Please enter a valid time period (1-50 years)";
+    const maxTime = durationUnit === "years" ? 50 : 600; // 50 years or 600 months
+    const timeLabel = durationUnit === "years" ? "years" : "months";
+
+    if (!time || parseFloat(time) <= 0 || parseFloat(time) > maxTime) {
+      newErrors.time = `Please enter a valid time period (1-${maxTime} ${timeLabel})`;
     }
 
     setErrors(newErrors);
@@ -43,8 +49,11 @@ export default function CompoundInterestCalculator({
 
     const p = parseFloat(principal);
     const r = parseFloat(rate) / 100;
-    const t = parseFloat(time);
+    const timeValue = parseFloat(time);
     const n = parseFloat(compoundFreq);
+
+    // Convert time to years for calculation
+    const t = durationUnit === "months" ? timeValue / 12 : timeValue;
 
     const amount = p * Math.pow(1 + r / n, n * t);
     const compoundInterest = amount - p;
@@ -91,25 +100,30 @@ export default function CompoundInterestCalculator({
           error={errors.rate}
           required
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Box>
+          <DurationToggle
+            value={durationUnit}
+            onChange={setDurationUnit}
+            label="Time Period Unit"
+          />
           <InputField
             label="Time Period"
             value={time}
             onChange={setTime}
-            placeholder="Enter time period"
-            suffix="years"
+            placeholder={`Enter time period in ${durationUnit}`}
+            suffix={durationUnit}
             error={errors.time}
             required
           />
-          <InputField
-            label="Compounding Frequency"
-            value={compoundFreq}
-            onChange={setCompoundFreq}
-            placeholder="Times per year"
-            suffix="times/year"
-            required
-          />
-        </div>
+        </Box>
+        <InputField
+          label="Compounding Frequency"
+          value={compoundFreq}
+          onChange={setCompoundFreq}
+          placeholder="Times per year"
+          suffix="times/year"
+          required
+        />
       </CalculatorCard>
 
       {result && (

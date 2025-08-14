@@ -21,55 +21,90 @@ export default function ResultCard({
 }: ResultCardProps) {
   return (
     <Card
-      className="w-full mt-6 shadow-lg border border-gray-200"
       sx={{
-        borderRadius: "16px",
-        background: "white",
+        width: "100%",
+        mt: 3,
+        borderRadius: 4,
+        backgroundColor: "background.paper",
+        border: 1,
+        borderColor: "divider",
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
       }}
     >
-      <CardContent className="p-6">
+      <CardContent sx={{ p: 3 }}>
         <Typography
           variant="h6"
           component="h3"
-          className="mb-4 font-bold text-gray-800"
+          sx={{
+            mb: 2,
+            fontWeight: 700,
+            color: "text.primary",
+          }}
         >
           {title}
         </Typography>
 
-        <div className="space-y-3">
+        <Box sx={{ "& > *": { mb: 1.5 } }}>
           {results.map((result, index) => (
             <Box
               key={index}
-              className={`flex justify-between items-center p-4 rounded-xl transition-all duration-200 ${
-                result.highlight
-                  ? "bg-blue-50 border-2 border-blue-200"
-                  : "bg-gray-50 border border-gray-200"
-              }`}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                p: 2,
+                borderRadius: 3,
+                transition: "all 0.2s ease-in-out",
+                backgroundColor: result.highlight
+                  ? "primary.light"
+                  : "action.hover",
+                border: 1,
+                borderColor: result.highlight ? "primary.main" : "divider",
+                ...(result.highlight && {
+                  color: "primary.contrastText",
+                }),
+              }}
             >
               <Typography
                 variant="body1"
-                className="font-semibold text-gray-700"
+                sx={{
+                  color: result.highlight ? "inherit" : "text.primary",
+                  fontWeight: 500,
+                }}
               >
                 {result.label}
               </Typography>
               <Typography
                 variant="h6"
-                className={`font-bold ${
-                  result.highlight ? "text-blue-600" : "text-gray-800"
-                }`}
+                sx={{
+                  fontWeight: 700,
+                  color: result.highlight ? "inherit" : "text.primary",
+                }}
               >
                 {result.value}
               </Typography>
             </Box>
           ))}
-        </div>
+        </Box>
 
         {explanation && (
-          <Box className="mt-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
-            <div className="flex items-start">
-              <div className="mr-3 mt-0.5">
+          <Box
+            sx={{
+              mt: 2,
+              p: 2,
+              backgroundColor: "info.light",
+              borderRadius: 3,
+              border: 1,
+              borderColor: "info.main",
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "flex-start" }}>
+              <Box sx={{ mr: 1.5, mt: 0.25 }}>
                 <svg
-                  className="w-5 h-5 text-blue-600"
+                  style={{ width: 20, height: 20, color: "currentColor" }}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -79,14 +114,17 @@ export default function ResultCard({
                     clipRule="evenodd"
                   />
                 </svg>
-              </div>
+              </Box>
               <Typography
                 variant="body2"
-                className="text-gray-700 leading-relaxed"
+                sx={{
+                  color: "text.primary",
+                  lineHeight: 1.6,
+                }}
               >
                 {explanation}
               </Typography>
-            </div>
+            </Box>
           </Box>
         )}
       </CardContent>

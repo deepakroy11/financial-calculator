@@ -6,7 +6,9 @@ import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
 import ChartCard from "../ui/ChartCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
+import DurationToggle from "../ui/DurationToggle";
 import { calculateEMI, formatCurrency } from "../../lib/calculators";
+import { Box } from "@mui/material";
 
 interface EMICalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -18,6 +20,7 @@ export default function EMICalculator({
   const [principal, setPrincipal] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
+  const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -30,8 +33,11 @@ export default function EMICalculator({
     if (!rate || parseFloat(rate) <= 0 || parseFloat(rate) > 50) {
       newErrors.rate = "Please enter a valid interest rate (0-50%)";
     }
-    if (!tenure || parseFloat(tenure) <= 0 || parseFloat(tenure) > 360) {
-      newErrors.tenure = "Please enter a valid tenure (1-360 months)";
+    const maxTenure = durationUnit === "years" ? 30 : 360; // 30 years or 360 months
+    const tenureLabel = durationUnit === "years" ? "years" : "months";
+
+    if (!tenure || parseFloat(tenure) <= 0 || parseFloat(tenure) > maxTenure) {
+      newErrors.tenure = `Please enter a valid tenure (1-${maxTenure} ${tenureLabel})`;
     }
 
     setErrors(newErrors);
@@ -41,10 +47,14 @@ export default function EMICalculator({
   const handleCalculate = () => {
     if (!validate()) return;
 
+    // Convert tenure to months for EMI calculation (EMI library expects months)
+    const tenureInMonths =
+      durationUnit === "years" ? parseFloat(tenure) * 12 : parseFloat(tenure);
+
     const emiResult = calculateEMI(
       parseFloat(principal),
       parseFloat(rate),
-      parseFloat(tenure)
+      tenureInMonths
     );
 
     // Generate year-wise data for chart
@@ -118,15 +128,22 @@ export default function EMICalculator({
               error={errors.rate}
               required
             />
-            <InputField
-              label="Loan Tenure"
-              value={tenure}
-              onChange={setTenure}
-              placeholder="Enter tenure in months"
-              suffix="months"
-              error={errors.tenure}
-              required
-            />
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Tenure Unit"
+              />
+              <InputField
+                label="Loan Tenure"
+                value={tenure}
+                onChange={setTenure}
+                placeholder={`Enter tenure in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.tenure}
+                required
+              />
+            </Box>
           </CalculatorCard>
         </div>
 

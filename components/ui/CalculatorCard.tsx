@@ -22,29 +22,51 @@ export default function CalculatorCard({
 }: CalculatorCardProps) {
   return (
     <Card
-      className="w-full shadow-lg border border-gray-200"
       sx={{
-        borderRadius: "16px",
-        background: "white",
+        width: "100%",
+        borderRadius: 4,
+        backgroundColor: "background.paper",
+        border: 1,
+        borderColor: "divider",
+        boxShadow: (theme) =>
+          theme.palette.mode === "dark"
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
+            : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
       }}
     >
-      <CardContent className="p-6">
-        <div className="mb-6">
+      <CardContent sx={{ p: 3 }}>
+        <Box sx={{ mb: 3 }}>
           <Typography
             variant="h5"
             component="h2"
-            className="mb-2 font-bold text-gray-800"
+            sx={{
+              mb: 1,
+              fontWeight: 700,
+              color: "text.primary",
+            }}
           >
             {title}
           </Typography>
-          <Typography variant="body2" className="text-gray-600 leading-relaxed">
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              lineHeight: 1.6,
+            }}
+          >
             {description}
           </Typography>
-        </div>
+        </Box>
 
-        <div className="space-y-4 mb-6">{children}</div>
+        <Box sx={{ mb: 3 }}>{children}</Box>
 
-        <Box className="flex gap-3 flex-col sm:flex-row">
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            flexDirection: { xs: "column", sm: "row" },
+          }}
+        >
           <Button
             variant="contained"
             onClick={onCalculate}

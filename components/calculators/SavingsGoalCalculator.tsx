@@ -5,7 +5,9 @@ import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
+import DurationToggle from "../ui/DurationToggle";
 import { calculateSavingsGoal, formatCurrency } from "../../lib/calculators";
+import { Box } from "@mui/material";
 
 interface SavingsGoalCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -17,6 +19,7 @@ export default function SavingsGoalCalculator({
   const [targetAmount, setTargetAmount] = useState("");
   const [currentSavings, setCurrentSavings] = useState("");
   const [timeframe, setTimeframe] = useState("");
+  const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [expectedReturn, setExpectedReturn] = useState("");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -30,12 +33,15 @@ export default function SavingsGoalCalculator({
     if (!currentSavings || parseFloat(currentSavings) < 0) {
       newErrors.currentSavings = "Please enter current savings (can be 0)";
     }
+    const maxTimeframe = durationUnit === "years" ? 50 : 600; // 50 years or 600 months
+    const timeframeLabel = durationUnit === "years" ? "years" : "months";
+
     if (
       !timeframe ||
       parseFloat(timeframe) <= 0 ||
-      parseFloat(timeframe) > 50
+      parseFloat(timeframe) > maxTimeframe
     ) {
-      newErrors.timeframe = "Please enter a valid timeframe (1-50 years)";
+      newErrors.timeframe = `Please enter a valid timeframe (1-${maxTimeframe} ${timeframeLabel})`;
     }
     if (
       !expectedReturn ||
@@ -56,10 +62,16 @@ export default function SavingsGoalCalculator({
   const handleCalculate = () => {
     if (!validate()) return;
 
+    // Convert timeframe to years for calculation
+    const timeframeInYears =
+      durationUnit === "months"
+        ? parseFloat(timeframe) / 12
+        : parseFloat(timeframe);
+
     const goalResult = calculateSavingsGoal(
       parseFloat(targetAmount),
       parseFloat(currentSavings),
-      parseFloat(timeframe),
+      timeframeInYears,
       parseFloat(expectedReturn)
     );
 
@@ -101,26 +113,31 @@ export default function SavingsGoalCalculator({
           error={errors.currentSavings}
           required
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Box>
+          <DurationToggle
+            value={durationUnit}
+            onChange={setDurationUnit}
+            label="Timeframe Unit"
+          />
           <InputField
             label="Time to Goal"
             value={timeframe}
             onChange={setTimeframe}
-            placeholder="Enter timeframe"
-            suffix="years"
+            placeholder={`Enter timeframe in ${durationUnit}`}
+            suffix={durationUnit}
             error={errors.timeframe}
             required
           />
-          <InputField
-            label="Expected Annual Return"
-            value={expectedReturn}
-            onChange={setExpectedReturn}
-            placeholder="Enter expected return"
-            suffix="%"
-            error={errors.expectedReturn}
-            required
-          />
-        </div>
+        </Box>
+        <InputField
+          label="Expected Annual Return"
+          value={expectedReturn}
+          onChange={setExpectedReturn}
+          placeholder="Enter expected return"
+          suffix="%"
+          error={errors.expectedReturn}
+          required
+        />
       </CalculatorCard>
 
       {result && (
