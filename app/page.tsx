@@ -9,6 +9,7 @@ import {
   CardContent,
   Box,
   Chip,
+  Button,
 } from "@mui/material";
 import {
   FaCalculator,
@@ -48,6 +49,7 @@ import HRACalculator from "../components/calculators/HRACalculator";
 import CompoundInterestCalculator from "../components/calculators/CompoundInterestCalculator";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
+import PWAInstallPrompt from "../components/ui/PWAInstallPrompt";
 
 const categories: CalculatorCategory[] = [
   {
@@ -333,7 +335,7 @@ export default function Home() {
 
   if (selectedCalculator) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
         <Header
           onCategorySelect={(categoryId) => {
             setSelectedCalculator(null);
@@ -345,36 +347,48 @@ export default function Home() {
           onHomeClick={() => setSelectedCalculator(null)}
         />
 
-        <Container maxWidth="lg" className="py-8">
-          <Box className="mb-8">
-            <button
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+          <Box sx={{ mb: 4 }}>
+            <Button
               onClick={() => setSelectedCalculator(null)}
-              className="flex items-center px-6 py-3 bg-white text-blue-600 hover:text-blue-800 font-medium rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
+              variant="outlined"
+              startIcon={
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              }
+              sx={{
+                px: 3,
+                py: 1.5,
+                borderRadius: 3,
+                fontWeight: 500,
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "translateY(-1px)",
+                },
+              }}
             >
-              <svg
-                className="w-5 h-5 mr-2"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
               Back to Calculators
-            </button>
+            </Button>
           </Box>
           {renderCalculator()}
         </Container>
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
       <Header
         onCategorySelect={(categoryId) => {
           const element = document.getElementById(categoryId);
@@ -383,47 +397,87 @@ export default function Home() {
         onHomeClick={() => setSelectedCalculator(null)}
       />
 
-      <Container maxWidth="lg" className="py-12">
-        <Box className="text-center mb-16">
+      <Container maxWidth="lg" sx={{ py: 6 }}>
+        <Box sx={{ textAlign: "center", mb: 8 }}>
           <Typography
             variant="h2"
             component="h1"
-            className="mb-6 font-bold text-gray-800 text-4xl md:text-5xl"
+            sx={{
+              mb: 3,
+              fontWeight: 700,
+              color: "text.primary",
+              fontSize: { xs: "2.5rem", md: "3.5rem" },
+            }}
           >
             Financial Calculator Suite
           </Typography>
           <Typography
             variant="h6"
-            className="text-gray-600 max-w-6xl mx-auto leading-relaxed"
+            sx={{
+              color: "text.secondary",
+              maxWidth: "800px",
+              mx: "auto",
+              lineHeight: 1.6,
+              mb: 2,
+            }}
           >
             Comprehensive financial calculators designed for Indian customers.
             Plan your loans, investments, taxes, and savings goals with
             precision.
           </Typography>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <div className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium shadow-sm">
-              20+ Calculators
-            </div>
-            <div className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium shadow-sm">
-              Indian Tax Compliant
-            </div>
-            <div className="px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium shadow-sm">
-              Mobile Optimized
-            </div>
-          </div>
+          <Box
+            sx={{
+              mt: 4,
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 2,
+            }}
+          >
+            <Chip
+              label="20+ Calculators"
+              sx={{
+                backgroundColor: "#1f7a99",
+                color: "white",
+                fontWeight: 500,
+                px: 2,
+                py: 1,
+              }}
+            />
+            <Chip
+              label="Indian Tax Compliant"
+              sx={{
+                backgroundColor: "#10b981",
+                color: "white",
+                fontWeight: 500,
+                px: 2,
+                py: 1,
+              }}
+            />
+            <Chip
+              label="Mobile Optimized"
+              sx={{
+                backgroundColor: "#f59e0b",
+                color: "white",
+                fontWeight: 500,
+                px: 2,
+                py: 1,
+              }}
+            />
+          </Box>
         </Box>
 
         {categories.map((category) => {
           const categoryColors = {
-            loans: "#2563eb",
-            investments: "#059669",
-            taxes: "#dc2626",
-            savings: "#7c3aed",
-            business: "#ea580c",
+            loans: "#1f7a99",
+            investments: "#10b981",
+            taxes: "#ef4444",
+            savings: "#4a9bb8",
+            business: "#f59e0b",
           };
           const categoryColor =
             categoryColors[category.id as keyof typeof categoryColors] ||
-            "#2563eb";
+            "#1f7a99";
 
           return (
             <Box key={category.id} className="mb-16" id={category.id}>
@@ -438,7 +492,10 @@ export default function Home() {
                 <Typography
                   variant="h4"
                   component="h2"
-                  className="font-bold text-gray-800"
+                  sx={{
+                    fontWeight: 700,
+                    color: "text.primary",
+                  }}
                 >
                   {category.name}
                 </Typography>
@@ -448,12 +505,12 @@ export default function Home() {
                 {category.calculators.map((calculator, index) => {
                   const IconComponent = iconMap[calculator.icon];
                   const colors = [
-                    "#2563eb",
-                    "#059669",
-                    "#dc2626",
-                    "#7c3aed",
-                    "#ea580c",
-                    "#0891b2",
+                    "#1f7a99",
+                    "#10b981",
+                    "#ef4444",
+                    "#4a9bb8",
+                    "#f59e0b",
+                    "#155a73",
                   ];
                   const color = colors[index % colors.length];
 
@@ -529,6 +586,7 @@ export default function Home() {
         })}
       </Container>
       <Footer />
-    </div>
+      <PWAInstallPrompt />
+    </Box>
   );
 }

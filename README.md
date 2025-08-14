@@ -67,7 +67,7 @@ A comprehensive financial calculator web application designed specifically for I
 │   ├── layout.tsx         # Root layout with theme provider
 │   ├── page.tsx           # Main page with calculator grid
 │   ├── globals.css        # Global styles
-│   └── theme.ts           # Material UI theme configuration
+│   └── theme.tsx          # Material UI theme configuration
 ├── components/
 │   ├── ui/                # Reusable UI components
 │   │   ├── InputField.tsx

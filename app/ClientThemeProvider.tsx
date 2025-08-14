@@ -1,8 +1,8 @@
 "use client";
 
-import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { theme } from "./theme";
+import { CustomThemeProvider } from "./theme";
+import DarkModeHandler from "../components/ui/DarkModeHandler";
 
 export default function ClientThemeProvider({
   children,
@@ -10,9 +10,10 @@ export default function ClientThemeProvider({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider theme={theme}>
+    <CustomThemeProvider>
       <CssBaseline />
+      <DarkModeHandler />
       {children}
-    </ThemeProvider>
+    </CustomThemeProvider>
   );
 }

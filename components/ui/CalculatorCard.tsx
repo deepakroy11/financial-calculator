@@ -52,13 +52,13 @@ export default function CalculatorCard({
             className="flex-1 py-3 text-base font-semibold"
             size="large"
             sx={{
-              backgroundColor: "#2563eb",
+              backgroundColor: "#1f7a99",
               borderRadius: "12px",
               textTransform: "none",
-              boxShadow: "0 4px 12px rgba(37, 99, 235, 0.3)",
+              boxShadow: "0 4px 12px rgba(31, 122, 153, 0.3)",
               "&:hover": {
-                backgroundColor: "#1d4ed8",
-                boxShadow: "0 6px 16px rgba(37, 99, 235, 0.4)",
+                backgroundColor: "#155a73",
+                boxShadow: "0 6px 16px rgba(31, 122, 153, 0.4)",
                 transform: "translateY(-1px)",
               },
               transition: "all 0.2s ease",

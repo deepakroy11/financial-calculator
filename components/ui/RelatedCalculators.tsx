@@ -226,7 +226,7 @@ export default function RelatedCalculators({
                   label="Try"
                   size="small"
                   sx={{
-                    backgroundColor: "#2563eb",
+                    backgroundColor: "#1f7a99",
                     color: "white",
                     fontWeight: 500,
                     fontSize: "0.7rem",

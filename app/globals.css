@@ -5,50 +5,131 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #059669;
-  --accent-color: #dc2626;
-  --purple-color: #7c3aed;
-  --orange-color: #ea580c;
+  --primary-color: #1f7a99;
+  --primary-light: #4a9bb8;
+  --primary-dark: #155a73;
+  --secondary-color: #f59e0b;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  --info-color: #3b82f6;
+}
+
+/* Light theme */
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body {
   font-family: "Inter", sans-serif;
-  background-color: #f9fafb;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
+  transition: all 0.3s ease;
+  /* Light theme gradient background */
+  background-image: radial-gradient(
+      circle at 25% 25%,
+      rgba(31, 122, 153, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(245, 158, 11, 0.05) 0%,
+      transparent 50%
+    );
+}
+
+/* Dark theme body styling */
+[data-theme="dark"] body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  /* Dark theme gradient background */
+  background-image: radial-gradient(
+      circle at 25% 25%,
+      rgba(31, 122, 153, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(245, 158, 11, 0.08) 0%,
+      transparent 50%
+    );
+}
+
+/* Ensure all text elements inherit proper colors */
+* {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+}
+
+p,
+span,
+div {
+  color: var(--text-primary);
 }
 
 .modern-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px 0 var(--shadow-light), 0 1px 2px 0 var(--shadow-light);
   transition: all 0.2s ease-in-out;
 }
 
 .modern-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 0 20px rgba(37, 99, 235, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgba(31, 122, 153, 0.1),
+    0 0 20px rgba(31, 122, 153, 0.15), 0 4px 12px var(--shadow-medium);
 }
 
 .calculator-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px 0 var(--shadow-light), 0 1px 2px 0 var(--shadow-light);
   transition: all 0.3s ease-in-out;
 }
 
 .calculator-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.1), 0 0 30px rgba(37, 99, 235, 0.2),
-    0 10px 25px rgba(0, 0, 0, 0.15);
-  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 0 1px rgba(31, 122, 153, 0.1),
+    0 0 30px rgba(31, 122, 153, 0.2), 0 10px 25px var(--shadow-medium);
+  border-color: rgba(31, 122, 153, 0.2);
 }
 
 .modern-button {
-  background-color: #2563eb;
+  background-color: var(--primary-color);
   color: white;
   border-radius: 12px;
   padding: 12px 24px;
@@ -59,13 +140,15 @@ body {
 }
 
 .modern-button:hover {
-  background-color: #1d4ed8;
+  background-color: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 12px rgba(31, 122, 153, 0.3);
 }
 
 .modern-input {
-  border: 2px solid #e5e7eb;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   padding: 12px 16px;
   font-size: 16px;
@@ -73,7 +156,118 @@ body {
 }
 
 .modern-input:focus {
-  border-color: #2563eb;
+  border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(31, 122, 153, 0.1);
+}
+
+/* Dark mode utilities */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--shadow-medium);
+}
+/* Ensure all text elements inherit proper colors */
+* {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary) !important;
+}
+
+p,
+span,
+div,
+label {
+  color: var(--text-primary);
+}
+
+/* Override any hardcoded text colors */
+.text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+.text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.text-gray-700 {
+  color: var(--text-primary) !important;
+}
+
+/* Ensure proper contrast for form elements */
+input,
+textarea,
+select {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Better background patterns */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(31, 122, 153, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(245, 158, 11, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(16, 185, 129, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+[data-theme="dark"] body::before {
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(31, 122, 153, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(245, 158, 11, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(16, 185, 129, 0.08) 0%,
+      transparent 50%
+    );
 }

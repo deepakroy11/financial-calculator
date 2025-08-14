@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
+  <!-- Background -->
+  <rect width="600" height="200" fill="transparent"/>
+  
+  <!-- Logo container with rounded corners -->
+  <rect x="20" y="30" width="140" height="140" fill="#1f7a99" rx="25" ry="25"/>
+  
+  <!-- Inner white rounded rectangle -->
+  <rect x="35" y="45" width="110" height="110" fill="white" rx="15" ry="15"/>
+  
+  <!-- Indian Rupees symbol -->
+  <g fill="#1f7a99">
+    <!-- Rupee symbol components -->
+    <rect x="55" y="75" width="35" height="8"/>
+    <rect x="55" y="95" width="25" height="8"/>
+    <path d="M55 110 L55 145 L70 145 L70 125 L85 125 L110 155 L125 155 L95 120 Q100 115 100 105 Q100 95 95 90 L90 85 L55 85 Z" fill="#1f7a99"/>
+  </g>
+  
+  <!-- "Finly" text -->
+  <text x="190" y="135" font-family="Arial, Helvetica, sans-serif" font-size="85" font-weight="normal" fill="#1f7a99">Finly</text>
+</svg>

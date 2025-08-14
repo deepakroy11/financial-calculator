@@ -10,7 +10,10 @@ import {
   SiTypescript,
 } from "react-icons/si";
 
+import { useTheme } from "@mui/material/styles";
+
 export default function Footer() {
+  const theme = useTheme();
   const techStack = [
     { name: "Next.js", icon: SiNextdotjs },
     { name: "React", icon: SiReact },
@@ -22,85 +25,151 @@ export default function Footer() {
   return (
     <Box
       component="footer"
-      className="mt-16 bg-white/80 backdrop-blur-sm border-t border-gray-200"
+      sx={{
+        mt: 8,
+        backgroundColor: theme.palette.background.paper,
+        backdropFilter: "blur(10px)",
+        borderTop: `1px solid ${theme.palette.divider}`,
+      }}
     >
       <Container maxWidth="lg" className="py-8">
         {/* Main Content */}
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: { xs: 3, md: 0 },
+          }}
+        >
           {/* Developer Credit */}
-          <div className="flex items-center space-x-3">
-            <Typography variant="body2" className="text-gray-600">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography variant="body2" color="text.secondary">
               Developed with
             </Typography>
-            <FaHeart className="text-red-500" size={14} />
-            <Typography variant="body2" className="text-gray-600">
+            <FaHeart style={{ color: theme.palette.error.main }} size={14} />
+            <Typography variant="body2" color="text.secondary">
               by
             </Typography>
             <Link
               href="https://deepakroy.dev"
               target="_blank"
-              className="text-blue-600 hover:text-blue-800 font-semibold transition-colors"
+              sx={{
+                color: theme.palette.primary.main,
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  color: theme.palette.primary.dark,
+                  textDecoration: "underline",
+                },
+              }}
             >
               Deepak Roy
             </Link>
-          </div>
+          </Box>
 
           {/* Tech Stack */}
-          <div className="flex items-center space-x-4">
-            <Typography variant="body2" className="text-gray-500 mr-2">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography variant="body2" color="text.secondary">
               Built with:
             </Typography>
-            <div className="flex items-center space-x-3">
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               {techStack.map((tech) => {
                 const IconComponent = tech.icon;
                 return (
-                  <div key={tech.name} className="flex items-center space-x-1">
-                    <IconComponent size={16} className="text-gray-600" />
+                  <Box
+                    key={tech.name}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 0.5,
+                      transition: "all 0.2s ease-in-out",
+                      "&:hover": {
+                        color: theme.palette.primary.main,
+                        transform: "translateY(-1px)",
+                      },
+                    }}
+                  >
+                    <IconComponent
+                      size={16}
+                      style={{ color: theme.palette.text.secondary }}
+                    />
                     <Typography
                       variant="caption"
-                      className="text-gray-600 hidden sm:block"
+                      color="text.secondary"
+                      sx={{ display: { xs: "none", sm: "block" } }}
                     >
                       {tech.name}
                     </Typography>
-                  </div>
+                  </Box>
                 );
               })}
-            </div>
-          </div>
+            </Box>
+          </Box>
 
           {/* Social Links */}
-          <div className="flex items-center space-x-4">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <Link
               href="https://github.com/deepakroy11"
               target="_blank"
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              sx={{
+                color: theme.palette.text.secondary,
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  color: theme.palette.primary.main,
+                  transform: "translateY(-2px)",
+                },
+              }}
             >
               <FaGithub size={18} />
             </Link>
             <Link
               href="https://linkedin.com/in/deepakroy11"
               target="_blank"
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              sx={{
+                color: theme.palette.text.secondary,
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  color: theme.palette.primary.main,
+                  transform: "translateY(-2px)",
+                },
+              }}
             >
               <FaLinkedin size={18} />
             </Link>
             <Link
               href="https://deepakroy.dev"
               target="_blank"
-              className="text-gray-500 hover:text-gray-700 transition-colors"
+              sx={{
+                color: theme.palette.text.secondary,
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  color: theme.palette.primary.main,
+                  transform: "translateY(-2px)",
+                },
+              }}
             >
               <FaGlobe size={18} />
             </Link>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {/* Copyright */}
-        <div className="text-center mt-6 pt-4 border-t border-gray-100">
-          <Typography variant="caption" className="text-gray-400">
-            © {new Date().getFullYear()} Indian Finance Calculator. All rights
-            reserved.
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 4,
+            pt: 3,
+            borderTop: `1px solid ${theme.palette.divider}`,
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            © {new Date().getFullYear()} Finly - Indian Finance Calculator. All
+            rights reserved.
           </Typography>
-        </div>
+        </Box>
       </Container>
     </Box>
   );
