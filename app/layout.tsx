@@ -89,6 +89,28 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className={inter.className}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Set initial dark theme to prevent flash
+              (function() {
+                const savedMode = localStorage.getItem('darkMode');
+                const isDark = savedMode ? JSON.parse(savedMode) : true; // Default to dark
+                if (isDark) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.classList.add('dark');
+                  document.body.style.backgroundColor = '#0f172a';
+                  document.body.style.color = '#f1f5f9';
+                } else {
+                  document.documentElement.setAttribute('data-theme', 'light');
+                  document.documentElement.classList.remove('dark');
+                  document.body.style.backgroundColor = '#fefcf7';
+                  document.body.style.color = '#1e293b';
+                }
+              })();
+            `,
+          }}
+        />
         <ClientThemeProvider>{children}</ClientThemeProvider>
         <script
           dangerouslySetInnerHTML={{

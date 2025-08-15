@@ -39,7 +39,7 @@ export const theme = createTheme({
 export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -49,6 +49,10 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       const savedMode = localStorage.getItem("darkMode");
       if (savedMode) {
         setDarkMode(JSON.parse(savedMode));
+      } else {
+        // Default to dark mode if no preference is saved
+        setDarkMode(true);
+        localStorage.setItem("darkMode", JSON.stringify(true));
       }
     }
   }, []);
@@ -64,11 +68,38 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
+    // Use dark theme as default during SSR
+    const ssrTheme = createTheme({
+      palette: {
+        mode: "dark",
+        primary: {
+          main: "#1f7a99",
+          light: "#4a9bb8",
+          dark: "#155a73",
+          contrastText: "#ffffff",
+        },
+        secondary: {
+          main: "#f59e0b",
+          light: "#fbbf24",
+          dark: "#d97706",
+          contrastText: "#ffffff",
+        },
+        background: {
+          default: "#0f172a",
+          paper: "#1e293b",
+        },
+        text: {
+          primary: "#f1f5f9",
+          secondary: "#cbd5e1",
+        },
+      },
+    });
+
     return (
       <ThemeContext.Provider
-        value={{ darkMode: false, toggleDarkMode: () => {} }}
+        value={{ darkMode: true, toggleDarkMode: () => {} }}
       >
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={ssrTheme}>{children}</ThemeProvider>
       </ThemeContext.Provider>
     );
   }

@@ -15,7 +15,7 @@ export default function DarkModeHandler() {
         document.body.style.backgroundColor = "#0f172a";
         document.body.style.color = "#f1f5f9";
       } else {
-        document.documentElement.removeAttribute("data-theme");
+        document.documentElement.setAttribute("data-theme", "light");
         document.documentElement.classList.remove("dark");
         document.body.style.backgroundColor = "#fefcf7";
         document.body.style.color = "#1e293b";

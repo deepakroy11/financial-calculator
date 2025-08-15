@@ -15,8 +15,20 @@
   --info-color: #3b82f6;
 }
 
-/* Light theme */
+/* Default theme (Dark) */
 :root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+  --shadow-light: rgba(0, 0, 0, 0.3);
+  --shadow-medium: rgba(0, 0, 0, 0.4);
+}
+
+/* Light theme */
+[data-theme="light"] {
   --bg-primary: #fefcf7; /* Warm cream background */
   --bg-secondary: #ffffff;
   --bg-tertiary: #faf8f3; /* Slightly warmer tertiary */
@@ -27,7 +39,7 @@
   --shadow-medium: rgba(0, 0, 0, 0.15);
 }
 
-/* Dark theme */
+/* Keep dark theme selector for backward compatibility */
 [data-theme="dark"] {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
