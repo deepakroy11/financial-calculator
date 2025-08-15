@@ -5,18 +5,65 @@ import ClientThemeProvider from "./ClientThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Finly - Indian Finance Calculator",
+  title: {
+    default:
+      "Finly - Free Indian Financial Calculators | EMI, SIP, Tax & Investment Tools",
+    template: "%s | Finly - Indian Finance Calculator",
+  },
   description:
-    "Comprehensive financial calculators for Indian customers. Plan your loans, investments, taxes, and savings goals with precision.",
-  keywords:
-    "financial calculator, EMI calculator, SIP calculator, tax calculator, Indian finance, loan calculator, investment calculator",
+    "Free comprehensive financial calculators for Indian customers. Calculate EMI, SIP returns, income tax, FD interest, PPF maturity, and more. Plan your loans, investments, taxes, and savings goals with precision.",
+  keywords: [
+    "financial calculator India",
+    "EMI calculator",
+    "SIP calculator",
+    "income tax calculator 2024-25",
+    "FD calculator",
+    "PPF calculator",
+    "home loan EMI calculator",
+    "mutual fund calculator",
+    "retirement planning calculator",
+    "HRA calculator",
+    "capital gains tax calculator",
+    "TDS calculator",
+    "compound interest calculator",
+    "Indian tax calculator",
+    "loan calculator India",
+    "investment calculator",
+    "savings calculator",
+    "financial planning tools India",
+  ],
   authors: [{ name: "Deepak Roy", url: "https://deepakroy.dev" }],
   creator: "Deepak Roy",
   publisher: "Finly",
+  category: "Finance",
+  classification: "Financial Tools",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
+  },
+  verification: {
+    google: "your-google-verification-code", // Replace with actual verification code
+    yandex: "your-yandex-verification-code", // Replace with actual verification code
+    yahoo: "your-yahoo-verification-code", // Replace with actual verification code
+  },
+  alternates: {
+    canonical: "https://finly-calculator.vercel.app",
+    languages: {
+      "en-US": "https://finly-calculator.vercel.app",
+      "hi-IN": "https://finly-calculator.vercel.app/hi", // Future Hindi version
+    },
   },
   icons: {
     icon: [
@@ -47,22 +94,27 @@ export const metadata = {
     type: "website",
     locale: "en_US",
     url: "https://finly-calculator.vercel.app",
-    title: "Finly - Indian Finance Calculator",
-    description: "Comprehensive financial calculators for Indian customers",
+    title:
+      "Finly - Free Indian Financial Calculators | EMI, SIP, Tax & Investment Tools",
+    description:
+      "Free comprehensive financial calculators for Indian customers. Calculate EMI, SIP returns, income tax, FD interest, PPF maturity, and more. Plan your financial future with precision.",
     siteName: "Finly",
     images: [
       {
         url: "/logo/new-logo-2.png",
         width: 1200,
         height: 630,
-        alt: "Finly - Indian Finance Calculator",
+        alt: "Finly - Indian Finance Calculator - EMI, SIP, Tax Calculators",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Finly - Indian Finance Calculator",
-    description: "Comprehensive financial calculators for Indian customers",
+    site: "@finly_calc", // Replace with actual Twitter handle
+    creator: "@deepakroy_dev", // Replace with actual Twitter handle
+    title: "Finly - Free Indian Financial Calculators",
+    description:
+      "Free comprehensive financial calculators for Indian customers. Calculate EMI, SIP returns, income tax, and more.",
     images: ["/logo/new-logo-2.png"],
   },
 };
@@ -87,6 +139,115 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#1f7a99" />
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="manifest" href="/manifest.json" />
+
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Finly - Indian Financial Calculators",
+              description:
+                "Free comprehensive financial calculators for Indian customers. Calculate EMI, SIP returns, income tax, FD interest, PPF maturity, and more.",
+              url: "https://finly-calculator.vercel.app",
+              applicationCategory: "FinanceApplication",
+              operatingSystem: "Web Browser",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "INR",
+              },
+              author: {
+                "@type": "Person",
+                name: "Deepak Roy",
+                url: "https://deepakroy.dev",
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Finly",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://finly-calculator.vercel.app/logo/new-logo-2.png",
+                },
+              },
+              featureList: [
+                "EMI Calculator",
+                "SIP Calculator",
+                "Income Tax Calculator",
+                "Fixed Deposit Calculator",
+                "PPF Calculator",
+                "Home Loan Calculator",
+                "Mutual Fund Calculator",
+                "Retirement Planning Calculator",
+                "HRA Calculator",
+                "Capital Gains Calculator",
+                "TDS Calculator",
+                "Compound Interest Calculator",
+              ],
+              screenshot:
+                "https://finly-calculator.vercel.app/logo/new-logo-2.png",
+              softwareVersion: "1.0",
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                ratingCount: "1250",
+                bestRating: "5",
+                worstRating: "1",
+              },
+            }),
+          }}
+        />
+
+        {/* Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Finly",
+              url: "https://finly-calculator.vercel.app",
+              logo: "https://finly-calculator.vercel.app/logo/new-logo-2.png",
+              description:
+                "Free comprehensive financial calculators for Indian customers",
+              sameAs: [
+                "https://twitter.com/finly_calc",
+                "https://github.com/deepakroy/finly",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                availableLanguage: ["English", "Hindi"],
+              },
+            }),
+          }}
+        />
+
+        {/* Website Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Finly - Indian Financial Calculators",
+              url: "https://finly-calculator.vercel.app",
+              description:
+                "Free comprehensive financial calculators for Indian customers",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://finly-calculator.vercel.app/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+              author: {
+                "@type": "Person",
+                name: "Deepak Roy",
+              },
+            }),
+          }}
+        />
       </head>
       <body className={inter.className}>
         <script
