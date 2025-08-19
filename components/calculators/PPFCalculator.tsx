@@ -95,6 +95,7 @@ export default function PPFCalculator({
           suffix="₹"
           error={errors.yearlyInvestment}
           required
+          showWordsFor="currency"
         />
         <InputField
           label="Current Age"
@@ -104,6 +105,7 @@ export default function PPFCalculator({
           suffix="years"
           error={errors.currentAge}
           required
+          showWordsFor="years"
         />
       </CalculatorCard>
 

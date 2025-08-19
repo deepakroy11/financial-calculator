@@ -108,6 +108,7 @@ export default function SIPCalculator({
           suffix="₹"
           error={errors.monthlyAmount}
           required
+          showWordsFor="currency"
         />
         <InputField
           label="Expected Annual Return"
@@ -117,6 +118,7 @@ export default function SIPCalculator({
           suffix="%"
           error={errors.rate}
           required
+          showWordsFor="percentage"
         />
         <Box>
           <DurationToggle
@@ -132,6 +134,7 @@ export default function SIPCalculator({
             suffix={durationUnit}
             error={errors.tenure}
             required
+            showWordsFor={durationUnit}
           />
         </Box>
       </CalculatorCard>

@@ -1,7 +1,14 @@
 "use client";
 
-import { TextField, Box } from "@mui/material";
+import { TextField, Box, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
+import {
+  formatCurrencyInWords,
+  formatPercentageInWords,
+  formatYearsInWords,
+  formatMonthsInWords,
+  numberToWords,
+} from "../../utils/numberToWords";
 
 interface InputFieldProps {
   label: string;
@@ -12,6 +19,7 @@ interface InputFieldProps {
   error?: string;
   suffix?: string;
   required?: boolean;
+  showWordsFor?: "currency" | "percentage" | "years" | "months" | "number";
 }
 
 export default function InputField({
@@ -23,10 +31,34 @@ export default function InputField({
   error,
   suffix,
   required = false,
+  showWordsFor,
 }: InputFieldProps) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
+
+  // Convert value to words based on type
+  const getValueInWords = () => {
+    const numValue = parseFloat(value.toString());
+    if (isNaN(numValue) || numValue <= 0 || !showWordsFor) return "";
+
+    switch (showWordsFor) {
+      case "currency":
+        return formatCurrencyInWords(numValue);
+      case "percentage":
+        return formatPercentageInWords(numValue);
+      case "years":
+        return formatYearsInWords(numValue);
+      case "months":
+        return formatMonthsInWords(numValue);
+      case "number":
+        return numberToWords(numValue);
+      default:
+        return "";
+    }
+  };
+
+  const wordsDisplay = getValueInWords();
 
   return (
     <Box sx={{ mb: 3 }}>
@@ -96,6 +128,23 @@ export default function InputField({
           },
         }}
       />
+
+      {/* Display value in words */}
+      {wordsDisplay && (
+        <Typography
+          variant="body2"
+          sx={{
+            mt: 1,
+            px: 1,
+            color: "text.secondary",
+            fontSize: "0.75rem",
+            fontStyle: "italic",
+            opacity: 0.8,
+          }}
+        >
+          {wordsDisplay}
+        </Typography>
+      )}
     </Box>
   );
 }

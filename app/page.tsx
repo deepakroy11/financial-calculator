@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -56,6 +56,8 @@ import ROICalculator from "../components/calculators/ROICalculator";
 import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import PWAInstallPrompt from "../components/ui/PWAInstallPrompt";
+import MobileBackHandler from "../components/ui/MobileBackHandler";
+import { useBackButton } from "../hooks/useBackButton";
 
 const categories: CalculatorCategory[] = [
   {
@@ -280,6 +282,75 @@ export default function Home() {
     null
   );
 
+  // Handle back button navigation
+  const handleBackToHome = () => {
+    // Clear the calculator selection
+    setSelectedCalculator(null);
+
+    // Update URL to home page with programmatic flag
+    if (typeof window !== "undefined") {
+      window.history.pushState(
+        { page: "home", programmatic: true },
+        "Financial Calculators",
+        "/"
+      );
+    }
+  };
+
+  // Use the back button hook when a calculator is selected
+  useBackButton({
+    onBack: handleBackToHome,
+    enabled: selectedCalculator !== null,
+  });
+
+  // Handle URL-based navigation and browser refresh
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Check if there's a calculator in URL params (for future URL routing)
+      const urlParams = new URLSearchParams(window.location.search);
+      const calculatorFromUrl = urlParams.get("calculator");
+
+      if (calculatorFromUrl && calculatorFromUrl !== selectedCalculator) {
+        setSelectedCalculator(calculatorFromUrl);
+      }
+
+      // Add history entry to prevent app closing on back button
+      if (window.history.length <= 1) {
+        window.history.pushState(
+          { page: "home" },
+          "Financial Calculators",
+          "/"
+        );
+      }
+    }
+  }, [selectedCalculator]);
+
+  // Update URL when calculator changes (optional - for better UX)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = selectedCalculator
+        ? `/?calculator=${selectedCalculator}`
+        : "/";
+
+      // Only update URL if it's different from current URL
+      const currentUrl = window.location.pathname + window.location.search;
+      if (currentUrl !== url) {
+        // Update URL without triggering page reload
+        window.history.replaceState(
+          {
+            page: selectedCalculator ? "calculator" : "home",
+            calculator: selectedCalculator,
+            programmatic: true,
+          },
+          selectedCalculator
+            ? `${selectedCalculator} Calculator`
+            : "Financial Calculators",
+          url
+        );
+      }
+    }
+  }, [selectedCalculator]);
+
   const renderCalculator = () => {
     switch (selectedCalculator) {
       case "emi":
@@ -368,9 +439,9 @@ export default function Home() {
         />
 
         <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box sx={{ mb: 4 }}>
+          <Box sx={{ mb: 4, display: "flex", alignItems: "center", gap: 2 }}>
             <Button
-              onClick={() => setSelectedCalculator(null)}
+              onClick={handleBackToHome}
               variant="outlined"
               startIcon={
                 <svg
@@ -393,16 +464,45 @@ export default function Home() {
                 borderRadius: 3,
                 fontWeight: 500,
                 transition: "all 0.2s ease-in-out",
+                minWidth: { xs: "140px", sm: "auto" },
                 "&:hover": {
                   transform: "translateY(-1px)",
                 },
               }}
             >
-              Back to Calculators
+              Back to Home
             </Button>
+
+            {/* Mobile-friendly breadcrumb */}
+            <Box
+              sx={{
+                display: { xs: "none", sm: "flex" },
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                Home
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                /
+              </Typography>
+              <Typography variant="body2" color="primary.main" fontWeight={500}>
+                {selectedCalculator
+                  ?.replace("-", " ")
+                  .replace(/\b\w/g, (l) => l.toUpperCase())}{" "}
+                Calculator
+              </Typography>
+            </Box>
           </Box>
           {renderCalculator()}
         </Container>
+
+        {/* Mobile Back Button */}
+        <MobileBackHandler
+          onBack={handleBackToHome}
+          show={selectedCalculator !== null}
+        />
       </Box>
     );
   }
@@ -424,26 +524,36 @@ export default function Home() {
             component="h1"
             sx={{
               mb: 3,
-              fontWeight: 700,
+              fontWeight: 800,
               color: "text.primary",
-              fontSize: { xs: "2.5rem", md: "3.5rem" },
+              fontSize: { xs: "2.25rem", sm: "2.75rem", md: "3.25rem" },
+              letterSpacing: "-0.025em",
+              lineHeight: 1.1,
             }}
           >
-            Financial Calculator Suite
+            Professional Financial
+            <Box
+              component="span"
+              sx={{ color: "primary.main", display: "block" }}
+            >
+              Calculator Suite
+            </Box>
           </Typography>
           <Typography
             variant="h6"
             sx={{
               color: "text.secondary",
-              maxWidth: "800px",
+              maxWidth: "700px",
               mx: "auto",
-              lineHeight: 1.6,
-              mb: 2,
+              lineHeight: 1.7,
+              mb: 3,
+              fontSize: { xs: "1.1rem", md: "1.25rem" },
+              fontWeight: 400,
             }}
           >
-            Comprehensive financial calculators designed for Indian customers.
-            Plan your loans, investments, taxes, and savings goals with
-            precision.
+            Comprehensive financial calculators designed specifically for Indian
+            customers. Plan your loans, investments, taxes, and savings goals
+            with precision and confidence.
           </Typography>
           <Box
             sx={{
@@ -455,33 +565,39 @@ export default function Home() {
             }}
           >
             <Chip
-              label="20+ Calculators"
+              label="20+ Professional Calculators"
               sx={{
-                backgroundColor: "#1f7a99",
+                backgroundColor: "primary.main",
                 color: "white",
-                fontWeight: 500,
-                px: 2,
-                py: 1,
+                fontWeight: 600,
+                px: 3,
+                py: 1.5,
+                fontSize: "0.875rem",
+                borderRadius: 3,
               }}
             />
             <Chip
-              label="Indian Tax Compliant"
+              label="Indian Tax Compliant 2024-25"
               sx={{
-                backgroundColor: "#10b981",
-                color: "white",
-                fontWeight: 500,
-                px: 2,
-                py: 1,
+                backgroundColor: "#14213D",
+                color: "#ffffff",
+                fontWeight: 600,
+                px: 3,
+                py: 1.5,
+                fontSize: "0.875rem",
+                borderRadius: 3,
               }}
             />
             <Chip
-              label="Mobile Optimized"
+              label="Mobile & Desktop Optimized"
               sx={{
-                backgroundColor: "#f59e0b",
+                backgroundColor: "primary.main",
                 color: "white",
-                fontWeight: 500,
-                px: 2,
-                py: 1,
+                fontWeight: 600,
+                px: 3,
+                py: 1.5,
+                fontSize: "0.875rem",
+                borderRadius: 3,
               }}
             />
           </Box>
@@ -489,25 +605,29 @@ export default function Home() {
 
         {categories.map((category) => {
           const categoryColors = {
-            loans: "#1f7a99",
-            investments: "#10b981",
-            taxes: "#ef4444",
-            savings: "#4a9bb8",
-            business: "#f59e0b",
+            loans: "#FCA311",
+            investments: "#FCA311",
+            taxes: "#14213D",
+            savings: "#FCA311",
+            business: "#14213D",
           };
           const categoryColor =
             categoryColors[category.id as keyof typeof categoryColors] ||
-            "#1f7a99";
+            "#FCA311";
 
           return (
             <Box key={category.id} className="mb-16" id={category.id}>
               <Box className="flex items-center mb-8">
                 <Box
-                  className="mr-4 p-3 rounded-xl text-white shadow-sm"
-                  sx={{ backgroundColor: categoryColor }}
+                  className="mr-4 p-4 rounded-2xl text-white shadow-lg"
+                  sx={{
+                    backgroundColor: categoryColor,
+                    background: `linear-gradient(135deg, ${categoryColor} 0%, ${categoryColor}dd 100%)`,
+                    boxShadow: `0 8px 32px ${categoryColor}40`,
+                  }}
                 >
                   {iconMap[category.icon] &&
-                    iconMap[category.icon]({ size: 24 })}
+                    iconMap[category.icon]({ size: 28 })}
                 </Box>
                 <Typography
                   variant="h4"
@@ -515,6 +635,8 @@ export default function Home() {
                   sx={{
                     fontWeight: 700,
                     color: "text.primary",
+                    fontSize: { xs: "1.75rem", md: "2rem" },
+                    letterSpacing: "-0.025em",
                   }}
                 >
                   {category.name}
@@ -525,12 +647,12 @@ export default function Home() {
                 {category.calculators.map((calculator, index) => {
                   const IconComponent = iconMap[calculator.icon];
                   const colors = [
-                    "#1f7a99",
-                    "#10b981",
-                    "#ef4444",
-                    "#4a9bb8",
-                    "#f59e0b",
-                    "#155a73",
+                    "#FCA311",
+                    "#14213D",
+                    "#FCA311",
+                    "#14213D",
+                    "#FCA311",
+                    "#000000",
                   ];
                   const color = colors[index % colors.length];
 
@@ -540,21 +662,41 @@ export default function Home() {
                         className="h-full cursor-pointer calculator-card"
                         onClick={() => setSelectedCalculator(calculator.id)}
                         sx={{
-                          minHeight: "200px",
+                          minHeight: "220px",
+                          position: "relative",
+                          overflow: "hidden",
+                          "&::before": {
+                            content: '""',
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            height: "4px",
+                            background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+                          },
                         }}
                       >
                         <CardContent className="p-6 h-full flex flex-col">
-                          <Box className="flex items-center mb-4">
+                          <Box className="flex items-start mb-4">
                             <Box
-                              className="mr-3 p-3 rounded-xl text-white shadow-sm"
-                              sx={{ backgroundColor: color }}
+                              className="mr-4 p-3 rounded-2xl text-white shadow-lg flex-shrink-0"
+                              sx={{
+                                backgroundColor: color,
+                                background: `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`,
+                                boxShadow: `0 4px 16px ${color}40`,
+                              }}
                             >
-                              {IconComponent && <IconComponent size={20} />}
+                              {IconComponent && <IconComponent size={22} />}
                             </Box>
                             <Typography
                               variant="h6"
                               component="h3"
-                              className="font-bold text-gray-800 leading-tight"
+                              sx={{
+                                fontWeight: 600,
+                                color: "text.primary",
+                                lineHeight: 1.3,
+                                fontSize: "1.125rem",
+                              }}
                             >
                               {calculator.name}
                             </Typography>
@@ -562,24 +704,31 @@ export default function Home() {
 
                           <Typography
                             variant="body2"
-                            className="text-gray-600 mb-6 leading-relaxed flex-grow"
+                            sx={{
+                              color: "text.secondary",
+                              mb: 4,
+                              lineHeight: 1.6,
+                              flexGrow: 1,
+                              fontSize: "0.9rem",
+                            }}
                           >
                             {calculator.description}
                           </Typography>
 
-                          <div className="flex justify-between items-center mt-auto">
+                          <Box className="flex justify-between items-center mt-auto">
                             <Chip
                               label={category.name.split(" ")[0]}
                               size="small"
                               sx={{
-                                backgroundColor: `${categoryColor}20`,
+                                backgroundColor: `${categoryColor}15`,
                                 color: categoryColor,
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 border: `1px solid ${categoryColor}30`,
                                 fontSize: "0.75rem",
+                                borderRadius: 2,
                               }}
                             />
-                            <div className="text-gray-400">
+                            <Box sx={{ color: "text.secondary", opacity: 0.7 }}>
                               <svg
                                 className="w-5 h-5"
                                 fill="none"
@@ -593,8 +742,8 @@ export default function Home() {
                                   d="M9 5l7 7-7 7"
                                 />
                               </svg>
-                            </div>
-                          </div>
+                            </Box>
+                          </Box>
                         </CardContent>
                       </Card>
                     </Grid>

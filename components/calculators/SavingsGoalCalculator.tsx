@@ -103,6 +103,7 @@ export default function SavingsGoalCalculator({
           suffix="₹"
           error={errors.targetAmount}
           required
+          showWordsFor="currency"
         />
         <InputField
           label="Current Savings"
@@ -112,6 +113,7 @@ export default function SavingsGoalCalculator({
           suffix="₹"
           error={errors.currentSavings}
           required
+          showWordsFor="currency"
         />
         <Box>
           <DurationToggle
@@ -127,6 +129,7 @@ export default function SavingsGoalCalculator({
             suffix={durationUnit}
             error={errors.timeframe}
             required
+            showWordsFor={durationUnit}
           />
         </Box>
         <InputField
@@ -137,6 +140,7 @@ export default function SavingsGoalCalculator({
           suffix="%"
           error={errors.expectedReturn}
           required
+          showWordsFor="percentage"
         />
       </CalculatorCard>
 

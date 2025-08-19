@@ -80,8 +80,8 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
           borderBottom: `1px solid ${theme.palette.divider}`,
           background:
             theme.palette.mode === "dark"
-              ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
-              : "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+              ? "linear-gradient(135deg, #000000 0%, #14213D 100%)"
+              : "linear-gradient(135deg, #E5E5E5 0%, #ffffff 100%)",
         }}
       >
         <Typography
@@ -164,14 +164,18 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
         sx={{
           background:
             theme.palette.mode === "dark"
-              ? "linear-gradient(135deg, #1e293b 0%, #334155 100%)"
-              : "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-          backdropFilter: "blur(10px)",
+              ? "linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 33, 61, 0.95) 100%)"
+              : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%)",
+          backdropFilter: "blur(20px)",
           borderBottom: `1px solid ${theme.palette.divider}`,
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)"
+              : "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03)",
         }}
       >
         <Container maxWidth="lg">
-          <Toolbar sx={{ px: 0, py: 1 }}>
+          <Toolbar sx={{ px: 0, py: 1.5, minHeight: "72px" }}>
             {/* Logo/Brand */}
             <Box
               onClick={onHomeClick}
@@ -179,17 +183,37 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                 display: "flex",
                 alignItems: "center",
                 cursor: "pointer",
-                transition: "transform 0.2s ease-in-out",
+                transition: "all 0.2s ease-in-out",
                 "&:hover": {
-                  transform: "scale(1.05)",
+                  transform: "scale(1.02)",
                 },
               }}
             >
-              <Box sx={{ mr: 2, display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  mr: 2,
+                  display: "flex",
+                  alignItems: "center",
+                  p: 1,
+                  borderRadius: 2,
+                  backgroundColor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(252, 163, 17, 0.1)"
+                      : "rgba(20, 33, 61, 0.05)",
+                  border: `1px solid ${
+                    theme.palette.mode === "dark"
+                      ? "rgba(252, 163, 17, 0.2)"
+                      : "rgba(20, 33, 61, 0.1)"
+                  }`,
+                }}
+              >
                 <img
                   src="/logo/new-logo-2.png"
                   alt="Finly Logo"
-                  style={{ height: "40px", width: "auto" }}
+                  style={{
+                    height: "36px",
+                    width: "auto",
+                  }}
                 />
               </Box>
             </Box>
@@ -214,17 +238,24 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                       sx={{
                         color: theme.palette.text.secondary,
                         fontWeight: 500,
-                        px: 2,
-                        py: 1,
-                        borderRadius: 2,
+                        px: 3,
+                        py: 1.5,
+                        borderRadius: 3,
                         textTransform: "none",
+                        fontSize: "0.875rem",
                         transition: "all 0.2s ease-in-out",
+                        border: `1px solid transparent`,
                         "&:hover": {
                           color: theme.palette.primary.main,
                           backgroundColor:
                             theme.palette.mode === "dark"
-                              ? "rgba(31, 122, 153, 0.1)"
-                              : "rgba(31, 122, 153, 0.05)",
+                              ? "rgba(252, 163, 17, 0.1)"
+                              : "rgba(252, 163, 17, 0.05)",
+                          border: `1px solid ${
+                            theme.palette.mode === "dark"
+                              ? "rgba(252, 163, 17, 0.2)"
+                              : "rgba(252, 163, 17, 0.1)"
+                          }`,
                           transform: "translateY(-1px)",
                         },
                       }}
@@ -238,16 +269,28 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                 <IconButton
                   onClick={toggleDarkMode}
                   sx={{
-                    ml: 1,
+                    ml: 2,
+                    p: 1.5,
                     color: theme.palette.text.secondary,
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(252, 163, 17, 0.1)"
+                        : "rgba(20, 33, 61, 0.05)",
+                    border: `1px solid ${
+                      theme.palette.mode === "dark"
+                        ? "rgba(252, 163, 17, 0.2)"
+                        : "rgba(20, 33, 61, 0.1)"
+                    }`,
+                    borderRadius: 2,
                     transition: "all 0.2s ease-in-out",
                     "&:hover": {
                       color: theme.palette.primary.main,
                       backgroundColor:
                         theme.palette.mode === "dark"
-                          ? "rgba(31, 122, 153, 0.1)"
-                          : "rgba(31, 122, 153, 0.05)",
-                      transform: "scale(1.1)",
+                          ? "rgba(252, 163, 17, 0.2)"
+                          : "rgba(252, 163, 17, 0.1)",
+                      border: `1px solid ${theme.palette.primary.main}`,
+                      transform: "scale(1.05)",
                     },
                   }}
                 >
@@ -269,13 +312,25 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                 <IconButton
                   onClick={toggleDarkMode}
                   sx={{
+                    p: 1.5,
                     color: theme.palette.text.secondary,
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(252, 163, 17, 0.1)"
+                        : "rgba(20, 33, 61, 0.05)",
+                    border: `1px solid ${
+                      theme.palette.mode === "dark"
+                        ? "rgba(252, 163, 17, 0.2)"
+                        : "rgba(20, 33, 61, 0.1)"
+                    }`,
+                    borderRadius: 2,
                     "&:hover": {
                       color: theme.palette.primary.main,
                       backgroundColor:
                         theme.palette.mode === "dark"
-                          ? "rgba(31, 122, 153, 0.1)"
-                          : "rgba(31, 122, 153, 0.05)",
+                          ? "rgba(252, 163, 17, 0.2)"
+                          : "rgba(252, 163, 17, 0.1)",
+                      border: `1px solid ${theme.palette.primary.main}`,
                     },
                   }}
                 >
@@ -284,16 +339,25 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                 <IconButton
                   onClick={handleDrawerToggle}
                   sx={{
+                    ml: 1,
+                    p: 1.5,
                     color: theme.palette.text.primary,
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(255, 255, 255, 0.05)"
+                        : "rgba(0, 0, 0, 0.03)",
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 2,
                     "&:hover": {
                       backgroundColor:
                         theme.palette.mode === "dark"
                           ? "rgba(255, 255, 255, 0.1)"
                           : "rgba(0, 0, 0, 0.05)",
+                      border: `1px solid ${theme.palette.text.secondary}`,
                     },
                   }}
                 >
-                  <FaBars />
+                  <FaBars size={16} />
                 </IconButton>
               </Box>
             )}
@@ -309,6 +373,16 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
         onClose={handleDrawerToggle}
         ModalProps={{
           keepMounted: true,
+        }}
+        PaperProps={{
+          sx: {
+            backgroundColor:
+              theme.palette.mode === "dark"
+                ? "rgba(20, 33, 61, 0.95)"
+                : "rgba(255, 255, 255, 0.95)",
+            backdropFilter: "blur(20px)",
+            borderLeft: `1px solid ${theme.palette.divider}`,
+          },
         }}
       >
         {drawer}

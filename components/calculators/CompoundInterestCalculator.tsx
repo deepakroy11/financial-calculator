@@ -90,6 +90,7 @@ export default function CompoundInterestCalculator({
           suffix="₹"
           error={errors.principal}
           required
+          showWordsFor="currency"
         />
         <InputField
           label="Annual Interest Rate"
@@ -99,6 +100,7 @@ export default function CompoundInterestCalculator({
           suffix="%"
           error={errors.rate}
           required
+          showWordsFor="percentage"
         />
         <Box>
           <DurationToggle
@@ -114,6 +116,7 @@ export default function CompoundInterestCalculator({
             suffix={durationUnit}
             error={errors.time}
             required
+            showWordsFor={durationUnit}
           />
         </Box>
         <InputField

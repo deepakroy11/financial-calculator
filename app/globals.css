@@ -5,50 +5,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
-  --primary-color: #1f7a99;
-  --primary-light: #4a9bb8;
-  --primary-dark: #155a73;
-  --secondary-color: #f59e0b;
-  --success-color: #10b981;
+  --primary-color: #fca311;
+  --primary-light: #fca311;
+  --primary-dark: #14213d;
+  --secondary-color: #14213d;
+  --success-color: #fca311;
   --error-color: #ef4444;
-  --warning-color: #f59e0b;
-  --info-color: #3b82f6;
+  --warning-color: #fca311;
+  --info-color: #fca311;
 }
 
 /* Default theme (Dark) */
 :root {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --border-color: #334155;
-  --shadow-light: rgba(0, 0, 0, 0.3);
-  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --bg-primary: #000000;
+  --bg-secondary: #14213d;
+  --bg-tertiary: #fca311;
+  --text-primary: #e5e5e5;
+  --text-secondary: #fca311;
+  --border-color: #14213d;
+  --shadow-light: rgba(0, 0, 0, 0.5);
+  --shadow-medium: rgba(0, 0, 0, 0.7);
 }
 
 /* Light theme */
 [data-theme="light"] {
-  --bg-primary: #fefcf7; /* Warm cream background */
+  --bg-primary: #fefcf7; /* Warm white background */
   --bg-secondary: #ffffff;
-  --bg-tertiary: #faf8f3; /* Slightly warmer tertiary */
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --border-color: #e8e5df; /* Warmer border */
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --bg-tertiary: #f8fafc; /* Slate-50 tertiary */
+  --text-primary: #1e293b; /* Slate-800 */
+  --text-secondary: #64748b; /* Slate-500 */
+  --border-color: #e2e8f0; /* Slate-200 */
+  --shadow-light: rgba(0, 0, 0, 0.04);
+  --shadow-medium: rgba(0, 0, 0, 0.08);
 }
 
 /* Keep dark theme selector for backward compatibility */
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --border-color: #334155;
-  --shadow-light: rgba(0, 0, 0, 0.3);
-  --shadow-medium: rgba(0, 0, 0, 0.4);
+  --bg-primary: #0f172a; /* Slate-900 */
+  --bg-secondary: #1e293b; /* Slate-800 */
+  --bg-tertiary: #334155; /* Slate-700 */
+  --text-primary: #f1f5f9; /* Slate-100 */
+  --text-secondary: #94a3b8; /* Slate-400 */
+  --border-color: #334155; /* Slate-700 */
+  --shadow-light: rgba(0, 0, 0, 0.4);
+  --shadow-medium: rgba(0, 0, 0, 0.6);
 }
 
 html {
@@ -60,22 +60,17 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  transition: all 0.3s ease;
-  /* Light theme gradient background with warm cream base */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Professional gradient background */
   background-image: radial-gradient(
-      circle at 25% 25%,
-      rgba(31, 122, 153, 0.08) 0%,
+      circle at 20% 20%,
+      rgba(252, 163, 17, 0.03) 0%,
       transparent 50%
     ),
     radial-gradient(
-      circle at 75% 75%,
-      rgba(245, 158, 11, 0.06) 0%,
+      circle at 80% 80%,
+      rgba(20, 33, 61, 0.02) 0%,
       transparent 50%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 248, 235, 0.3) 0%,
-      transparent 70%
     );
 }
 
@@ -83,15 +78,15 @@ body {
 [data-theme="dark"] body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  /* Dark theme gradient background */
+  /* Professional dark theme gradient background */
   background-image: radial-gradient(
-      circle at 25% 25%,
-      rgba(31, 122, 153, 0.1) 0%,
+      circle at 20% 20%,
+      rgba(252, 163, 17, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
-      circle at 75% 75%,
-      rgba(245, 158, 11, 0.08) 0%,
+      circle at 80% 80%,
+      rgba(51, 65, 85, 0.3) 0%,
       transparent 50%
     );
 }
@@ -125,9 +120,9 @@ div {
 }
 
 .modern-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(31, 122, 153, 0.1),
-    0 0 20px rgba(31, 122, 153, 0.15), 0 4px 12px var(--shadow-medium);
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(252, 163, 17, 0.1),
+    0 10px 25px var(--shadow-medium), 0 4px 12px var(--shadow-light);
 }
 
 .calculator-card {
@@ -139,10 +134,11 @@ div {
 }
 
 .calculator-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 0 1px rgba(31, 122, 153, 0.1),
-    0 0 30px rgba(31, 122, 153, 0.2), 0 10px 25px var(--shadow-medium);
-  border-color: rgba(31, 122, 153, 0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 0 0 1px rgba(252, 163, 17, 0.1), 
+    0 20px 40px var(--shadow-medium),
+    0 10px 25px var(--shadow-light);
+  border-color: rgba(252, 163, 17, 0.2);
 }
 
 .modern-button {
@@ -159,7 +155,7 @@ div {
 .modern-button:hover {
   background-color: var(--primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(31, 122, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 186, 235, 0.3);
 }
 
 .modern-input {
@@ -175,7 +171,7 @@ div {
 .modern-input:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(31, 122, 153, 0.1);
+  box-shadow: 0 0 0 3px rgba(252, 163, 17, 0.1);
 }
 
 /* Dark mode utilities */
@@ -253,18 +249,13 @@ body::before {
   width: 100%;
   height: 100%;
   background: radial-gradient(
-      circle at 20% 80%,
-      rgba(31, 122, 153, 0.1) 0%,
+      circle at 30% 70%,
+      rgba(252, 163, 17, 0.02) 0%,
       transparent 50%
     ),
     radial-gradient(
-      circle at 80% 20%,
-      rgba(245, 158, 11, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 40%,
-      rgba(16, 185, 129, 0.05) 0%,
+      circle at 70% 30%,
+      rgba(20, 33, 61, 0.01) 0%,
       transparent 50%
     );
   pointer-events: none;
@@ -273,25 +264,28 @@ body::before {
 
 [data-theme="dark"] body::before {
   background: radial-gradient(
-      circle at 20% 80%,
-      rgba(31, 122, 153, 0.15) 0%,
+      circle at 30% 70%,
+      rgba(252, 163, 17, 0.05) 0%,
       transparent 50%
     ),
     radial-gradient(
-      circle at 80% 20%,
-      rgba(245, 158, 11, 0.12) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 40%,
-      rgba(16, 185, 129, 0.08) 0%,
+      circle at 70% 30%,
+      rgba(51, 65, 85, 0.2) 0%,
       transparent 50%
     );
 }
-/* Enhanced dark theme support for form elements */
+/* Enhanced theme support for form elements */
 [data-theme="dark"] input,
 [data-theme="dark"] textarea,
 [data-theme="dark"] select {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
   background-color: var(--bg-secondary) !important;
   color: var(--text-primary) !important;
   border-color: var(--border-color) !important;
@@ -302,32 +296,116 @@ body::before {
   color: var(--text-primary) !important;
 }
 
+[data-theme="light"] .MuiOutlinedInput-root {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
 [data-theme="dark"] .MuiInputLabel-root {
   color: var(--text-secondary) !important;
 }
 
-[data-theme="dark"] .MuiInputLabel-root.Mui-focused {
+[data-theme="light"] .MuiInputLabel-root {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .MuiInputLabel-root.Mui-focused,
+[data-theme="light"] .MuiInputLabel-root.Mui-focused {
   color: var(--primary-color) !important;
 }
 
-/* Fix for input field suffix visibility in dark theme */
-[data-theme="dark"] .MuiInputAdornment-root {
+/* Fix for input field suffix visibility */
+[data-theme="dark"] .MuiInputAdornment-root,
+[data-theme="light"] .MuiInputAdornment-root {
   color: var(--text-primary) !important;
 }
 
-/* Ensure proper contrast for all interactive elements */
-[data-theme="dark"] .MuiChip-root {
-  background-color: var(--primary-color) !important;
-  color: white !important;
+/* Professional scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Fix for toggle buttons in dark theme */
-[data-theme="dark"] .MuiToggleButton-root {
-  color: var(--text-secondary) !important;
-  border-color: var(--border-color) !important;
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 }
 
-[data-theme="dark"] .MuiToggleButton-root.Mui-selected {
-  background-color: var(--primary-color) !important;
-  color: white !important;
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(252, 163, 17, 0.3);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background-color: rgba(252, 163, 17, 0.3);
+  color: var(--text-primary);
+}
+
+/* Focus outline improvements */
+*:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Professional animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s ease-out;
+}
+
+/* Professional loading states */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--border-color) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }

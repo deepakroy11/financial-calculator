@@ -5,6 +5,7 @@ import ClientThemeProvider from "./ClientThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL('https://finly-calculator.vercel.app'),
   title: {
     default:
       "Finly - Free Indian Financial Calculators | EMI, SIP, Tax & Investment Tools",
@@ -59,10 +60,10 @@ export const metadata = {
     yahoo: "your-yahoo-verification-code", // Replace with actual verification code
   },
   alternates: {
-    canonical: "https://finly-calculator.vercel.app",
+    canonical: "/",
     languages: {
-      "en-US": "https://finly-calculator.vercel.app",
-      "hi-IN": "https://finly-calculator.vercel.app/hi", // Future Hindi version
+      "en-US": "/",
+      "hi-IN": "/hi", // Future Hindi version
     },
   },
   icons: {
@@ -104,7 +105,7 @@ export const metadata = {
         url: "/logo/new-logo-2.png",
         width: 1200,
         height: 630,
-        alt: "Finly - Indian Finance Calculator - EMI, SIP, Tax Calculators",
+        alt: "Finly - Professional Indian Finance Calculator - EMI, SIP, Tax Calculators",
       },
     ],
   },

@@ -20,17 +20,17 @@ export const useThemeMode = () => useContext(ThemeContext);
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#1f7a99",
-      light: "#4a9bb8",
-      dark: "#155a73",
+      main: "#FCA311",
+      light: "#FCA311",
+      dark: "#14213D",
     },
     secondary: {
-      main: "#f59e0b",
-      light: "#fbbf24",
-      dark: "#d97706",
+      main: "#14213D",
+      light: "#E5E5E5",
+      dark: "#000000",
     },
     background: {
-      default: "#fefcf7" /* Warm cream background */,
+      default: "#E5E5E5" /* Light gray background */,
       paper: "#ffffff",
     },
   },
@@ -73,24 +73,24 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       palette: {
         mode: "dark",
         primary: {
-          main: "#1f7a99",
-          light: "#4a9bb8",
-          dark: "#155a73",
-          contrastText: "#ffffff",
+          main: "#FCA311",
+          light: "#FCA311",
+          dark: "#14213D",
+          contrastText: "#000000",
         },
         secondary: {
-          main: "#f59e0b",
-          light: "#fbbf24",
-          dark: "#d97706",
-          contrastText: "#ffffff",
+          main: "#14213D",
+          light: "#E5E5E5",
+          dark: "#000000",
+          contrastText: "#E5E5E5",
         },
         background: {
-          default: "#0f172a",
-          paper: "#1e293b",
+          default: "#000000",
+          paper: "#14213D",
         },
         text: {
-          primary: "#f1f5f9",
-          secondary: "#cbd5e1",
+          primary: "#E5E5E5",
+          secondary: "#FCA311",
         },
       },
     });
@@ -109,36 +109,36 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     palette: {
       mode: darkMode ? "dark" : "light",
       primary: {
-        main: "#1f7a99",
-        light: "#4a9bb8",
-        dark: "#155a73",
+        main: "#FCA311", // Vibrant orange
+        light: "#FCA311", // Vibrant orange
+        dark: "#14213D", // Dark navy blue
         contrastText: "#ffffff",
       },
       secondary: {
-        main: "#f59e0b",
-        light: "#fbbf24",
-        dark: "#d97706",
-        contrastText: "#ffffff",
+        main: "#14213D", // Dark navy blue
+        light: "#E5E5E5", // Light gray
+        dark: "#000000", // Pure black
+        contrastText: "#E5E5E5",
       },
       background: {
         default: darkMode
-          ? "#0f172a"
-          : "#fefcf7" /* Warm cream for light theme */,
-        paper: darkMode ? "#1e293b" : "#ffffff",
+          ? "#0f172a" /* Slate-900 for better contrast */
+          : "#fefcf7" /* Warm white for light theme */,
+        paper: darkMode ? "#1e293b" : "#ffffff", /* Slate-800 for dark, pure white for light */
       },
       text: {
-        primary: darkMode ? "#f1f5f9" : "#1e293b",
-        secondary: darkMode ? "#cbd5e1" : "#64748b",
+        primary: darkMode ? "#f1f5f9" : "#1e293b", /* Slate-100 for dark, slate-800 for light */
+        secondary: darkMode ? "#94a3b8" : "#64748b", /* Slate-400 for dark, slate-500 for light */
       },
       success: {
-        main: "#10b981",
-        light: "#34d399",
-        dark: "#059669",
+        main: "#FCA311",
+        light: "#FCA311",
+        dark: "#14213D",
       },
       warning: {
-        main: "#f59e0b",
-        light: "#fbbf24",
-        dark: "#d97706",
+        main: "#FCA311",
+        light: "#FCA311",
+        dark: "#14213D",
       },
       error: {
         main: "#ef4444",
@@ -146,11 +146,11 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         dark: "#dc2626",
       },
       info: {
-        main: "#3b82f6",
-        light: "#60a5fa",
-        dark: "#2563eb",
+        main: "#FCA311",
+        light: "#FCA311",
+        dark: "#14213D",
       },
-      divider: darkMode ? "#334155" : "#e2e8f0",
+      divider: darkMode ? "#334155" : "#e2e8f0", /* Slate-700 for dark, slate-200 for light */
     },
     typography: {
       fontFamily: "Inter, sans-serif",
@@ -171,14 +171,15 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
             border: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
             backgroundColor: darkMode ? "#1e293b" : "#ffffff",
             boxShadow: darkMode
-              ? "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)"
-              : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
-            transition: "all 0.2s ease-in-out",
+              ? "0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)"
+              : "0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.04)",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             "&:hover": {
-              transform: "translateY(-2px)",
+              transform: "translateY(-4px)",
               boxShadow: darkMode
-                ? "0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3)"
-                : "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                ? "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3)"
+                : "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+              borderColor: darkMode ? "#475569" : "#cbd5e1",
             },
           },
         },
@@ -204,14 +205,15 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
               borderRadius: 12,
               backgroundColor: darkMode ? "#1e293b" : "#ffffff",
               "& fieldset": {
-                borderWidth: "2px",
+                borderWidth: "1px",
                 borderColor: darkMode ? "#334155" : "#e2e8f0",
               },
               "&:hover fieldset": {
-                borderColor: "#4a9bb8",
+                borderColor: darkMode ? "#475569" : "#cbd5e1",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#1f7a99",
+                borderColor: "#FCA311",
+                borderWidth: "2px",
               },
             },
           },
@@ -220,19 +222,22 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: darkMode ? "#1e293b" : "#ffffff",
+            backgroundColor: darkMode ? "rgba(15, 23, 42, 0.95)" : "rgba(255, 255, 255, 0.95)",
             color: darkMode ? "#f1f5f9" : "#1e293b",
-            boxShadow: "none",
+            boxShadow: darkMode 
+              ? "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)"
+              : "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03)",
             borderBottom: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
-            backdropFilter: "blur(8px)",
+            backdropFilter: "blur(20px)",
           },
         },
       },
       MuiDrawer: {
         styleOverrides: {
           paper: {
-            backgroundColor: darkMode ? "#1e293b" : "#ffffff",
+            backgroundColor: darkMode ? "rgba(30, 41, 59, 0.95)" : "rgba(255, 255, 255, 0.95)",
             borderLeft: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
+            backdropFilter: "blur(20px)",
           },
         },
       },

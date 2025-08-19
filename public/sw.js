@@ -20,8 +20,19 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - handle navigation and caching
 self.addEventListener("fetch", (event) => {
+  // Handle navigation requests - always return the main page for SPA routing
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      caches.match("/").then((response) => {
+        return response || fetch("/");
+      })
+    );
+    return;
+  }
+
+  // Handle other requests normally - serve from cache when offline
   event.respondWith(
     caches.match(event.request).then((response) => {
       // Return cached version or fetch from network

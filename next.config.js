@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   // Enable PWA features
   async headers() {
     return [

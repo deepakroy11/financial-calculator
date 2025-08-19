@@ -88,6 +88,7 @@ export default function FDCalculator({
           suffix="₹"
           error={errors.principal}
           required
+          showWordsFor="currency"
         />
         <InputField
           label="Interest Rate (Annual)"
@@ -97,6 +98,7 @@ export default function FDCalculator({
           suffix="%"
           error={errors.rate}
           required
+          showWordsFor="percentage"
         />
         <Box>
           <DurationToggle
@@ -112,6 +114,7 @@ export default function FDCalculator({
             suffix={durationUnit}
             error={errors.tenure}
             required
+            showWordsFor={durationUnit}
           />
         </Box>
       </CalculatorCard>
