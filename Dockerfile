@@ -19,7 +19,8 @@ COPY --from=builder /app/next.config.js ./next.config.js
 EXPOSE 3000
 
 # Recommended: run as non-root for security
-RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+RUN addgroup -S nodejs || true && adduser -S -G nodejs nextjs || true
 USER nextjs
+
 
 CMD ["npm", "run", "start"]
