@@ -120,9 +120,13 @@ div {
 }
 
 .modern-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 0 1px rgba(252, 163, 17, 0.1),
-    0 10px 25px var(--shadow-medium), 0 4px 12px var(--shadow-light);
+  box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.2),
+    0 0 30px rgba(252, 163, 17, 0.3), 0 4px 12px var(--shadow-medium);
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary),
+    rgba(252, 163, 17, 0.05)
+  );
 }
 
 .calculator-card {
@@ -134,11 +138,14 @@ div {
 }
 
 .calculator-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 0 1px rgba(252, 163, 17, 0.1), 
-    0 20px 40px var(--shadow-medium),
-    0 10px 25px var(--shadow-light);
-  border-color: rgba(252, 163, 17, 0.2);
+  box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.3),
+    0 0 40px rgba(252, 163, 17, 0.4), 0 10px 25px var(--shadow-medium);
+  border-color: rgba(252, 163, 17, 0.4);
+  background: linear-gradient(
+    135deg,
+    var(--bg-secondary),
+    rgba(252, 163, 17, 0.08)
+  );
 }
 
 .modern-button {
@@ -154,8 +161,8 @@ div {
 
 .modern-button:hover {
   background-color: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 186, 235, 0.3);
+  box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.2),
+    0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px rgba(252, 163, 17, 0.3);
 }
 
 .modern-input {
@@ -194,8 +201,8 @@ div {
 }
 
 .dark-mode-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px var(--shadow-medium);
+  box-shadow: 0 0 0 2px rgba(252, 163, 17, 0.2),
+    0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px var(--shadow-medium);
 }
 /* Ensure all text elements inherit proper colors */
 * {

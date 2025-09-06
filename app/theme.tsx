@@ -124,11 +124,17 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         default: darkMode
           ? "#0f172a" /* Slate-900 for better contrast */
           : "#fefcf7" /* Warm white for light theme */,
-        paper: darkMode ? "#1e293b" : "#ffffff", /* Slate-800 for dark, pure white for light */
+        paper: darkMode
+          ? "#1e293b"
+          : "#ffffff" /* Slate-800 for dark, pure white for light */,
       },
       text: {
-        primary: darkMode ? "#f1f5f9" : "#1e293b", /* Slate-100 for dark, slate-800 for light */
-        secondary: darkMode ? "#94a3b8" : "#64748b", /* Slate-400 for dark, slate-500 for light */
+        primary: darkMode
+          ? "#f1f5f9"
+          : "#1e293b" /* Slate-100 for dark, slate-800 for light */,
+        secondary: darkMode
+          ? "#94a3b8"
+          : "#64748b" /* Slate-400 for dark, slate-500 for light */,
       },
       success: {
         main: "#FCA311",
@@ -150,7 +156,9 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         light: "#FCA311",
         dark: "#14213D",
       },
-      divider: darkMode ? "#334155" : "#e2e8f0", /* Slate-700 for dark, slate-200 for light */
+      divider: darkMode
+        ? "#334155"
+        : "#e2e8f0" /* Slate-700 for dark, slate-200 for light */,
     },
     typography: {
       fontFamily: "Inter, sans-serif",
@@ -175,11 +183,15 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
               : "0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.04)",
             transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             "&:hover": {
-              transform: "translateY(-4px)",
               boxShadow: darkMode
-                ? "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3)"
-                : "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-              borderColor: darkMode ? "#475569" : "#cbd5e1",
+                ? "0 0 0 2px rgba(252, 163, 17, 0.3), 0 0 30px rgba(252, 163, 17, 0.4), 0 20px 25px -5px rgba(0, 0, 0, 0.5)"
+                : "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 20px rgba(252, 163, 17, 0.3), 0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+              borderColor: darkMode
+                ? "rgba(252, 163, 17, 0.4)"
+                : "rgba(252, 163, 17, 0.3)",
+              background: darkMode
+                ? "linear-gradient(135deg, #14213D, rgba(252, 163, 17, 0.08))"
+                : "linear-gradient(135deg, #ffffff, rgba(252, 163, 17, 0.05))",
             },
           },
         },
@@ -193,7 +205,8 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
             padding: "12px 24px",
             transition: "all 0.2s ease-in-out",
             "&:hover": {
-              transform: "translateY(-1px)",
+              boxShadow:
+                "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px rgba(252, 163, 17, 0.3)",
             },
           },
         },
@@ -222,9 +235,11 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       MuiAppBar: {
         styleOverrides: {
           root: {
-            backgroundColor: darkMode ? "rgba(15, 23, 42, 0.95)" : "rgba(255, 255, 255, 0.95)",
+            backgroundColor: darkMode
+              ? "rgba(15, 23, 42, 0.95)"
+              : "rgba(255, 255, 255, 0.95)",
             color: darkMode ? "#f1f5f9" : "#1e293b",
-            boxShadow: darkMode 
+            boxShadow: darkMode
               ? "0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2)"
               : "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03)",
             borderBottom: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
@@ -235,7 +250,9 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       MuiDrawer: {
         styleOverrides: {
           paper: {
-            backgroundColor: darkMode ? "rgba(30, 41, 59, 0.95)" : "rgba(255, 255, 255, 0.95)",
+            backgroundColor: darkMode
+              ? "rgba(30, 41, 59, 0.95)"
+              : "rgba(255, 255, 255, 0.95)",
             borderLeft: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
             backdropFilter: "blur(20px)",
           },

@@ -74,19 +74,20 @@ export default function LumpSumCalculator({
   };
 
   const getChartData = () => {
-    if (!result) return null;
+    if (!result) return [];
 
-    return {
-      labels: ["Principal", "Returns"],
-      datasets: [
-        {
-          data: [result.principal, result.totalReturns],
-          backgroundColor: ["#14213D", "#FCA311"],
-          borderColor: ["#14213D", "#FCA311"],
-          borderWidth: 2,
-        },
-      ],
-    };
+    return [
+      {
+        name: "Principal",
+        value: result.principal,
+        color: "#14213D",
+      },
+      {
+        name: "Returns",
+        value: result.totalReturns,
+        color: "#FCA311",
+      },
+    ];
   };
 
   const relatedCalculators = [
@@ -191,14 +192,16 @@ export default function LumpSumCalculator({
       {result && (
         <ChartCard
           title="Investment Breakdown"
-          chartData={getChartData()}
-          chartType="doughnut"
+          data={getChartData()}
+          type="pie"
+          dataKey="value"
+          colors={["#14213D", "#FCA311"]}
         />
       )}
 
       <RelatedCalculators
-        calculators={relatedCalculators}
-        onCalculatorSelect={onCalculatorSelect}
+        currentCalculator="lump-sum"
+        onCalculatorSelect={onCalculatorSelect || (() => {})}
       />
     </div>
   );

@@ -61,7 +61,8 @@ export default function MobileBackHandler({
         boxShadow: "0 4px 12px rgba(31, 122, 153, 0.3)",
         "&:hover": {
           backgroundColor: theme.palette.primary.dark,
-          transform: "scale(1.1)",
+          boxShadow:
+            "0 0 0 3px rgba(252, 163, 17, 0.3), 0 0 25px rgba(252, 163, 17, 0.4), 0 6px 16px rgba(31, 122, 153, 0.4)",
         },
         transition: "all 0.2s ease-in-out",
         display: { xs: "flex", sm: "none" }, // Only show on mobile

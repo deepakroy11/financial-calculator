@@ -185,7 +185,9 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                 cursor: "pointer",
                 transition: "all 0.2s ease-in-out",
                 "&:hover": {
-                  transform: "scale(1.02)",
+                  boxShadow:
+                    "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 15px rgba(252, 163, 17, 0.3)",
+                  background: "rgba(252, 163, 17, 0.05)",
                 },
               }}
             >

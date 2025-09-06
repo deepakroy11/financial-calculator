@@ -476,7 +476,8 @@ export default function Home() {
                 transition: "all 0.2s ease-in-out",
                 minWidth: { xs: "140px", sm: "auto" },
                 "&:hover": {
-                  transform: "translateY(-1px)",
+                  boxShadow:
+                    "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px rgba(252, 163, 17, 0.3)",
                 },
               }}
             >
