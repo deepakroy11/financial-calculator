@@ -365,6 +365,43 @@ body::before {
   border-radius: 4px;
 }
 
+/* Prevent layout shifts */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Prevent menu-related layout shifts */
+.MuiMenu-root {
+  position: fixed !important;
+}
+
+.MuiDrawer-root {
+  position: fixed !important;
+}
+
+.MuiModal-root {
+  position: fixed !important;
+}
+
+/* Stable layout for dropdowns */
+.MuiPopover-root {
+  position: fixed !important;
+}
+
+/* Prevent scrollbar from causing layout shifts */
+html {
+  scrollbar-gutter: stable;
+}
+
 /* Professional animations */
 @keyframes fadeInUp {
   from {

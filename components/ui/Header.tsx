@@ -16,6 +16,9 @@ import {
   ListItemText,
   useMediaQuery,
   useTheme,
+  Menu,
+  MenuItem,
+  Collapse,
 } from "@mui/material";
 import {
   FaChartLine,
@@ -26,6 +29,10 @@ import {
   FaHome,
   FaMoon,
   FaSun,
+  FaCalculator,
+  FaPlus,
+  FaChartBar,
+  FaChevronDown,
 } from "react-icons/fa";
 import { useThemeMode } from "../../app/theme";
 
@@ -34,31 +41,75 @@ interface HeaderProps {
   onHomeClick?: () => void;
 }
 
-const categories = [
-  { id: "loans", name: "Loans & Mortgages", icon: FaHome, color: "#1f7a99" },
+const mainMenus = [
   {
-    id: "investments",
-    name: "Investments",
+    id: "calculators",
+    name: "Calculators",
+    icon: FaCalculator,
+    color: "#1f7a99",
+    submenus: [
+      {
+        id: "loans",
+        name: "Loans & Mortgages",
+        icon: FaHome,
+        color: "#1f7a99",
+      },
+      {
+        id: "investments",
+        name: "Investments",
+        icon: FaChartLine,
+        color: "#10b981",
+      },
+      { id: "taxes", name: "Tax Planning", icon: FaCoins, color: "#ef4444" },
+      {
+        id: "savings",
+        name: "Savings & Goals",
+        icon: FaPiggyBank,
+        color: "#4a9bb8",
+      },
+      {
+        id: "business",
+        name: "Business Tools",
+        icon: FaBriefcase,
+        color: "#f59e0b",
+      },
+    ],
+  },
+  {
+    id: "portfolio",
+    name: "Portfolio",
     icon: FaChartLine,
-    color: "#10b981",
-  },
-  { id: "taxes", name: "Tax Planning", icon: FaCoins, color: "#ef4444" },
-  {
-    id: "savings",
-    name: "Savings & Goals",
-    icon: FaPiggyBank,
-    color: "#4a9bb8",
-  },
-  {
-    id: "business",
-    name: "Business Tools",
-    icon: FaBriefcase,
-    color: "#f59e0b",
+    color: "#8b5cf6",
+    submenus: [
+      {
+        id: "portfolio",
+        name: "Portfolio Dashboard",
+        icon: FaChartLine,
+        color: "#8b5cf6",
+      },
+      {
+        id: "portfolio-add",
+        name: "Add Assets",
+        icon: FaPlus,
+        color: "#10b981",
+      },
+      {
+        id: "portfolio-reports",
+        name: "Reports & Analytics",
+        icon: FaChartBar,
+        color: "#f59e0b",
+      },
+    ],
   },
 ];
 
 export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState<{
+    [key: string]: boolean;
+  }>({});
   const theme = useTheme();
   const { darkMode, toggleDarkMode } = useThemeMode();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -66,10 +117,41 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
   const handleCategorySelect = (categoryId: string) => {
     onCategorySelect?.(categoryId);
     setMobileOpen(false);
+    setAnchorEl(null);
+    setOpenSubmenu(null);
   };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLElement>,
+    menuId: string
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (menuId === "portfolio") {
+      // Direct navigation to portfolio
+      handleCategorySelect("portfolio");
+    } else {
+      // Show submenu for calculators
+      setAnchorEl(event.currentTarget);
+      setOpenSubmenu(menuId);
+    }
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setOpenSubmenu(null);
+  };
+
+  const toggleMobileSubmenu = (menuId: string) => {
+    setMobileSubmenuOpen((prev) => ({
+      ...prev,
+      [menuId]: !prev[menuId],
+    }));
   };
 
   const drawer = (
@@ -104,52 +186,130 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
         </Typography>
       </Box>
       <List sx={{ p: 1 }}>
-        {categories.map((category) => {
-          const IconComponent = category.icon;
+        {mainMenus.map((menu) => {
+          const IconComponent = menu.icon;
           return (
-            <ListItem
-              key={category.id}
-              onClick={() => handleCategorySelect(category.id)}
-              sx={{
-                cursor: "pointer",
-                borderRadius: 2,
-                mx: 1,
-                mb: 0.5,
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  backgroundColor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(31, 122, 153, 0.1)"
-                      : "rgba(31, 122, 153, 0.05)",
-                  transform: "translateX(4px)",
-                },
-              }}
-            >
-              <ListItemIcon>
-                <Box
-                  sx={{
-                    p: 1.5,
-                    borderRadius: 2,
-                    backgroundColor: `${category.color}20`,
-                    color: category.color,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <IconComponent size={20} />
-                </Box>
-              </ListItemIcon>
-              <ListItemText
-                primary={category.name}
-                primaryTypographyProps={{
-                  sx: {
-                    fontWeight: 500,
-                    color: theme.palette.text.primary,
+            <Box key={menu.id}>
+              <ListItem
+                onClick={() =>
+                  menu.id === "portfolio"
+                    ? handleCategorySelect("portfolio")
+                    : toggleMobileSubmenu(menu.id)
+                }
+                sx={{
+                  cursor: "pointer",
+                  borderRadius: 2,
+                  mx: 1,
+                  mb: 0.5,
+                  transition: "all 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(31, 122, 153, 0.1)"
+                        : "rgba(31, 122, 153, 0.05)",
+                    transform: "translateX(4px)",
                   },
                 }}
-              />
-            </ListItem>
+              >
+                <ListItemIcon>
+                  <Box
+                    sx={{
+                      p: 1.5,
+                      borderRadius: 2,
+                      backgroundColor: `${menu.color}20`,
+                      color: menu.color,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <IconComponent size={20} />
+                  </Box>
+                </ListItemIcon>
+                <ListItemText
+                  primary={menu.name}
+                  primaryTypographyProps={{
+                    sx: {
+                      fontWeight: 500,
+                      color: theme.palette.text.primary,
+                    },
+                  }}
+                />
+                {menu.id === "calculators" && (
+                  <FaChevronDown
+                    size={12}
+                    style={{
+                      transform: mobileSubmenuOpen[menu.id]
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)",
+                      transition: "transform 0.2s ease-in-out",
+                    }}
+                  />
+                )}
+              </ListItem>
+
+              {/* Submenu for mobile */}
+              {menu.id === "calculators" && (
+                <Collapse
+                  in={mobileSubmenuOpen[menu.id]}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List sx={{ pl: 2 }}>
+                    {menu.submenus.map((submenu) => {
+                      const SubmenuIcon = submenu.icon;
+                      return (
+                        <ListItem
+                          key={submenu.id}
+                          onClick={() => handleCategorySelect(submenu.id)}
+                          sx={{
+                            cursor: "pointer",
+                            borderRadius: 2,
+                            mx: 1,
+                            mb: 0.5,
+                            py: 1,
+                            transition: "all 0.2s ease-in-out",
+                            "&:hover": {
+                              backgroundColor:
+                                theme.palette.mode === "dark"
+                                  ? "rgba(31, 122, 153, 0.1)"
+                                  : "rgba(31, 122, 153, 0.05)",
+                              transform: "translateX(4px)",
+                            },
+                          }}
+                        >
+                          <ListItemIcon sx={{ minWidth: 36 }}>
+                            <Box
+                              sx={{
+                                p: 1,
+                                borderRadius: 1,
+                                backgroundColor: `${submenu.color}15`,
+                                color: submenu.color,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <SubmenuIcon size={16} />
+                            </Box>
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={submenu.name}
+                            primaryTypographyProps={{
+                              sx: {
+                                fontWeight: 400,
+                                fontSize: "0.875rem",
+                                color: theme.palette.text.secondary,
+                              },
+                            }}
+                          />
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Collapse>
+              )}
+            </Box>
           );
         })}
       </List>
@@ -230,13 +390,18 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                   gap: 1,
                 }}
               >
-                {categories.map((category) => {
-                  const IconComponent = category.icon;
+                {mainMenus.map((menu) => {
+                  const IconComponent = menu.icon;
                   return (
                     <Button
-                      key={category.id}
-                      onClick={() => handleCategorySelect(category.id)}
+                      key={menu.id}
+                      onClick={(e) => handleMenuClick(e, menu.id)}
                       startIcon={<IconComponent size={16} />}
+                      endIcon={
+                        menu.id === "calculators" ? (
+                          <FaChevronDown size={12} />
+                        ) : undefined
+                      }
                       sx={{
                         color: theme.palette.text.secondary,
                         fontWeight: 500,
@@ -262,7 +427,7 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
                         },
                       }}
                     >
-                      {category.name.split(" ")[0]}
+                      {menu.name}
                     </Button>
                   );
                 })}
@@ -373,6 +538,7 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
         anchor="right"
         open={mobileOpen}
         onClose={handleDrawerToggle}
+        disableScrollLock={true}
         ModalProps={{
           keepMounted: true,
         }}
@@ -389,6 +555,94 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
       >
         {drawer}
       </Drawer>
+
+      {/* Desktop Dropdown Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl) && openSubmenu === "calculators"}
+        onClose={handleMenuClose}
+        disableScrollLock={true}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            minWidth: 250,
+            backgroundColor:
+              theme.palette.mode === "dark"
+                ? "rgba(20, 33, 61, 0.95)"
+                : "rgba(255, 255, 255, 0.95)",
+            backdropFilter: "blur(20px)",
+            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: 2,
+            boxShadow:
+              theme.palette.mode === "dark"
+                ? "0 8px 32px rgba(0, 0, 0, 0.3)"
+                : "0 8px 32px rgba(0, 0, 0, 0.1)",
+          },
+        }}
+        MenuListProps={{
+          sx: {
+            py: 1,
+          },
+        }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+      >
+        {mainMenus
+          .find((menu) => menu.id === "calculators")
+          ?.submenus.map((submenu) => {
+            const SubmenuIcon = submenu.icon;
+            return (
+              <MenuItem
+                key={submenu.id}
+                onClick={() => handleCategorySelect(submenu.id)}
+                sx={{
+                  py: 1.5,
+                  px: 2,
+                  borderRadius: 1,
+                  mx: 1,
+                  mb: 0.5,
+                  transition: "all 0.2s ease-in-out",
+                  "&:hover": {
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "rgba(252, 163, 17, 0.1)"
+                        : "rgba(252, 163, 17, 0.05)",
+                    transform: "translateX(4px)",
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 1,
+                    borderRadius: 1,
+                    backgroundColor: `${submenu.color}15`,
+                    color: submenu.color,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    mr: 2,
+                  }}
+                >
+                  <SubmenuIcon size={16} />
+                </Box>
+                <Typography
+                  sx={{
+                    fontWeight: 500,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  {submenu.name}
+                </Typography>
+              </MenuItem>
+            );
+          })}
+      </Menu>
     </>
   );
 }

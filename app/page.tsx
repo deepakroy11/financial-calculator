@@ -60,6 +60,7 @@ import Footer from "../components/ui/Footer";
 import PWAInstallPrompt from "../components/ui/PWAInstallPrompt";
 import MobileBackHandler from "../components/ui/MobileBackHandler";
 import DevCacheManager from "../components/DevCacheManager";
+import Portfolio from "../components/portfolio/Portfolio";
 import { useBackButton } from "../hooks/useBackButton";
 import { useCacheManager } from "../hooks/useCacheManager";
 
@@ -267,6 +268,20 @@ const categories: CalculatorCategory[] = [
       },
     ],
   },
+  {
+    id: "portfolio",
+    name: "Portfolio Management",
+    icon: "FaChartPie",
+    calculators: [
+      {
+        id: "portfolio",
+        name: "Portfolio Dashboard",
+        description: "Track and manage all your financial assets in one place",
+        icon: "FaChartPie",
+        category: "portfolio",
+      },
+    ],
+  },
 ];
 
 const iconMap: { [key: string]: any } = {
@@ -437,6 +452,15 @@ export default function Home() {
         );
       case "roi":
         return <ROICalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "portfolio":
+        return (
+          <Portfolio
+            onNavigateToCalculators={() => setSelectedCalculator(null)}
+            onNavigateHome={() => setSelectedCalculator(null)}
+          />
+        );
+      case "portfolio-test":
+        return <Portfolio />;
       default:
         return (
           <div className="text-center py-12">
@@ -453,14 +477,24 @@ export default function Home() {
 
   if (selectedCalculator) {
     return (
-      <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: "background.default",
+          transition: "all 0.3s ease-in-out",
+        }}
+      >
         <Header
           onCategorySelect={(categoryId) => {
-            setSelectedCalculator(null);
-            setTimeout(() => {
-              const element = document.getElementById(categoryId);
-              element?.scrollIntoView({ behavior: "smooth" });
-            }, 100);
+            if (categoryId === "portfolio") {
+              setSelectedCalculator("portfolio");
+            } else {
+              setSelectedCalculator(null);
+              setTimeout(() => {
+                const element = document.getElementById(categoryId);
+                element?.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            }
           }}
           onHomeClick={() => setSelectedCalculator(null)}
         />
@@ -536,11 +570,21 @@ export default function Home() {
   }
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "background.default",
+        transition: "all 0.3s ease-in-out",
+      }}
+    >
       <Header
         onCategorySelect={(categoryId) => {
-          const element = document.getElementById(categoryId);
-          element?.scrollIntoView({ behavior: "smooth" });
+          if (categoryId === "portfolio") {
+            setSelectedCalculator("portfolio");
+          } else {
+            const element = document.getElementById(categoryId);
+            element?.scrollIntoView({ behavior: "smooth" });
+          }
         }}
         onHomeClick={() => setSelectedCalculator(null)}
       />
