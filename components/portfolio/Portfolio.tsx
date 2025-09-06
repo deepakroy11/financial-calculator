@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import PortfolioDashboard from "./PortfolioDashboard";
 import PortfolioManager from "./PortfolioManager";
-import Header from "../ui/Header";
 
 type ViewMode = "dashboard" | "add" | "edit";
 
@@ -50,19 +49,6 @@ export default function Portfolio({
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "background.default" }}>
-      <Header
-        onCategorySelect={(categoryId) => {
-          if (categoryId === "portfolio") {
-            // Already on portfolio, do nothing
-            return;
-          } else {
-            // Navigate to calculators
-            onNavigateToCalculators?.();
-          }
-        }}
-        onHomeClick={() => onNavigateHome?.()}
-      />
-
       {viewMode === "dashboard" ? (
         <PortfolioDashboard
           onAddAsset={handleAddAsset}

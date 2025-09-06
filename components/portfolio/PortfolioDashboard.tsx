@@ -538,9 +538,23 @@ export default function PortfolioDashboard({
                   <Grid container spacing={1.5}>
                     {portfolio.investments.map((investment) => (
                       <Grid item xs={12} sm={6} lg={4} key={investment.id}>
-                        <Card variant="outlined" sx={{ position: "relative" }}>
+                        <Card
+                          variant="outlined"
+                          sx={{
+                            position: "relative",
+                            height: 200,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
                           <CardContent
-                            sx={{ p: 1.5, "&:last-child": { pb: 1.5 } }}
+                            sx={{
+                              p: 1.5,
+                              "&:last-child": { pb: 1.5 },
+                              flex: 1,
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
                           >
                             <Box
                               sx={{
@@ -607,12 +621,12 @@ export default function PortfolioDashboard({
                             <Typography
                               variant="caption"
                               color="text.secondary"
-                              sx={{ display: "block", mb: 1 }}
+                              sx={{ display: "block", mb: 1, flex: 1 }}
                             >
                               {investment.provider}
                             </Typography>
 
-                            <Box sx={{ display: "flex", gap: 0.5, mt: 1 }}>
+                            <Box sx={{ display: "flex", gap: 0.5, mt: "auto" }}>
                               <Button
                                 size="small"
                                 variant="outlined"
@@ -689,21 +703,40 @@ export default function PortfolioDashboard({
                 ) : (
                   <Grid container spacing={2}>
                     {portfolio.insurance.map((insurance) => (
-                      <Grid item xs={12} sm={6} md={4} key={insurance.id}>
-                        <Card variant="outlined">
-                          <CardContent sx={{ pb: 1 }}>
+                      <Grid item xs={12} sm={6} lg={4} key={insurance.id}>
+                        <Card
+                          variant="outlined"
+                          sx={{
+                            height: 200,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <CardContent
+                            sx={{
+                              p: 1.5,
+                              "&:last-child": { pb: 1.5 },
+                              flex: 1,
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
                             <Box
                               sx={{
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "flex-start",
-                                mb: 2,
+                                mb: 1,
                               }}
                             >
                               <Box sx={{ flex: 1 }}>
                                 <Typography
-                                  variant="subtitle2"
-                                  sx={{ fontWeight: 600, mb: 0.5 }}
+                                  variant="body2"
+                                  sx={{
+                                    fontWeight: 600,
+                                    mb: 0.5,
+                                    fontSize: "0.875rem",
+                                  }}
                                 >
                                   {insurance.name}
                                 </Typography>
@@ -711,7 +744,7 @@ export default function PortfolioDashboard({
                                   label={insurance.type.toUpperCase()}
                                   size="small"
                                   color="success"
-                                  sx={{ fontSize: "0.7rem", height: 20 }}
+                                  sx={{ fontSize: "0.65rem", height: 18 }}
                                 />
                               </Box>
                               <Chip
@@ -722,22 +755,25 @@ export default function PortfolioDashboard({
                                     ? "success"
                                     : "default"
                                 }
-                                sx={{ fontSize: "0.7rem" }}
+                                sx={{ fontSize: "0.65rem" }}
                               />
                             </Box>
 
                             <Typography
-                              variant="h6"
+                              variant="subtitle1"
                               sx={{
                                 color: "success.main",
                                 fontWeight: 700,
-                                mb: 1,
+                                mb: 0.5,
                               }}
                             >
                               {formatCurrency(insurance.coverageAmount)}
                             </Typography>
 
-                            <Typography variant="body2" sx={{ mb: 1 }}>
+                            <Typography
+                              variant="caption"
+                              sx={{ mb: 0.5, display: "block" }}
+                            >
                               Premium: {formatCurrency(insurance.premium)} /{" "}
                               {insurance.premiumFrequency}
                             </Typography>
@@ -745,19 +781,20 @@ export default function PortfolioDashboard({
                             <Typography
                               variant="caption"
                               color="text.secondary"
+                              sx={{ flex: 1 }}
                             >
                               {insurance.provider} • {insurance.policyNumber}
                             </Typography>
 
-                            <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+                            <Box sx={{ display: "flex", gap: 0.5, mt: "auto" }}>
                               <Button
                                 size="small"
                                 variant="outlined"
-                                startIcon={<FaEdit />}
+                                startIcon={<FaEdit size={10} />}
                                 onClick={() =>
                                   onEditAsset("insurance", insurance.id)
                                 }
-                                sx={{ fontSize: "0.7rem" }}
+                                sx={{ fontSize: "0.65rem", px: 1, py: 0.5 }}
                               >
                                 Edit
                               </Button>
@@ -765,7 +802,7 @@ export default function PortfolioDashboard({
                                 size="small"
                                 variant="outlined"
                                 color="error"
-                                startIcon={<FaTrash />}
+                                startIcon={<FaTrash size={10} />}
                                 onClick={() =>
                                   handleDeleteAsset(
                                     "insurance",
@@ -825,21 +862,40 @@ export default function PortfolioDashboard({
                 ) : (
                   <Grid container spacing={2}>
                     {portfolio.loans.map((loan) => (
-                      <Grid item xs={12} sm={6} md={4} key={loan.id}>
-                        <Card variant="outlined">
-                          <CardContent sx={{ pb: 1 }}>
+                      <Grid item xs={12} sm={6} lg={4} key={loan.id}>
+                        <Card
+                          variant="outlined"
+                          sx={{
+                            height: 200,
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <CardContent
+                            sx={{
+                              p: 1.5,
+                              "&:last-child": { pb: 1.5 },
+                              flex: 1,
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
                             <Box
                               sx={{
                                 display: "flex",
                                 justifyContent: "space-between",
                                 alignItems: "flex-start",
-                                mb: 2,
+                                mb: 1,
                               }}
                             >
                               <Box sx={{ flex: 1 }}>
                                 <Typography
-                                  variant="subtitle2"
-                                  sx={{ fontWeight: 600, mb: 0.5 }}
+                                  variant="body2"
+                                  sx={{
+                                    fontWeight: 600,
+                                    mb: 0.5,
+                                    fontSize: "0.875rem",
+                                  }}
                                 >
                                   {loan.name}
                                 </Typography>
@@ -847,7 +903,7 @@ export default function PortfolioDashboard({
                                   label={loan.type.toUpperCase()}
                                   size="small"
                                   color="error"
-                                  sx={{ fontSize: "0.7rem", height: 20 }}
+                                  sx={{ fontSize: "0.65rem", height: 18 }}
                                 />
                               </Box>
                               <Chip
@@ -858,22 +914,25 @@ export default function PortfolioDashboard({
                                     ? "warning"
                                     : "default"
                                 }
-                                sx={{ fontSize: "0.7rem" }}
+                                sx={{ fontSize: "0.65rem" }}
                               />
                             </Box>
 
                             <Typography
-                              variant="h6"
+                              variant="subtitle1"
                               sx={{
                                 color: "error.main",
                                 fontWeight: 700,
-                                mb: 1,
+                                mb: 0.5,
                               }}
                             >
                               {formatCurrency(loan.outstandingAmount)}
                             </Typography>
 
-                            <Typography variant="body2" sx={{ mb: 1 }}>
+                            <Typography
+                              variant="caption"
+                              sx={{ mb: 0.5, display: "block" }}
+                            >
                               EMI: {formatCurrency(loan.emi)} •{" "}
                               {loan.interestRate}% p.a.
                             </Typography>
@@ -881,17 +940,18 @@ export default function PortfolioDashboard({
                             <Typography
                               variant="caption"
                               color="text.secondary"
+                              sx={{ flex: 1 }}
                             >
                               {loan.lender}
                             </Typography>
 
-                            <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+                            <Box sx={{ display: "flex", gap: 0.5, mt: "auto" }}>
                               <Button
                                 size="small"
                                 variant="outlined"
-                                startIcon={<FaEdit />}
+                                startIcon={<FaEdit size={10} />}
                                 onClick={() => onEditAsset("loans", loan.id)}
-                                sx={{ fontSize: "0.7rem" }}
+                                sx={{ fontSize: "0.65rem", px: 1, py: 0.5 }}
                               >
                                 Edit
                               </Button>
@@ -899,11 +959,11 @@ export default function PortfolioDashboard({
                                 size="small"
                                 variant="outlined"
                                 color="error"
-                                startIcon={<FaTrash />}
+                                startIcon={<FaTrash size={10} />}
                                 onClick={() =>
                                   handleDeleteAsset("loans", loan.id, loan.name)
                                 }
-                                sx={{ fontSize: "0.7rem" }}
+                                sx={{ fontSize: "0.65rem", px: 1, py: 0.5 }}
                               >
                                 Delete
                               </Button>
