@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
@@ -120,41 +120,67 @@ export default function SimpleInterestCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Principal Amount"
-          value={principal}
-          onChange={setPrincipal}
-          placeholder="Enter principal amount"
-          suffix="₹"
-          error={errors.principal}
-          required
-        />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Investment Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Investment Details
+            </Typography>
+            <InputField
+              label="Principal Amount"
+              value={principal}
+              onChange={setPrincipal}
+              placeholder="Enter principal amount"
+              suffix="₹"
+              error={errors.principal}
+              required
+            />
+            <InputField
+              label="Interest Rate"
+              value={rate}
+              onChange={setRate}
+              placeholder="Enter annual interest rate"
+              suffix="% p.a."
+              error={errors.rate}
+              required
+            />
+          </Box>
 
-        <InputField
-          label="Interest Rate"
-          value={rate}
-          onChange={setRate}
-          placeholder="Enter annual interest rate"
-          suffix="% p.a."
-          error={errors.rate}
-          required
-        />
-
-        <Box>
-          <DurationToggle
-            value={durationUnit}
-            onChange={setDurationUnit}
-            label="Time Period Unit"
-          />
-          <InputField
-            label="Time Period"
-            value={tenure}
-            onChange={setTenure}
-            placeholder={`Enter time period in ${durationUnit}`}
-            suffix={durationUnit}
-            error={errors.tenure}
-            required
-          />
+          {/* Right Column - Time Period */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⏰ Time Period
+            </Typography>
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Time Period Unit"
+              />
+              <InputField
+                label="Time Period"
+                value={tenure}
+                onChange={setTenure}
+                placeholder={`Enter time period in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.tenure}
+                required
+              />
+            </Box>
+          </Box>
         </Box>
 
         <Box

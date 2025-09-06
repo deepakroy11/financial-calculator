@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
@@ -83,39 +83,69 @@ export default function NSCCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Investment Amount"
-          value={principal}
-          onChange={setPrincipal}
-          placeholder="Enter NSC investment amount"
-          suffix="₹"
-          error={errors.principal}
-          required
-        />
-
+        {/* Two Column Layout */}
         <Box
           sx={{
-            p: 2,
-            backgroundColor: "info.light",
-            borderRadius: 2,
-            border: 1,
-            borderColor: "info.main",
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
           }}
         >
-          <Box sx={{ mb: 1, fontWeight: 600, color: "text.primary" }}>
-            NSC Details:
+          {/* Left Column - Investment Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Investment Details
+            </Typography>
+            <InputField
+              label="Investment Amount"
+              value={principal}
+              onChange={setPrincipal}
+              placeholder="Enter NSC investment amount"
+              suffix="₹"
+              error={errors.principal}
+              required
+            />
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
-            • Fixed Interest Rate: {nscRate}% per annum
-          </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
-            • Fixed Tenure: 5 years
-          </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
-            • Tax benefits under Section 80C
-          </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
-            • Interest is taxable but reinvested
+
+          {/* Right Column - NSC Information */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              📋 NSC Details
+            </Typography>
+            <Box
+              sx={{
+                p: 2,
+                backgroundColor: "background.paper",
+                borderRadius: 2,
+                border: 1,
+                borderColor: "divider",
+              }}
+            >
+              <Box
+                sx={{ fontSize: "0.875rem", color: "text.secondary", mb: 1 }}
+              >
+                • Fixed Interest Rate: {nscRate}% per annum
+              </Box>
+              <Box
+                sx={{ fontSize: "0.875rem", color: "text.secondary", mb: 1 }}
+              >
+                • Fixed Tenure: 5 years
+              </Box>
+              <Box
+                sx={{ fontSize: "0.875rem", color: "text.secondary", mb: 1 }}
+              >
+                • Tax benefits under Section 80C
+              </Box>
+              <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+                • Interest is taxable but reinvested
+              </Box>
+            </Box>
           </Box>
         </Box>
       </CalculatorCard>

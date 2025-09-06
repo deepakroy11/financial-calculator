@@ -7,7 +7,7 @@ import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateRD, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface RDCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -80,42 +80,70 @@ export default function RDCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Monthly Deposit"
-          value={monthlyDeposit}
-          onChange={setMonthlyDeposit}
-          placeholder="Enter monthly deposit amount"
-          suffix="₹"
-          error={errors.monthlyDeposit}
-          required
-          showWordsFor="currency"
-        />
-        <InputField
-          label="Interest Rate (Annual)"
-          value={rate}
-          onChange={setRate}
-          placeholder="Enter interest rate"
-          suffix="%"
-          error={errors.rate}
-          required
-          showWordsFor="percentage"
-        />
-        <Box>
-          <DurationToggle
-            value={durationUnit}
-            onChange={setDurationUnit}
-            label="Tenure Unit"
-          />
-          <InputField
-            label="Tenure"
-            value={tenure}
-            onChange={setTenure}
-            placeholder={`Enter tenure in ${durationUnit}`}
-            suffix={durationUnit}
-            error={errors.tenure}
-            required
-            showWordsFor={durationUnit}
-          />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Deposit Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Deposit Details
+            </Typography>
+            <InputField
+              label="Monthly Deposit"
+              value={monthlyDeposit}
+              onChange={setMonthlyDeposit}
+              placeholder="Enter monthly deposit amount"
+              suffix="₹"
+              error={errors.monthlyDeposit}
+              required
+              showWordsFor="currency"
+            />
+            <InputField
+              label="Interest Rate (Annual)"
+              value={rate}
+              onChange={setRate}
+              placeholder="Enter interest rate"
+              suffix="%"
+              error={errors.rate}
+              required
+              showWordsFor="percentage"
+            />
+          </Box>
+
+          {/* Right Column - Tenure Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⏰ Tenure Details
+            </Typography>
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Tenure Unit"
+              />
+              <InputField
+                label="Tenure"
+                value={tenure}
+                onChange={setTenure}
+                placeholder={`Enter tenure in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.tenure}
+                required
+                showWordsFor={durationUnit}
+              />
+            </Box>
+          </Box>
         </Box>
       </CalculatorCard>
 

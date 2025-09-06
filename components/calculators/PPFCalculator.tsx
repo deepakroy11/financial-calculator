@@ -7,6 +7,7 @@ import ResultCard from "../ui/ResultCard";
 import ChartCard from "../ui/ChartCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import { formatCurrency } from "../../lib/calculators";
+import { Box, Typography } from "@mui/material";
 
 interface PPFCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -87,26 +88,54 @@ export default function PPFCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Yearly Investment"
-          value={yearlyInvestment}
-          onChange={setYearlyInvestment}
-          placeholder="Enter yearly PPF investment"
-          suffix="₹"
-          error={errors.yearlyInvestment}
-          required
-          showWordsFor="currency"
-        />
-        <InputField
-          label="Current Age"
-          value={currentAge}
-          onChange={setCurrentAge}
-          placeholder="Enter your current age"
-          suffix="years"
-          error={errors.currentAge}
-          required
-          showWordsFor="years"
-        />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Investment Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 PPF Investment
+            </Typography>
+            <InputField
+              label="Yearly Investment"
+              value={yearlyInvestment}
+              onChange={setYearlyInvestment}
+              placeholder="Enter yearly PPF investment"
+              suffix="₹"
+              error={errors.yearlyInvestment}
+              required
+              showWordsFor="currency"
+            />
+          </Box>
+
+          {/* Right Column - Personal Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              👤 Personal Details
+            </Typography>
+            <InputField
+              label="Current Age"
+              value={currentAge}
+              onChange={setCurrentAge}
+              placeholder="Enter your current age"
+              suffix="years"
+              error={errors.currentAge}
+              required
+              showWordsFor="years"
+            />
+          </Box>
+        </Box>
       </CalculatorCard>
 
       {result && (

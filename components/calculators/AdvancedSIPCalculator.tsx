@@ -176,92 +176,87 @@ export default function AdvancedSIPCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        {/* Lumpsum Section */}
-        <Box sx={{ mb: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
-          >
-            💰 One-time Investment
-          </Typography>
-          <InputField
-            label="Lumpsum Amount (Optional)"
-            value={lumpSumAmount}
-            onChange={setLumpSumAmount}
-            placeholder="Enter initial investment amount"
-            suffix="₹"
-            error={errors.lumpSumAmount}
-            showWordsFor="currency"
-          />
-        </Box>
-
-        <Divider sx={{ my: 3 }} />
-
-        {/* SIP Section */}
-        <Box sx={{ mb: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
-          >
-            📈 Systematic Investment Plan
-          </Typography>
-          <InputField
-            label="Monthly SIP Amount"
-            value={monthlyAmount}
-            onChange={setMonthlyAmount}
-            placeholder="Enter monthly SIP amount"
-            suffix="₹"
-            error={errors.monthlyAmount}
-            required
-            showWordsFor="currency"
-          />
-          <InputField
-            label="Annual Step-up (Optional)"
-            value={stepUpRate}
-            onChange={setStepUpRate}
-            placeholder="Enter annual increase rate (e.g., 10)"
-            suffix="%"
-            error={errors.stepUpRate}
-            showWordsFor="percentage"
-          />
-        </Box>
-
-        <Divider sx={{ my: 3 }} />
-
-        {/* Common Parameters */}
-        <Box>
-          <Typography
-            variant="h6"
-            sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
-          >
-            ⚙️ Investment Parameters
-          </Typography>
-          <InputField
-            label="Expected Annual Return"
-            value={rate}
-            onChange={setRate}
-            placeholder="Enter expected return rate"
-            suffix="%"
-            error={errors.rate}
-            required
-            showWordsFor="percentage"
-          />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Investment Amounts */}
           <Box>
-            <DurationToggle
-              value={durationUnit}
-              onChange={setDurationUnit}
-              label="Investment Period Unit"
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Investment Amounts
+            </Typography>
+            <InputField
+              label="Lumpsum Amount (Optional)"
+              value={lumpSumAmount}
+              onChange={setLumpSumAmount}
+              placeholder="Enter initial investment amount"
+              suffix="₹"
+              error={errors.lumpSumAmount}
+              showWordsFor="currency"
             />
             <InputField
-              label="Investment Period"
-              value={tenure}
-              onChange={setTenure}
-              placeholder={`Enter investment period in ${durationUnit}`}
-              suffix={durationUnit}
-              error={errors.tenure}
+              label="Monthly SIP Amount"
+              value={monthlyAmount}
+              onChange={setMonthlyAmount}
+              placeholder="Enter monthly SIP amount"
+              suffix="₹"
+              error={errors.monthlyAmount}
               required
-              showWordsFor={durationUnit}
+              showWordsFor="currency"
             />
+            <InputField
+              label="Annual Step-up (Optional)"
+              value={stepUpRate}
+              onChange={setStepUpRate}
+              placeholder="Enter annual increase rate (e.g., 10)"
+              suffix="%"
+              error={errors.stepUpRate}
+              showWordsFor="percentage"
+            />
+          </Box>
+
+          {/* Right Column - Investment Parameters */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⚙️ Investment Parameters
+            </Typography>
+            <InputField
+              label="Expected Annual Return"
+              value={rate}
+              onChange={setRate}
+              placeholder="Enter expected return rate"
+              suffix="%"
+              error={errors.rate}
+              required
+              showWordsFor="percentage"
+            />
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Investment Period Unit"
+              />
+              <InputField
+                label="Investment Period"
+                value={tenure}
+                onChange={setTenure}
+                placeholder={`Enter investment period in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.tenure}
+                required
+                showWordsFor={durationUnit}
+              />
+            </Box>
           </Box>
         </Box>
       </CalculatorCard>

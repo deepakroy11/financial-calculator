@@ -7,6 +7,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Box,
+  Typography,
 } from "@mui/material";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
@@ -60,40 +62,67 @@ export default function TaxCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Annual Income"
-          value={income}
-          onChange={setIncome}
-          placeholder="Enter your annual income"
-          suffix="₹"
-          error={errors.income}
-          required
-        />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Income Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Income Details
+            </Typography>
+            <InputField
+              label="Annual Income"
+              value={income}
+              onChange={setIncome}
+              placeholder="Enter your annual income"
+              suffix="₹"
+              error={errors.income}
+              required
+            />
+          </Box>
 
-        <FormControl component="fieldset" className="w-full">
-          <FormLabel
-            component="legend"
-            className="text-gray-700 font-medium mb-2"
-          >
-            Tax Regime
-          </FormLabel>
-          <RadioGroup
-            value={regime}
-            onChange={(e) => setRegime(e.target.value as "old" | "new")}
-            row
-          >
-            <FormControlLabel
-              value="new"
-              control={<Radio />}
-              label="New Tax Regime"
-            />
-            <FormControlLabel
-              value="old"
-              control={<Radio />}
-              label="Old Tax Regime"
-            />
-          </RadioGroup>
-        </FormControl>
+          {/* Right Column - Tax Regime */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              📋 Tax Regime
+            </Typography>
+            <FormControl component="fieldset" className="w-full">
+              <FormLabel
+                component="legend"
+                className="text-gray-700 font-medium mb-2"
+              >
+                Select Tax Regime
+              </FormLabel>
+              <RadioGroup
+                value={regime}
+                onChange={(e) => setRegime(e.target.value as "old" | "new")}
+                row
+              >
+                <FormControlLabel
+                  value="new"
+                  control={<Radio />}
+                  label="New Tax Regime"
+                />
+                <FormControlLabel
+                  value="old"
+                  control={<Radio />}
+                  label="Old Tax Regime"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+        </Box>
       </CalculatorCard>
 
       {result && (

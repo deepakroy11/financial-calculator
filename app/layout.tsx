@@ -5,7 +5,7 @@ import ClientThemeProvider from "./ClientThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  metadataBase: new URL('https://finly-calculator.vercel.app'),
+  metadataBase: new URL("https://finly-calculator.vercel.app"),
   title: {
     default:
       "Finly - Free Indian Financial Calculators | EMI, SIP, Tax & Investment Tools",
@@ -251,21 +251,54 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-
         <ClientThemeProvider>{children}</ClientThemeProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
+                  navigator.serviceWorker.register('/sw.js', {
+                    updateViaCache: 'none' // Always check for updates
+                  })
                     .then(function(registration) {
                       console.log('SW registered: ', registration);
+                      
+                      // Check for updates immediately
+                      registration.update();
+                      
+                      // Listen for service worker updates
+                      registration.addEventListener('updatefound', function() {
+                        const newWorker = registration.installing;
+                        if (newWorker) {
+                          newWorker.addEventListener('statechange', function() {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                              console.log('New service worker available');
+                              // Auto-update in development, prompt in production
+                              if (${process.env.NODE_ENV === "development"}) {
+                                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                window.location.reload();
+                              } else {
+                                if (confirm('New version available! Reload to update?')) {
+                                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                  window.location.reload();
+                                }
+                              }
+                            }
+                          });
+                        }
+                      });
                     })
                     .catch(function(registrationError) {
                       console.log('SW registration failed: ', registrationError);
                     });
                 });
+              }
+              
+              // Load cache manager in development
+              if (${process.env.NODE_ENV === "development"}) {
+                const script = document.createElement('script');
+                script.src = '/cache-manager.js';
+                document.head.appendChild(script);
               }
             `,
           }}

@@ -7,7 +7,7 @@ import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateSavingsGoal, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface SavingsGoalCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -95,53 +95,81 @@ export default function SavingsGoalCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Target Amount"
-          value={targetAmount}
-          onChange={setTargetAmount}
-          placeholder="Enter your savings goal"
-          suffix="₹"
-          error={errors.targetAmount}
-          required
-          showWordsFor="currency"
-        />
-        <InputField
-          label="Current Savings"
-          value={currentSavings}
-          onChange={setCurrentSavings}
-          placeholder="Enter current savings amount"
-          suffix="₹"
-          error={errors.currentSavings}
-          required
-          showWordsFor="currency"
-        />
-        <Box>
-          <DurationToggle
-            value={durationUnit}
-            onChange={setDurationUnit}
-            label="Timeframe Unit"
-          />
-          <InputField
-            label="Time to Goal"
-            value={timeframe}
-            onChange={setTimeframe}
-            placeholder={`Enter timeframe in ${durationUnit}`}
-            suffix={durationUnit}
-            error={errors.timeframe}
-            required
-            showWordsFor={durationUnit}
-          />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Goal Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              🎯 Savings Goal
+            </Typography>
+            <InputField
+              label="Target Amount"
+              value={targetAmount}
+              onChange={setTargetAmount}
+              placeholder="Enter your savings goal"
+              suffix="₹"
+              error={errors.targetAmount}
+              required
+              showWordsFor="currency"
+            />
+            <InputField
+              label="Current Savings"
+              value={currentSavings}
+              onChange={setCurrentSavings}
+              placeholder="Enter current savings amount"
+              suffix="₹"
+              error={errors.currentSavings}
+              required
+              showWordsFor="currency"
+            />
+          </Box>
+
+          {/* Right Column - Investment Parameters */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⚙️ Investment Parameters
+            </Typography>
+            <InputField
+              label="Expected Annual Return"
+              value={expectedReturn}
+              onChange={setExpectedReturn}
+              placeholder="Enter expected return"
+              suffix="%"
+              error={errors.expectedReturn}
+              required
+              showWordsFor="percentage"
+            />
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Timeframe Unit"
+              />
+              <InputField
+                label="Time to Goal"
+                value={timeframe}
+                onChange={setTimeframe}
+                placeholder={`Enter timeframe in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.timeframe}
+                required
+                showWordsFor={durationUnit}
+              />
+            </Box>
+          </Box>
         </Box>
-        <InputField
-          label="Expected Annual Return"
-          value={expectedReturn}
-          onChange={setExpectedReturn}
-          placeholder="Enter expected return"
-          suffix="%"
-          error={errors.expectedReturn}
-          required
-          showWordsFor="percentage"
-        />
       </CalculatorCard>
 
       {result && (

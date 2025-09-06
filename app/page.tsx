@@ -59,7 +59,9 @@ import Header from "../components/ui/Header";
 import Footer from "../components/ui/Footer";
 import PWAInstallPrompt from "../components/ui/PWAInstallPrompt";
 import MobileBackHandler from "../components/ui/MobileBackHandler";
+import DevCacheManager from "../components/DevCacheManager";
 import { useBackButton } from "../hooks/useBackButton";
+import { useCacheManager } from "../hooks/useCacheManager";
 
 const categories: CalculatorCategory[] = [
   {
@@ -297,6 +299,9 @@ export default function Home() {
   const [selectedCalculator, setSelectedCalculator] = useState<string | null>(
     null
   );
+
+  // Initialize cache manager for development
+  useCacheManager();
 
   // Handle back button navigation
   const handleBackToHome = () => {
@@ -699,7 +704,10 @@ export default function Home() {
                           },
                         }}
                       >
-                        <CardContent sx={{ p: 2.5 }} className="h-full flex flex-col">
+                        <CardContent
+                          sx={{ p: 2.5 }}
+                          className="h-full flex flex-col"
+                        >
                           <Box className="flex items-start mb-4">
                             <Box
                               className="mr-3 p-2 rounded-lg text-white flex-shrink-0"
@@ -777,6 +785,7 @@ export default function Home() {
       </Container>
       <Footer />
       <PWAInstallPrompt />
+      <DevCacheManager />
     </Box>
   );
 }

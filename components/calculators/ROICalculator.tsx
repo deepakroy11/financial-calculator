@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
@@ -153,48 +153,73 @@ export default function ROICalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Initial Investment"
-          value={initialInvestment}
-          onChange={setInitialInvestment}
-          placeholder="Enter initial investment amount"
-          suffix="₹"
-          error={errors.initialInvestment}
-          required
-        />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Investment Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Investment Details
+            </Typography>
+            <InputField
+              label="Initial Investment"
+              value={initialInvestment}
+              onChange={setInitialInvestment}
+              placeholder="Enter initial investment amount"
+              suffix="₹"
+              error={errors.initialInvestment}
+              required
+            />
+            <InputField
+              label="Final Value"
+              value={finalValue}
+              onChange={setFinalValue}
+              placeholder="Enter final value or current value"
+              suffix="₹"
+              error={errors.finalValue}
+              required
+            />
+            <InputField
+              label="Additional Costs (Optional)"
+              value={additionalCosts}
+              onChange={setAdditionalCosts}
+              placeholder="Enter additional costs (fees, taxes, etc.)"
+              suffix="₹"
+            />
+          </Box>
 
-        <InputField
-          label="Final Value"
-          value={finalValue}
-          onChange={setFinalValue}
-          placeholder="Enter final value or current value"
-          suffix="₹"
-          error={errors.finalValue}
-          required
-        />
-
-        <InputField
-          label="Additional Costs (Optional)"
-          value={additionalCosts}
-          onChange={setAdditionalCosts}
-          placeholder="Enter additional costs (fees, taxes, etc.)"
-          suffix="₹"
-        />
-
-        <Box>
-          <DurationToggle
-            value={durationUnit}
-            onChange={setDurationUnit}
-            label="Time Period Unit (Optional)"
-          />
-          <InputField
-            label="Investment Period (Optional)"
-            value={timePeriod}
-            onChange={setTimePeriod}
-            placeholder={`Enter investment period in ${durationUnit} (for annualized ROI)`}
-            suffix={durationUnit}
-            error={errors.timePeriod}
-          />
+          {/* Right Column - Time Period */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⏰ Time Period (Optional)
+            </Typography>
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Time Period Unit (Optional)"
+              />
+              <InputField
+                label="Investment Period (Optional)"
+                value={timePeriod}
+                onChange={setTimePeriod}
+                placeholder={`Enter investment period in ${durationUnit} (for annualized ROI)`}
+                suffix={durationUnit}
+                error={errors.timePeriod}
+              />
+            </Box>
+          </Box>
         </Box>
 
         <Box

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CalculatorCard from "../ui/CalculatorCard";
 import InputField from "../ui/InputField";
 import ResultCard from "../ui/ResultCard";
@@ -121,41 +121,67 @@ export default function InflationCalculator({
         onCalculate={handleCalculate}
         onReset={handleReset}
       >
-        <InputField
-          label="Current Amount"
-          value={currentAmount}
-          onChange={setCurrentAmount}
-          placeholder="Enter current amount"
-          suffix="₹"
-          error={errors.currentAmount}
-          required
-        />
+        {/* Two Column Layout */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+            gap: 3,
+          }}
+        >
+          {/* Left Column - Amount Details */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              💰 Amount Details
+            </Typography>
+            <InputField
+              label="Current Amount"
+              value={currentAmount}
+              onChange={setCurrentAmount}
+              placeholder="Enter current amount"
+              suffix="₹"
+              error={errors.currentAmount}
+              required
+            />
+            <InputField
+              label="Expected Inflation Rate"
+              value={inflationRate}
+              onChange={setInflationRate}
+              placeholder="Enter annual inflation rate"
+              suffix="% p.a."
+              error={errors.inflationRate}
+              required
+            />
+          </Box>
 
-        <InputField
-          label="Expected Inflation Rate"
-          value={inflationRate}
-          onChange={setInflationRate}
-          placeholder="Enter annual inflation rate"
-          suffix="% p.a."
-          error={errors.inflationRate}
-          required
-        />
-
-        <Box>
-          <DurationToggle
-            value={durationUnit}
-            onChange={setDurationUnit}
-            label="Time Period Unit"
-          />
-          <InputField
-            label="Time Period"
-            value={timePeriod}
-            onChange={setTimePeriod}
-            placeholder={`Enter time period in ${durationUnit}`}
-            suffix={durationUnit}
-            error={errors.timePeriod}
-            required
-          />
+          {/* Right Column - Time Period */}
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}
+            >
+              ⏰ Time Period
+            </Typography>
+            <Box>
+              <DurationToggle
+                value={durationUnit}
+                onChange={setDurationUnit}
+                label="Time Period Unit"
+              />
+              <InputField
+                label="Time Period"
+                value={timePeriod}
+                onChange={setTimePeriod}
+                placeholder={`Enter time period in ${durationUnit}`}
+                suffix={durationUnit}
+                error={errors.timePeriod}
+                required
+              />
+            </Box>
+          </Box>
         </Box>
 
         <Box
