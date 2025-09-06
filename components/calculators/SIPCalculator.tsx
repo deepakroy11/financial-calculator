@@ -8,7 +8,7 @@ import ChartCard from "../ui/ChartCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateSIP, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface SIPCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -104,13 +104,20 @@ export default function SIPCalculator({
   };
 
   return (
-    <div>
-      <CalculatorCard
-        title="SIP Calculator"
-        description="Calculate the future value of your Systematic Investment Plan (SIP) and see how your money grows over time."
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-      >
+    <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
+      <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}>
+        SIP Calculator
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+        Calculate the future value of your Systematic Investment Plan (SIP) and see how your money grows over time.
+      </Typography>
+      
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" }, gap: 3 }}>
+        <CalculatorCard
+          title="SIP Details"
+          onCalculate={handleCalculate}
+          onReset={handleReset}
+        >
         <InputField
           label="Monthly Investment"
           value={monthlyAmount}
@@ -157,105 +164,65 @@ export default function SIPCalculator({
             showWordsFor={durationUnit}
           />
         </Box>
-      </CalculatorCard>
-
-      {result && (
-        <ResultCard
-          title={`SIP Investment Results${
-            stepUpRate && parseFloat(stepUpRate) > 0 ? " (with Step-up)" : ""
-          }`}
-          results={[
-            {
-              label: "Future Value",
-              value: formatCurrency(result.futureValue),
-              highlight: true,
-            },
-            {
-              label: "Total Investment",
-              value: formatCurrency(result.totalInvestment),
-            },
-            {
-              label: "Total Returns",
-              value: formatCurrency(result.totalReturns),
-            },
-            ...(stepUpRate && parseFloat(stepUpRate) > 0
-              ? [
+        </CalculatorCard>
+        
+        <Box>
+          {result ? (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <ResultCard
+                title="SIP Results"
+                results={[
                   {
-                    label: "Annual Step-up Rate",
-                    value: `${stepUpRate}%`,
+                    label: "Future Value",
+                    value: formatCurrency(result.futureValue),
+                    highlight: true,
                   },
-                ]
-              : []),
-          ]}
-          explanation={`By investing ${formatCurrency(
-            parseFloat(monthlyAmount)
-          )} monthly${
-            stepUpRate && parseFloat(stepUpRate) > 0
-              ? ` with ${stepUpRate}% annual increase`
-              : ""
-          } for ${tenure} ${
-            durationUnit === "years" ? "years" : "months"
-          } at ${rate}% annual return, your investment will grow to ${formatCurrency(
-            result.futureValue
-          )}.`}
-        />
-      )}
-
-      {result && result.yearlyData && (
-        <>
-          <ChartCard
-            title="SIP Growth Over Time"
-            data={result.yearlyData}
-            type="line"
-            dataKey="total"
-            xAxisKey="year"
-          />
-
-          <ChartCard
-            title="Investment vs Returns"
-            data={[
-              { name: "Total Investment", value: result.totalInvestment },
-              { name: "Total Returns", value: result.totalReturns },
-            ]}
-            type="pie"
-            dataKey="value"
-            colors={["#00C49F", "#FFBB28"]}
-          />
-        </>
-      )}
-
-      {/* Step-up Information */}
-      <Box
-        sx={{
-          p: 2,
-          backgroundColor: "info.light",
-          borderRadius: 2,
-          border: 1,
-          borderColor: "info.main",
-          mb: 3,
-          mt: 3,
-        }}
-      >
-        <Box sx={{ mb: 1, fontWeight: 600, color: "#000000" }}>
-          About Step-up SIP:
-        </Box>
-        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
-          • Step-up SIP allows you to increase your investment amount annually
-        </Box>
-        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
-          • Helps counter inflation and increase wealth creation over time
-        </Box>
-        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
-          • Example: ₹5,000 monthly with 10% step-up becomes ₹5,500 in year 2
+                  {
+                    label: "Total Investment",
+                    value: formatCurrency(result.totalInvestment),
+                  },
+                  {
+                    label: "Total Returns",
+                    value: formatCurrency(result.totalReturns),
+                  },
+                ]}
+              />
+              <ChartCard
+                title="Investment Breakdown"
+                data={[
+                  { name: "Investment", value: result.totalInvestment },
+                  { name: "Returns", value: result.totalReturns },
+                ]}
+                type="pie"
+                dataKey="value"
+                colors={["#14213D", "#FCA311"]}
+              />
+            </Box>
+          ) : (
+            <Box sx={{ 
+              p: 4, 
+              textAlign: "center", 
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              border: 1,
+              borderColor: "divider"
+            }}>
+              <Typography variant="body2" color="text.secondary">
+                Enter SIP details to see investment growth and returns
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
-
+      
       {onCalculatorSelect && (
-        <RelatedCalculators
-          currentCalculator="sip"
-          onCalculatorSelect={onCalculatorSelect}
-        />
+        <Box sx={{ mt: 3 }}>
+          <RelatedCalculators
+            currentCalculator="sip"
+            onCalculatorSelect={onCalculatorSelect}
+          />
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }

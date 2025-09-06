@@ -8,7 +8,7 @@ import ChartCard from "../ui/ChartCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateEMI, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface EMICalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -100,16 +100,20 @@ export default function EMICalculator({
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Calculator Input - Left Column */}
-        <div className="lg:col-span-1">
-          <CalculatorCard
-            title="EMI Calculator"
-            description="Calculate your Equated Monthly Installment (EMI) for home loans, personal loans, car loans, and more."
-            onCalculate={handleCalculate}
-            onReset={handleReset}
-          >
+    <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
+      <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}>
+        EMI Calculator
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+        Calculate your Equated Monthly Installment (EMI) for home loans, personal loans, car loans, and more.
+      </Typography>
+      
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" }, gap: 3 }}>
+        <CalculatorCard
+          title="Loan Details"
+          onCalculate={handleCalculate}
+          onReset={handleReset}
+        >
             <InputField
               label="Loan Amount"
               value={principal}
@@ -147,15 +151,13 @@ export default function EMICalculator({
                 showWordsFor={durationUnit}
               />
             </Box>
-          </CalculatorCard>
-        </div>
-
-        {/* Results and Charts - Right Columns */}
-        <div className="lg:col-span-2">
-          {result && (
-            <div className="space-y-6">
+        </CalculatorCard>
+        
+        <Box>
+          {result ? (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <ResultCard
-                title="EMI Calculation Results"
+                title="EMI Results"
                 results={[
                   {
                     label: "Monthly EMI",
@@ -163,88 +165,54 @@ export default function EMICalculator({
                     highlight: true,
                   },
                   {
-                    label: "Total Interest Payable",
+                    label: "Total Interest",
                     value: formatCurrency(result.totalInterest),
                   },
                   {
-                    label: "Total Amount Payable",
+                    label: "Total Amount",
                     value: formatCurrency(result.totalAmount),
                   },
                 ]}
-                explanation={`You will pay ${formatCurrency(
-                  result.emi
-                )} every month for ${tenure} months. The total interest over the loan period will be ${formatCurrency(
-                  result.totalInterest
-                )}.`}
               />
-
-              {result.yearlyData && (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                  <ChartCard
-                    title="Principal vs Interest Payment Over Time"
-                    data={result.yearlyData}
-                    type="bar"
-                    dataKey="principal"
-                    xAxisKey="year"
-                  />
-
-                  <ChartCard
-                    title="Loan Breakdown"
-                    data={[
-                      {
-                        name: "Principal Amount",
-                        value: result.totalAmount - result.totalInterest,
-                      },
-                      { name: "Total Interest", value: result.totalInterest },
-                    ]}
-                    type="pie"
-                    dataKey="value"
-                    colors={["#0088FE", "#FF8042"]}
-                  />
-                </div>
-              )}
-            </div>
+              <ChartCard
+                title="Loan Breakdown"
+                data={[
+                  {
+                    name: "Principal",
+                    value: result.totalAmount - result.totalInterest,
+                  },
+                  { name: "Interest", value: result.totalInterest },
+                ]}
+                type="pie"
+                dataKey="value"
+                colors={["#14213D", "#FCA311"]}
+              />
+            </Box>
+          ) : (
+            <Box sx={{ 
+              p: 4, 
+              textAlign: "center", 
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              border: 1,
+              borderColor: "divider"
+            }}>
+              <Typography variant="body2" color="text.secondary">
+                Enter loan details to calculate EMI and see breakdown
+              </Typography>
+            </Box>
           )}
-
-          {!result && (
-            <div className="flex items-center justify-center h-64 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300">
-              <div className="text-center">
-                <div className="text-gray-400 mb-2">
-                  <svg
-                    className="w-12 h-12 mx-auto"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1}
-                      d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <p className="text-gray-500 font-medium">
-                  Enter loan details to see results
-                </p>
-                <p className="text-gray-400 text-sm">
-                  Fill in the form and click calculate
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Related Calculators - Full Width */}
+        </Box>
+      </Box>
+      
       {onCalculatorSelect && (
-        <div className="mt-8">
+        <Box sx={{ mt: 3 }}>
           <RelatedCalculators
             currentCalculator="emi"
             onCalculatorSelect={onCalculatorSelect}
           />
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }

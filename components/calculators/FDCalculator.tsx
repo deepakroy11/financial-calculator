@@ -7,7 +7,7 @@ import ResultCard from "../ui/ResultCard";
 import RelatedCalculators from "../ui/RelatedCalculators";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateFD, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface FDCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -73,13 +73,20 @@ export default function FDCalculator({
   };
 
   return (
-    <div>
-      <CalculatorCard
-        title="Fixed Deposit Calculator"
-        description="Calculate the maturity amount and interest earned on your Fixed Deposit investment."
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-      >
+    <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
+      <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}>
+        Fixed Deposit Calculator
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+        Calculate the maturity amount and interest earned on your Fixed Deposit investment.
+      </Typography>
+      
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" }, gap: 3 }}>
+        <CalculatorCard
+          title="FD Details"
+          onCalculate={handleCalculate}
+          onReset={handleReset}
+        >
         <InputField
           label="Principal Amount"
           value={principal}
@@ -117,40 +124,53 @@ export default function FDCalculator({
             showWordsFor={durationUnit}
           />
         </Box>
-      </CalculatorCard>
-
-      {result && (
-        <ResultCard
-          title="Fixed Deposit Results"
-          results={[
-            {
-              label: "Maturity Amount",
-              value: formatCurrency(result.maturityAmount),
-              highlight: true,
-            },
-            {
-              label: "Principal Amount",
-              value: formatCurrency(result.principal),
-            },
-            {
-              label: "Interest Earned",
-              value: formatCurrency(result.interest),
-            },
-          ]}
-          explanation={`Your FD of ${formatCurrency(
-            parseFloat(principal)
-          )} at ${rate}% for ${tenure} years will mature to ${formatCurrency(
-            result.maturityAmount
-          )}, earning ${formatCurrency(result.interest)} in interest.`}
-        />
-      )}
-
+        </CalculatorCard>
+        
+        <Box>
+          {result ? (
+            <ResultCard
+              title="FD Results"
+              results={[
+                {
+                  label: "Maturity Amount",
+                  value: formatCurrency(result.maturityAmount),
+                  highlight: true,
+                },
+                {
+                  label: "Principal Amount",
+                  value: formatCurrency(result.principal),
+                },
+                {
+                  label: "Interest Earned",
+                  value: formatCurrency(result.interest),
+                },
+              ]}
+            />
+          ) : (
+            <Box sx={{ 
+              p: 4, 
+              textAlign: "center", 
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              border: 1,
+              borderColor: "divider"
+            }}>
+              <Typography variant="body2" color="text.secondary">
+                Enter FD details to calculate maturity amount
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Box>
+      
       {onCalculatorSelect && (
-        <RelatedCalculators
-          currentCalculator="fd"
-          onCalculatorSelect={onCalculatorSelect}
-        />
+        <Box sx={{ mt: 3 }}>
+          <RelatedCalculators
+            currentCalculator="fd"
+            onCalculatorSelect={onCalculatorSelect}
+          />
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }

@@ -540,8 +540,8 @@ export default function Home() {
         onHomeClick={() => setSelectedCalculator(null)}
       />
 
-      <Container maxWidth="lg" sx={{ py: 6 }}>
-        <Box sx={{ textAlign: "center", mb: 8 }}>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Box sx={{ textAlign: "center", mb: 5 }}>
           <Typography
             variant="h2"
             component="h1"
@@ -549,7 +549,7 @@ export default function Home() {
               mb: 3,
               fontWeight: 800,
               color: "text.primary",
-              fontSize: { xs: "2.25rem", sm: "2.75rem", md: "3.25rem" },
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "2.75rem" },
               letterSpacing: "-0.025em",
               lineHeight: 1.1,
             }}
@@ -639,10 +639,10 @@ export default function Home() {
             "#FCA311";
 
           return (
-            <Box key={category.id} className="mb-16" id={category.id}>
-              <Box className="flex items-center mb-8">
+            <Box key={category.id} sx={{ mb: 6 }} id={category.id}>
+              <Box className="flex items-center mb-3">
                 <Box
-                  className="mr-4 p-4 rounded-2xl text-white shadow-lg"
+                  className="mr-3 p-2.5 rounded-lg text-white"
                   sx={{
                     backgroundColor: categoryColor,
                     background: `linear-gradient(135deg, ${categoryColor} 0%, ${categoryColor}dd 100%)`,
@@ -658,7 +658,7 @@ export default function Home() {
                   sx={{
                     fontWeight: 700,
                     color: "text.primary",
-                    fontSize: { xs: "1.75rem", md: "2rem" },
+                    fontSize: { xs: "1.4rem", md: "1.6rem" },
                     letterSpacing: "-0.025em",
                   }}
                 >
@@ -666,7 +666,7 @@ export default function Home() {
                 </Typography>
               </Box>
 
-              <Grid container spacing={4}>
+              <Grid container spacing={2.5}>
                 {category.calculators.map((calculator, index) => {
                   const IconComponent = iconMap[calculator.icon];
                   const colors = [
@@ -685,7 +685,7 @@ export default function Home() {
                         className="h-full cursor-pointer calculator-card"
                         onClick={() => setSelectedCalculator(calculator.id)}
                         sx={{
-                          minHeight: "220px",
+                          minHeight: "160px",
                           position: "relative",
                           overflow: "hidden",
                           "&::before": {
@@ -694,22 +694,20 @@ export default function Home() {
                             top: 0,
                             left: 0,
                             right: 0,
-                            height: "4px",
+                            display: "none",
                             background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
                           },
                         }}
                       >
-                        <CardContent className="p-6 h-full flex flex-col">
+                        <CardContent sx={{ p: 2.5 }} className="h-full flex flex-col">
                           <Box className="flex items-start mb-4">
                             <Box
-                              className="mr-4 p-3 rounded-2xl text-white shadow-lg flex-shrink-0"
+                              className="mr-3 p-2 rounded-lg text-white flex-shrink-0"
                               sx={{
                                 backgroundColor: color,
-                                background: `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`,
-                                boxShadow: `0 4px 16px ${color}40`,
                               }}
                             >
-                              {IconComponent && <IconComponent size={22} />}
+                              {IconComponent && <IconComponent size={18} />}
                             </Box>
                             <Typography
                               variant="h6"
@@ -717,8 +715,8 @@ export default function Home() {
                               sx={{
                                 fontWeight: 600,
                                 color: "text.primary",
-                                lineHeight: 1.3,
-                                fontSize: "1.125rem",
+                                lineHeight: 1.2,
+                                fontSize: "0.95rem",
                               }}
                             >
                               {calculator.name}
@@ -729,10 +727,10 @@ export default function Home() {
                             variant="body2"
                             sx={{
                               color: "text.secondary",
-                              mb: 4,
-                              lineHeight: 1.6,
+                              mb: 2,
+                              lineHeight: 1.4,
                               flexGrow: 1,
-                              fontSize: "0.9rem",
+                              fontSize: "0.8rem",
                             }}
                           >
                             {calculator.description}

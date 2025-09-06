@@ -8,7 +8,7 @@ import RelatedCalculators from "../ui/RelatedCalculators";
 import ChartCard from "../ui/ChartCard";
 import DurationToggle from "../ui/DurationToggle";
 import { calculateLumpSum, formatCurrency } from "../../lib/calculators";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface LumpSumCalculatorProps {
   onCalculatorSelect?: (calculatorId: string) => void;
@@ -114,13 +114,20 @@ export default function LumpSumCalculator({
   ];
 
   return (
-    <div>
-      <CalculatorCard
-        title="Lump Sum Calculator"
-        description="Calculate the future value of your one-time investment with compound interest over time."
-        onCalculate={handleCalculate}
-        onReset={handleReset}
-      >
+    <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
+      <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}>
+        Lump Sum Calculator
+      </Typography>
+      <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+        Calculate the future value of your one-time investment with compound interest over time.
+      </Typography>
+      
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" }, gap: 3 }}>
+        <CalculatorCard
+          title="Investment Details"
+          onCalculate={handleCalculate}
+          onReset={handleReset}
+        >
         <InputField
           label="Investment Amount"
           value={principal}
@@ -158,51 +165,68 @@ export default function LumpSumCalculator({
             showWordsFor={durationUnit}
           />
         </Box>
-      </CalculatorCard>
-
-      {result && (
-        <ResultCard
-          title="Lump Sum Investment Results"
-          results={[
-            {
-              label: "Future Value",
-              value: formatCurrency(result.futureValue),
-              highlight: true,
-            },
-            {
-              label: "Principal Amount",
-              value: formatCurrency(result.principal),
-            },
-            {
-              label: "Total Returns",
-              value: formatCurrency(result.totalReturns),
-            },
-            {
-              label: "Absolute Return",
-              value: `${result.absoluteReturn}%`,
-            },
-            {
-              label: "CAGR",
-              value: `${result.cagr}%`,
-            },
-          ]}
+        </CalculatorCard>
+        
+        <Box>
+          {result ? (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <ResultCard
+                title="Investment Results"
+                results={[
+                  {
+                    label: "Future Value",
+                    value: formatCurrency(result.futureValue),
+                    highlight: true,
+                  },
+                  {
+                    label: "Principal Amount",
+                    value: formatCurrency(result.principal),
+                  },
+                  {
+                    label: "Total Returns",
+                    value: formatCurrency(result.totalReturns),
+                  },
+                  {
+                    label: "Absolute Return",
+                    value: `${result.absoluteReturn}%`,
+                  },
+                  {
+                    label: "CAGR",
+                    value: `${result.cagr}%`,
+                  },
+                ]}
+              />
+              <ChartCard
+                title="Investment Breakdown"
+                data={getChartData()}
+                type="pie"
+                dataKey="value"
+                colors={["#14213D", "#FCA311"]}
+              />
+            </Box>
+          ) : (
+            <Box sx={{ 
+              p: 4, 
+              textAlign: "center", 
+              backgroundColor: "background.paper",
+              borderRadius: 2,
+              border: 1,
+              borderColor: "divider"
+            }}>
+              <Typography variant="body2" color="text.secondary">
+                Enter investment details to see results and breakdown
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Box>
+      
+      <Box sx={{ mt: 3 }}>
+        <RelatedCalculators
+          currentCalculator="lump-sum"
+          onCalculatorSelect={onCalculatorSelect || (() => {})}
         />
-      )}
-
-      {result && (
-        <ChartCard
-          title="Investment Breakdown"
-          data={getChartData()}
-          type="pie"
-          dataKey="value"
-          colors={["#14213D", "#FCA311"]}
-        />
-      )}
-
-      <RelatedCalculators
-        currentCalculator="lump-sum"
-        onCalculatorSelect={onCalculatorSelect || (() => {})}
-      />
-    </div>
+      </Box>
+    </Box>
   );
 }

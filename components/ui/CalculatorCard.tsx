@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 interface CalculatorCardProps {
   title: string;
-  description: string;
+  description?: string;
   children: ReactNode;
   onCalculate: () => void;
   onReset: () => void;
@@ -47,15 +47,17 @@ export default function CalculatorCard({
           >
             {title}
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "text.secondary",
-              lineHeight: 1.6,
-            }}
-          >
-            {description}
-          </Typography>
+          {description && (
+            <Typography
+              variant="body2"
+              sx={{
+                color: "text.secondary",
+                lineHeight: 1.6,
+              }}
+            >
+              {description}
+            </Typography>
+          )}
         </Box>
 
         <Box sx={{ mb: 3 }}>{children}</Box>
