@@ -22,22 +22,61 @@ export const calculateEMI = (
 export const calculateSIP = (
   monthlyAmount: number,
   rate: number,
-  tenure: number
+  tenure: number,
+  stepUpRate: number = 0
 ) => {
   const monthlyRate = rate / (12 * 100);
   const months = tenure * 12;
-  const futureValue =
-    monthlyAmount *
-    (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
-      (1 + monthlyRate));
-  const totalInvestment = monthlyAmount * months;
-  const totalReturns = futureValue - totalInvestment;
 
-  return {
-    futureValue: Math.round(futureValue),
-    totalInvestment: Math.round(totalInvestment),
-    totalReturns: Math.round(totalReturns),
-  };
+  if (stepUpRate === 0) {
+    // Regular SIP without step-up
+    const futureValue =
+      monthlyAmount *
+      (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+        (1 + monthlyRate));
+    const totalInvestment = monthlyAmount * months;
+    const totalReturns = futureValue - totalInvestment;
+
+    return {
+      futureValue: Math.round(futureValue),
+      totalInvestment: Math.round(totalInvestment),
+      totalReturns: Math.round(totalReturns),
+    };
+  } else {
+    // SIP with annual step-up
+    let futureValue = 0;
+    let totalInvestment = 0;
+    let currentMonthlyAmount = monthlyAmount;
+
+    for (let year = 1; year <= tenure; year++) {
+      // Calculate for 12 months of current year
+      const monthsInYear = year === tenure ? months % 12 || 12 : 12;
+      const remainingMonths = months - (year - 1) * 12;
+      const actualMonthsInYear = Math.min(monthsInYear, remainingMonths);
+
+      // Calculate future value for this year's investments
+      for (let month = 1; month <= actualMonthsInYear; month++) {
+        const monthsToMaturity = months - ((year - 1) * 12 + month - 1);
+        futureValue +=
+          currentMonthlyAmount * Math.pow(1 + monthlyRate, monthsToMaturity);
+        totalInvestment += currentMonthlyAmount;
+      }
+
+      // Increase amount for next year
+      if (year < tenure) {
+        currentMonthlyAmount = currentMonthlyAmount * (1 + stepUpRate / 100);
+      }
+    }
+
+    const totalReturns = futureValue - totalInvestment;
+
+    return {
+      futureValue: Math.round(futureValue),
+      totalInvestment: Math.round(totalInvestment),
+      totalReturns: Math.round(totalReturns),
+      stepUpRate,
+    };
+  }
 };
 
 // Fixed Deposit Calculator
@@ -214,6 +253,27 @@ export const calculateSavingsGoal = (
     monthlySIP: Math.round(Math.max(0, monthlySIP)),
     futureValueCurrentSavings: Math.round(futureValueCurrentSavings),
     totalInvestment: Math.round(currentSavings + monthlySIP * months),
+  };
+};
+
+// Lump Sum Calculator
+export const calculateLumpSum = (
+  principal: number,
+  rate: number,
+  tenure: number
+) => {
+  const annualRate = rate / 100;
+  const futureValue = principal * Math.pow(1 + annualRate, tenure);
+  const totalReturns = futureValue - principal;
+  const absoluteReturn = ((futureValue - principal) / principal) * 100;
+  const cagr = (Math.pow(futureValue / principal, 1 / tenure) - 1) * 100;
+
+  return {
+    futureValue: Math.round(futureValue),
+    totalReturns: Math.round(totalReturns),
+    absoluteReturn: Math.round(absoluteReturn * 100) / 100,
+    cagr: Math.round(cagr * 100) / 100,
+    principal: Math.round(principal),
   };
 };
 

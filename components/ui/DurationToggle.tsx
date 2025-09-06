@@ -50,6 +50,7 @@ export default function DurationToggle({
           "& .MuiToggleButton-root": {
             px: 2,
             py: 1,
+            margin: 0.5,
             borderRadius: 2,
             textTransform: "none",
             fontWeight: 500,

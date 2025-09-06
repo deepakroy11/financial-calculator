@@ -20,6 +20,7 @@ export default function SIPCalculator({
   const [monthlyAmount, setMonthlyAmount] = useState("");
   const [rate, setRate] = useState("");
   const [tenure, setTenure] = useState("");
+  const [stepUpRate, setStepUpRate] = useState("");
   const [durationUnit, setDurationUnit] = useState<"months" | "years">("years");
   const [result, setResult] = useState<any>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -41,6 +42,14 @@ export default function SIPCalculator({
       newErrors.tenure = `Please enter a valid investment period (1-${maxTenure} ${tenureLabel})`;
     }
 
+    // Step-up rate validation (optional field)
+    if (
+      stepUpRate &&
+      (parseFloat(stepUpRate) < 0 || parseFloat(stepUpRate) > 50)
+    ) {
+      newErrors.stepUpRate = "Step-up rate should be between 0-50%";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -55,7 +64,8 @@ export default function SIPCalculator({
     const sipResult = calculateSIP(
       parseFloat(monthlyAmount),
       parseFloat(rate),
-      tenureInYears
+      tenureInYears,
+      stepUpRate ? parseFloat(stepUpRate) : 0
     );
 
     // Generate year-wise growth data for chart
@@ -88,6 +98,7 @@ export default function SIPCalculator({
     setMonthlyAmount("");
     setRate("");
     setTenure("");
+    setStepUpRate("");
     setResult(null);
     setErrors({});
   };
@@ -120,6 +131,15 @@ export default function SIPCalculator({
           required
           showWordsFor="percentage"
         />
+        <InputField
+          label="Annual Step-up (Optional)"
+          value={stepUpRate}
+          onChange={setStepUpRate}
+          placeholder="Enter annual increase rate (e.g., 10)"
+          suffix="%"
+          error={errors.stepUpRate}
+          showWordsFor="percentage"
+        />
         <Box>
           <DurationToggle
             value={durationUnit}
@@ -141,7 +161,9 @@ export default function SIPCalculator({
 
       {result && (
         <ResultCard
-          title="SIP Investment Results"
+          title={`SIP Investment Results${
+            stepUpRate && parseFloat(stepUpRate) > 0 ? " (with Step-up)" : ""
+          }`}
           results={[
             {
               label: "Future Value",
@@ -156,10 +178,24 @@ export default function SIPCalculator({
               label: "Total Returns",
               value: formatCurrency(result.totalReturns),
             },
+            ...(stepUpRate && parseFloat(stepUpRate) > 0
+              ? [
+                  {
+                    label: "Annual Step-up Rate",
+                    value: `${stepUpRate}%`,
+                  },
+                ]
+              : []),
           ]}
           explanation={`By investing ${formatCurrency(
             parseFloat(monthlyAmount)
-          )} monthly for ${tenure} years at ${rate}% annual return, your investment will grow to ${formatCurrency(
+          )} monthly${
+            stepUpRate && parseFloat(stepUpRate) > 0
+              ? ` with ${stepUpRate}% annual increase`
+              : ""
+          } for ${tenure} ${
+            durationUnit === "years" ? "years" : "months"
+          } at ${rate}% annual return, your investment will grow to ${formatCurrency(
             result.futureValue
           )}.`}
         />
@@ -187,6 +223,32 @@ export default function SIPCalculator({
           />
         </>
       )}
+
+      {/* Step-up Information */}
+      <Box
+        sx={{
+          p: 2,
+          backgroundColor: "info.light",
+          borderRadius: 2,
+          border: 1,
+          borderColor: "info.main",
+          mb: 3,
+          mt: 3,
+        }}
+      >
+        <Box sx={{ mb: 1, fontWeight: 600, color: "#000000" }}>
+          About Step-up SIP:
+        </Box>
+        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
+          • Step-up SIP allows you to increase your investment amount annually
+        </Box>
+        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
+          • Helps counter inflation and increase wealth creation over time
+        </Box>
+        <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
+          • Example: ₹5,000 monthly with 10% step-up becomes ₹5,500 in year 2
+        </Box>
+      </Box>
 
       {onCalculatorSelect && (
         <RelatedCalculators

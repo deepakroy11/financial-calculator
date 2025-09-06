@@ -167,16 +167,16 @@ export default function InflationCalculator({
             borderColor: "warning.main",
           }}
         >
-          <Box sx={{ mb: 1, fontWeight: 600, color: "text.primary" }}>
+          <Box sx={{ mb: 1, fontWeight: 600, color: "#000000" }}>
             About Inflation:
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
             • India's average inflation rate: ~6% per annum
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
             • Inflation reduces purchasing power over time
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
             • Investments should beat inflation to grow real wealth
           </Box>
         </Box>

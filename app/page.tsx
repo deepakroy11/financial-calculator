@@ -38,6 +38,7 @@ import { MdSavings, MdAccountBalance } from "react-icons/md";
 import { CalculatorCategory } from "../types/calculator";
 import EMICalculator from "../components/calculators/EMICalculator";
 import SIPCalculator from "../components/calculators/SIPCalculator";
+import LumpSumCalculator from "../components/calculators/LumpSumCalculator";
 import FDCalculator from "../components/calculators/FDCalculator";
 import RDCalculator from "../components/calculators/RDCalculator";
 import TaxCalculator from "../components/calculators/TaxCalculator";
@@ -105,6 +106,13 @@ const categories: CalculatorCategory[] = [
         name: "SIP Calculator",
         description: "Calculate SIP returns and wealth creation",
         icon: "FaChartLine",
+        category: "investments",
+      },
+      {
+        id: "lump-sum",
+        name: "Lump Sum Calculator",
+        description: "Calculate one-time investment returns",
+        icon: "FaCoins",
         category: "investments",
       },
       {
@@ -361,6 +369,8 @@ export default function Home() {
       case "sip":
       case "mutual-fund":
         return <SIPCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "lump-sum":
+        return <LumpSumCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "fd":
         return <FDCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "rd":
@@ -579,7 +589,7 @@ export default function Home() {
             <Chip
               label="Indian Tax Compliant 2024-25"
               sx={{
-                backgroundColor: "#14213D",
+                backgroundColor: "primary.main",
                 color: "#ffffff",
                 fontWeight: 600,
                 px: 3,

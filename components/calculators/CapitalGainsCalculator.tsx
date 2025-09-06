@@ -211,13 +211,13 @@ export default function CapitalGainsCalculator({
             borderColor: "warning.main",
           }}
         >
-          <Box sx={{ mb: 1, fontWeight: 600, color: "text.primary" }}>
+          <Box sx={{ mb: 1, fontWeight: 600, color: "#000000" }}>
             Tax Rules:
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
             • Equity: Long-term (&gt;1 year) - 10% above ₹1L, Short-term - 15%
           </Box>
-          <Box sx={{ fontSize: "0.875rem", color: "text.secondary" }}>
+          <Box sx={{ fontSize: "0.875rem", color: "#000000" }}>
             • Property: Long-term (&gt;2 years) - 20% with indexation,
             Short-term - 30%
           </Box>
