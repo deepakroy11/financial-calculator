@@ -66,40 +66,15 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Prevent hydration mismatch by not rendering until mounted
+  // Prevent hydration mismatch by using consistent theme during SSR
   if (!mounted) {
-    // Use dark theme as default during SSR
-    const ssrTheme = createTheme({
-      palette: {
-        mode: "dark",
-        primary: {
-          main: "#FCA311",
-          light: "#FCA311",
-          dark: "#14213D",
-          contrastText: "#000000",
-        },
-        secondary: {
-          main: "#14213D",
-          light: "#E5E5E5",
-          dark: "#000000",
-          contrastText: "#E5E5E5",
-        },
-        background: {
-          default: "#000000",
-          paper: "#14213D",
-        },
-        text: {
-          primary: "#E5E5E5",
-          secondary: "#FCA311",
-        },
-      },
-    });
-
     return (
       <ThemeContext.Provider
         value={{ darkMode: true, toggleDarkMode: () => {} }}
       >
-        <ThemeProvider theme={ssrTheme}>{children}</ThemeProvider>
+        <ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}>
+          {children}
+        </ThemeProvider>
       </ThemeContext.Provider>
     );
   }

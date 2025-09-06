@@ -39,6 +39,7 @@ import { CalculatorCategory } from "../types/calculator";
 import EMICalculator from "../components/calculators/EMICalculator";
 import SIPCalculator from "../components/calculators/SIPCalculator";
 import LumpSumCalculator from "../components/calculators/LumpSumCalculator";
+import AdvancedSIPCalculator from "../components/calculators/AdvancedSIPCalculator";
 import FDCalculator from "../components/calculators/FDCalculator";
 import RDCalculator from "../components/calculators/RDCalculator";
 import TaxCalculator from "../components/calculators/TaxCalculator";
@@ -113,6 +114,13 @@ const categories: CalculatorCategory[] = [
         name: "Lump Sum Calculator",
         description: "Calculate one-time investment returns",
         icon: "FaCoins",
+        category: "investments",
+      },
+      {
+        id: "advanced-sip",
+        name: "Advanced SIP with Lumpsum",
+        description: "Combine lumpsum and SIP investments",
+        icon: "FaChartArea",
         category: "investments",
       },
       {
@@ -371,6 +379,10 @@ export default function Home() {
         return <SIPCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "lump-sum":
         return <LumpSumCalculator onCalculatorSelect={setSelectedCalculator} />;
+      case "advanced-sip":
+        return (
+          <AdvancedSIPCalculator onCalculatorSelect={setSelectedCalculator} />
+        );
       case "fd":
         return <FDCalculator onCalculatorSelect={setSelectedCalculator} />;
       case "rd":

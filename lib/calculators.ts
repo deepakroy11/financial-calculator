@@ -277,6 +277,75 @@ export const calculateLumpSum = (
   };
 };
 
+// Advanced SIP with Lumpsum Calculator
+export const calculateAdvancedSIP = (
+  lumpSumAmount: number,
+  monthlyAmount: number,
+  rate: number,
+  tenure: number,
+  stepUpRate: number = 0
+) => {
+  const monthlyRate = rate / (12 * 100);
+  const months = tenure * 12;
+
+  // Calculate lumpsum growth
+  const lumpSumFutureValue = lumpSumAmount * Math.pow(1 + rate / 100, tenure);
+
+  // Calculate SIP growth (with optional step-up)
+  let sipFutureValue = 0;
+  let totalSipInvestment = 0;
+
+  if (stepUpRate === 0) {
+    // Regular SIP without step-up
+    sipFutureValue =
+      monthlyAmount *
+      (((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) *
+        (1 + monthlyRate));
+    totalSipInvestment = monthlyAmount * months;
+  } else {
+    // SIP with annual step-up
+    let currentMonthlyAmount = monthlyAmount;
+
+    for (let year = 1; year <= tenure; year++) {
+      const monthsInYear = year === tenure ? months % 12 || 12 : 12;
+      const remainingMonths = months - (year - 1) * 12;
+      const actualMonthsInYear = Math.min(monthsInYear, remainingMonths);
+
+      // Calculate future value for this year's investments
+      for (let month = 1; month <= actualMonthsInYear; month++) {
+        const monthsToMaturity = months - ((year - 1) * 12 + month - 1);
+        sipFutureValue +=
+          currentMonthlyAmount * Math.pow(1 + monthlyRate, monthsToMaturity);
+        totalSipInvestment += currentMonthlyAmount;
+      }
+
+      // Increase amount for next year
+      if (year < tenure) {
+        currentMonthlyAmount = currentMonthlyAmount * (1 + stepUpRate / 100);
+      }
+    }
+  }
+
+  const totalFutureValue = lumpSumFutureValue + sipFutureValue;
+  const totalInvestment = lumpSumAmount + totalSipInvestment;
+  const totalReturns = totalFutureValue - totalInvestment;
+  const lumpSumReturns = lumpSumFutureValue - lumpSumAmount;
+  const sipReturns = sipFutureValue - totalSipInvestment;
+
+  return {
+    totalFutureValue: Math.round(totalFutureValue),
+    totalInvestment: Math.round(totalInvestment),
+    totalReturns: Math.round(totalReturns),
+    lumpSumInvestment: Math.round(lumpSumAmount),
+    lumpSumFutureValue: Math.round(lumpSumFutureValue),
+    lumpSumReturns: Math.round(lumpSumReturns),
+    sipInvestment: Math.round(totalSipInvestment),
+    sipFutureValue: Math.round(sipFutureValue),
+    sipReturns: Math.round(sipReturns),
+    stepUpRate,
+  };
+};
+
 // Utility functions
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat("en-IN", {
