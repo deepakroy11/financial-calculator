@@ -64,7 +64,7 @@ export default function InputField({
     <Box sx={{ mb: { xs: 2, sm: 3 } }}>
       <TextField
         fullWidth
-        label={label}
+        label={String(label)}
         value={value}
         onChange={handleChange}
         placeholder={placeholder}

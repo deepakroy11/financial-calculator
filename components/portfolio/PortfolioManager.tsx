@@ -11,7 +11,6 @@ import {
   CardContent,
   TextField,
   Button,
-  Grid,
   MenuItem,
   Alert,
   Snackbar,
@@ -468,8 +467,14 @@ export default function PortfolioManager({
                 💰 Investment Details
               </Typography>
 
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+                  gap: 2,
+                }}
+              >
+                <Box>
                   <TextField
                     fullWidth
                     label="Investment Name"
@@ -484,9 +489,9 @@ export default function PortfolioManager({
                     helperText={errors.name}
                     placeholder="e.g., HDFC Top 100 Fund"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <FormControl fullWidth error={!!errors.type}>
                     <InputLabel>Investment Type</InputLabel>
                     <Select
@@ -511,9 +516,9 @@ export default function PortfolioManager({
                       <MenuItem value="crypto">Cryptocurrency</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Provider/AMC"
@@ -528,9 +533,9 @@ export default function PortfolioManager({
                     helperText={errors.provider}
                     placeholder="e.g., HDFC Mutual Fund"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="Investment Amount"
                     value={investmentForm.amount}
@@ -546,9 +551,9 @@ export default function PortfolioManager({
                     placeholder="Enter investment amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <DatePicker
                     label="Start Date"
                     value={
@@ -571,9 +576,9 @@ export default function PortfolioManager({
                       },
                     }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Maturity Date (Optional)"
@@ -587,12 +592,12 @@ export default function PortfolioManager({
                     }
                     InputLabelProps={{ shrink: true }}
                   />
-                </Grid>
+                </Box>
 
                 {(investmentForm.type === "fd" ||
                   investmentForm.type === "rd" ||
                   investmentForm.type === "bonds") && (
-                  <Grid item xs={12} md={6}>
+                  <Box>
                     <TextField
                       fullWidth
                       label="Interest Rate"
@@ -610,12 +615,12 @@ export default function PortfolioManager({
                         ),
                       }}
                     />
-                  </Grid>
+                  </Box>
                 )}
 
                 {investmentForm.type === "mutual_funds" && (
                   <>
-                    <Grid item xs={12} md={4}>
+                    <Box>
                       <TextField
                         fullWidth
                         label="Units"
@@ -628,8 +633,8 @@ export default function PortfolioManager({
                           })
                         }
                       />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
+                    </Box>
+                    <Box>
                       <TextField
                         fullWidth
                         label="Current NAV"
@@ -647,8 +652,8 @@ export default function PortfolioManager({
                           ),
                         }}
                       />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
+                    </Box>
+                    <Box>
                       <TextField
                         fullWidth
                         label="Folio Number"
@@ -660,12 +665,12 @@ export default function PortfolioManager({
                           })
                         }
                       />
-                    </Grid>
+                    </Box>
                   </>
                 )}
 
                 {investmentForm.type === "stocks" && (
-                  <Grid item xs={12} md={6}>
+                  <Box>
                     <TextField
                       fullWidth
                       label="Stock Symbol"
@@ -678,10 +683,10 @@ export default function PortfolioManager({
                       }
                       placeholder="e.g., RELIANCE"
                     />
-                  </Grid>
+                  </Box>
                 )}
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <TextField
                     fullWidth
                     label="Notes (Optional)"
@@ -696,9 +701,9 @@ export default function PortfolioManager({
                     }
                     placeholder="Any additional notes about this investment"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -708,8 +713,8 @@ export default function PortfolioManager({
                   >
                     {editData ? "Update Investment" : "Save Investment"}
                   </Button>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             </CardContent>
           </TabPanel>
 
@@ -720,8 +725,8 @@ export default function PortfolioManager({
                 🛡️ Insurance Details
               </Typography>
 
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+              <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2 }}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Insurance Name"
@@ -736,9 +741,9 @@ export default function PortfolioManager({
                     helperText={errors.name}
                     placeholder="e.g., HDFC Life Click 2 Protect Plus"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <FormControl fullWidth>
                     <InputLabel>Insurance Type</InputLabel>
                     <Select
@@ -759,9 +764,9 @@ export default function PortfolioManager({
                       <MenuItem value="travel">Travel Insurance</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Insurance Provider"
@@ -776,9 +781,9 @@ export default function PortfolioManager({
                     helperText={errors.provider}
                     placeholder="e.g., HDFC Life"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Policy Number"
@@ -792,9 +797,9 @@ export default function PortfolioManager({
                     error={!!errors.policyNumber}
                     helperText={errors.policyNumber}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="Premium Amount"
                     value={insuranceForm.premium}
@@ -811,9 +816,9 @@ export default function PortfolioManager({
                     placeholder="Enter premium amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <FormControl fullWidth>
                     <InputLabel>Premium Frequency</InputLabel>
                     <Select
@@ -832,9 +837,9 @@ export default function PortfolioManager({
                       <MenuItem value="yearly">Yearly</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="Coverage Amount"
                     value={insuranceForm.coverageAmount}
@@ -850,9 +855,9 @@ export default function PortfolioManager({
                     placeholder="Enter coverage amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <DatePicker
                     label="Policy Start Date"
                     value={
@@ -875,9 +880,9 @@ export default function PortfolioManager({
                       },
                     }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Maturity Date (Optional)"
@@ -891,9 +896,9 @@ export default function PortfolioManager({
                     }
                     InputLabelProps={{ shrink: true }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Nominee (Optional)"
@@ -906,9 +911,9 @@ export default function PortfolioManager({
                     }
                     placeholder="e.g., Spouse, Parent"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <TextField
                     fullWidth
                     label="Notes (Optional)"
@@ -923,9 +928,9 @@ export default function PortfolioManager({
                     }
                     placeholder="Any additional notes about this insurance policy"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -935,8 +940,8 @@ export default function PortfolioManager({
                   >
                     {editData ? "Update Insurance" : "Save Insurance"}
                   </Button>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             </CardContent>
           </TabPanel>
 
@@ -947,8 +952,8 @@ export default function PortfolioManager({
                 💳 Loan Details
               </Typography>
 
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+              <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2 }}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Loan Name"
@@ -960,9 +965,9 @@ export default function PortfolioManager({
                     helperText={errors.name}
                     placeholder="e.g., Home Loan - Dream Home"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <FormControl fullWidth>
                     <InputLabel>Loan Type</InputLabel>
                     <Select
@@ -983,9 +988,9 @@ export default function PortfolioManager({
                       <MenuItem value="credit_card">Credit Card</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Lender"
@@ -997,9 +1002,9 @@ export default function PortfolioManager({
                     helperText={errors.lender}
                     placeholder="e.g., HDFC Bank"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="Principal Amount"
                     value={loanForm.principalAmount}
@@ -1015,9 +1020,9 @@ export default function PortfolioManager({
                     placeholder="Enter principal amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="Outstanding Amount"
                     value={loanForm.outstandingAmount}
@@ -1033,9 +1038,9 @@ export default function PortfolioManager({
                     placeholder="Enter outstanding amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Interest Rate"
@@ -1055,9 +1060,9 @@ export default function PortfolioManager({
                       ),
                     }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <NumberInput
                     label="EMI Amount"
                     value={loanForm.emi}
@@ -1070,9 +1075,9 @@ export default function PortfolioManager({
                     placeholder="Enter EMI amount"
                     showInWords={true}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Tenure"
@@ -1092,9 +1097,9 @@ export default function PortfolioManager({
                       ),
                     }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Start Date"
@@ -1107,9 +1112,9 @@ export default function PortfolioManager({
                     helperText={errors.startDate}
                     InputLabelProps={{ shrink: true }}
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12} md={6}>
+                <Box>
                   <TextField
                     fullWidth
                     label="Account Number (Optional)"
@@ -1121,9 +1126,9 @@ export default function PortfolioManager({
                       })
                     }
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <TextField
                     fullWidth
                     label="Notes (Optional)"
@@ -1135,9 +1140,9 @@ export default function PortfolioManager({
                     }
                     placeholder="Any additional notes about this loan"
                   />
-                </Grid>
+                </Box>
 
-                <Grid item xs={12}>
+                <Box sx={{ gridColumn: "1 / -1" }}>
                   <Button
                     variant="contained"
                     size="large"
@@ -1147,8 +1152,8 @@ export default function PortfolioManager({
                   >
                     {editData ? "Update Loan" : "Save Loan"}
                   </Button>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             </CardContent>
           </TabPanel>
         </Card>

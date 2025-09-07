@@ -101,58 +101,68 @@ export default function EMICalculator({
 
   return (
     <Box sx={{ maxWidth: "1200px", mx: "auto" }}>
-      <Typography variant="h4" sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}>
+      <Typography
+        variant="h4"
+        sx={{ mb: 1, fontWeight: 700, color: "text.primary" }}
+      >
         EMI Calculator
       </Typography>
       <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
-        Calculate your Equated Monthly Installment (EMI) for home loans, personal loans, car loans, and more.
+        Calculate your Equated Monthly Installment (EMI) for home loans,
+        personal loans, car loans, and more.
       </Typography>
-      
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" }, gap: 3 }}>
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" },
+          gap: 3,
+        }}
+      >
         <CalculatorCard
           title="Loan Details"
           onCalculate={handleCalculate}
           onReset={handleReset}
         >
-            <InputField
-              label="Loan Amount"
-              value={principal}
-              onChange={setPrincipal}
-              placeholder="Enter loan amount"
-              suffix="₹"
-              error={errors.principal}
-              required
-              showWordsFor="currency"
+          <InputField
+            label="Loan Amount"
+            value={principal}
+            onChange={setPrincipal}
+            placeholder="Enter loan amount"
+            suffix="₹"
+            error={errors.principal}
+            required
+            showWordsFor="currency"
+          />
+          <InputField
+            label="Interest Rate (Annual)"
+            value={rate}
+            onChange={setRate}
+            placeholder="Enter interest rate"
+            suffix="%"
+            error={errors.rate}
+            required
+            showWordsFor="percentage"
+          />
+          <Box>
+            <DurationToggle
+              value={durationUnit}
+              onChange={setDurationUnit}
+              label="Tenure Unit"
             />
             <InputField
-              label="Interest Rate (Annual)"
-              value={rate}
-              onChange={setRate}
-              placeholder="Enter interest rate"
-              suffix="%"
-              error={errors.rate}
+              label="Loan Tenure"
+              value={tenure}
+              onChange={setTenure}
+              placeholder={`Enter tenure in ${durationUnit}`}
+              suffix={durationUnit}
+              error={errors.tenure}
               required
-              showWordsFor="percentage"
+              showWordsFor={durationUnit}
             />
-            <Box>
-              <DurationToggle
-                value={durationUnit}
-                onChange={setDurationUnit}
-                label="Tenure Unit"
-              />
-              <InputField
-                label="Loan Tenure"
-                value={tenure}
-                onChange={setTenure}
-                placeholder={`Enter tenure in ${durationUnit}`}
-                suffix={durationUnit}
-                error={errors.tenure}
-                required
-                showWordsFor={durationUnit}
-              />
-            </Box>
+          </Box>
         </CalculatorCard>
-        
+
         <Box>
           {result ? (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -189,14 +199,16 @@ export default function EMICalculator({
               />
             </Box>
           ) : (
-            <Box sx={{ 
-              p: 4, 
-              textAlign: "center", 
-              backgroundColor: "background.paper",
-              borderRadius: 2,
-              border: 1,
-              borderColor: "divider"
-            }}>
+            <Box
+              sx={{
+                p: 4,
+                textAlign: "center",
+                backgroundColor: "background.paper",
+                borderRadius: 2,
+                border: 1,
+                borderColor: "divider",
+              }}
+            >
               <Typography variant="body2" color="text.secondary">
                 Enter loan details to calculate EMI and see breakdown
               </Typography>
@@ -204,7 +216,7 @@ export default function EMICalculator({
           )}
         </Box>
       </Box>
-      
+
       {onCalculatorSelect && (
         <Box sx={{ mt: 3 }}>
           <RelatedCalculators

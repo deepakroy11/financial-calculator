@@ -5,7 +5,6 @@ import {
   Box,
   Container,
   Typography,
-  Grid,
   Card,
   CardContent,
   Button,
@@ -238,28 +237,29 @@ export default function PortfolioDashboard({
   }
 
   return (
-    <Container maxWidth="xl" sx={{ py: 2 }}>
-      {/* Compact Header */}
+    <Container maxWidth="xl" sx={{ py: { xs: 1, sm: 2 }, px: { xs: 1, sm: 2 } }}>
+      {/* Modern Header */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
-          p: 2,
-          backgroundColor: "background.paper",
-          borderRadius: 2,
-          boxShadow: 1,
+          mb: { xs: 2, sm: 3 },
+          p: { xs: 2, sm: 3 },
+          background: "linear-gradient(135deg, #FCA311 0%, #F77F00 100%)",
+          borderRadius: 3,
+          color: "white",
+          boxShadow: "0 8px 32px rgba(252, 163, 17, 0.3)",
         }}
       >
         <Box>
           <Typography
-            variant="h5"
-            sx={{ fontWeight: 700, color: "text.primary", mb: 0.5 }}
+            variant="h4"
+            sx={{ fontWeight: 800, mb: 0.5, fontSize: { xs: "1.5rem", sm: "2rem" } }}
           >
             Portfolio Dashboard
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body1" sx={{ opacity: 0.9, fontSize: { xs: "0.9rem", sm: "1rem" } }}>
             Track and manage all your financial assets
           </Typography>
         </Box>
@@ -267,32 +267,46 @@ export default function PortfolioDashboard({
         <Box sx={{ display: "flex", gap: 1 }}>
           <IconButton
             onClick={(e) => setFilterAnchor(e.currentTarget)}
-            size="small"
-            sx={{ backgroundColor: "action.hover" }}
+            sx={{ color: "white", backgroundColor: "rgba(255,255,255,0.2)" }}
           >
             <FaFilter size={16} />
           </IconButton>
 
           <Button
             variant="contained"
-            startIcon={<FaPlus size={14} />}
             onClick={() => onAddAsset("investments")}
-            size="small"
-            sx={{ borderRadius: 2, px: 2 }}
+            sx={{ 
+              backgroundColor: "white", 
+              color: "#FCA311", 
+              borderRadius: 2, 
+              px: 3,
+              fontWeight: 600,
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.9)" }
+            }}
           >
             Add Asset
           </Button>
         </Box>
       </Box>
 
-      {/* Compact Summary Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={6} sm={3}>
+      {/* Modern Summary Cards */}
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(2, 1fr)",
+            sm: "repeat(4, 1fr)",
+          },
+          gap: { xs: 1.5, sm: 2 },
+          mb: { xs: 2, sm: 3 },
+        }}
+      >
+        <Box>
           <Card
             sx={{
               background: "linear-gradient(135deg, #FCA311 0%, #F77F00 100%)",
               color: "white",
-              minHeight: 100,
+              minHeight: { xs: 80, sm: 100 },
             }}
           >
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
@@ -321,14 +335,14 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        <Grid item xs={6} sm={3}>
+        <Box>
           <Card
             sx={{
               background: "linear-gradient(135deg, #2E8B57 0%, #228B22 100%)",
               color: "white",
-              minHeight: 100,
+              minHeight: { xs: 80, sm: 100 },
             }}
           >
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
@@ -357,14 +371,14 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        <Grid item xs={6} sm={3}>
+        <Box>
           <Card
             sx={{
               background: "linear-gradient(135deg, #DC143C 0%, #B22222 100%)",
               color: "white",
-              minHeight: 100,
+              minHeight: { xs: 80, sm: 100 },
             }}
           >
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
@@ -393,9 +407,9 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        <Grid item xs={6} sm={3}>
+        <Box>
           <Card
             sx={{
               background:
@@ -403,7 +417,7 @@ export default function PortfolioDashboard({
                   ? "linear-gradient(135deg, #14213D 0%, #000000 100%)"
                   : "linear-gradient(135deg, #8B0000 0%, #DC143C 100%)",
               color: "white",
-              minHeight: 100,
+              minHeight: { xs: 80, sm: 100 },
             }}
           >
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
@@ -436,12 +450,19 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Compact Charts Section */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} md={6}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Box>
           <Card>
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -472,9 +493,9 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={6}>
+        <Box>
           <Card>
             <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
               <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 600 }}>
@@ -495,14 +516,14 @@ export default function PortfolioDashboard({
               </Box>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* Compact Assets List */}
-      <Grid container spacing={2}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {/* Investments */}
         {(selectedCategory === "all" || selectedCategory === "investments") && (
-          <Grid item xs={12}>
+          <Box>
             <Card>
               <CardContent>
                 <Box
@@ -535,9 +556,19 @@ export default function PortfolioDashboard({
                     No investments added yet. Click "Add" to get started.
                   </Typography>
                 ) : (
-                  <Grid container spacing={1.5}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "repeat(2, 1fr)",
+                        lg: "repeat(3, 1fr)",
+                      },
+                      gap: 1.5,
+                    }}
+                  >
                     {portfolio.investments.map((investment) => (
-                      <Grid item xs={12} sm={6} lg={4} key={investment.id}>
+                      <Box key={investment.id}>
                         <Card
                           variant="outlined"
                           sx={{
@@ -657,18 +688,18 @@ export default function PortfolioDashboard({
                             </Box>
                           </CardContent>
                         </Card>
-                      </Grid>
+                      </Box>
                     ))}
-                  </Grid>
+                  </Box>
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
         )}
 
         {/* Insurance */}
         {(selectedCategory === "all" || selectedCategory === "insurance") && (
-          <Grid item xs={12}>
+          <Box>
             <Card>
               <CardContent>
                 <Box
@@ -701,9 +732,19 @@ export default function PortfolioDashboard({
                     get started.
                   </Typography>
                 ) : (
-                  <Grid container spacing={2}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "repeat(2, 1fr)",
+                        lg: "repeat(3, 1fr)",
+                      },
+                      gap: 2,
+                    }}
+                  >
                     {portfolio.insurance.map((insurance) => (
-                      <Grid item xs={12} sm={6} lg={4} key={insurance.id}>
+                      <Box key={insurance.id}>
                         <Card
                           variant="outlined"
                           sx={{
@@ -817,18 +858,18 @@ export default function PortfolioDashboard({
                             </Box>
                           </CardContent>
                         </Card>
-                      </Grid>
+                      </Box>
                     ))}
-                  </Grid>
+                  </Box>
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
         )}
 
         {/* Loans */}
         {(selectedCategory === "all" || selectedCategory === "loans") && (
-          <Grid item xs={12}>
+          <Box>
             <Card>
               <CardContent>
                 <Box
@@ -860,9 +901,19 @@ export default function PortfolioDashboard({
                     No loans added yet. Click "Add Loan" to get started.
                   </Typography>
                 ) : (
-                  <Grid container spacing={2}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "repeat(2, 1fr)",
+                        lg: "repeat(3, 1fr)",
+                      },
+                      gap: 2,
+                    }}
+                  >
                     {portfolio.loans.map((loan) => (
-                      <Grid item xs={12} sm={6} lg={4} key={loan.id}>
+                      <Box key={loan.id}>
                         <Card
                           variant="outlined"
                           sx={{
@@ -970,15 +1021,15 @@ export default function PortfolioDashboard({
                             </Box>
                           </CardContent>
                         </Card>
-                      </Grid>
+                      </Box>
                     ))}
-                  </Grid>
+                  </Box>
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
         )}
-      </Grid>
+      </Box>
 
       {/* Filter Menu */}
       <Menu

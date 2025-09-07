@@ -38,6 +38,12 @@ jobs:
               NODE_ENV='production' \
               docker compose up -d --build financial-calculator
             "
+      - run:
+        name: Prune Docker Build Cache
+        command: |
+          ssh -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "
+            docker builder prune --all --force
+          "
 
 workflows:
   version: 2

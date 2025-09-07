@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import {
   Container,
   Typography,
-  Grid,
   Card,
   CardContent,
   Box,
@@ -481,7 +480,6 @@ export default function Home() {
         sx={{
           minHeight: "100vh",
           backgroundColor: "background.default",
-          transition: "all 0.3s ease-in-out",
         }}
       >
         <Header
@@ -503,10 +501,9 @@ export default function Home() {
           <Box
             sx={{
               mb: { xs: 1, sm: 3 },
-              display: "flex",
-              alignItems: { xs: "flex-start", sm: "center" },
-              flexDirection: { xs: "column", sm: "row" },
-              gap: { xs: 1, sm: 2 },
+              display: { xs: "none", sm: "flex" },
+              alignItems: "center",
+              gap: 2,
             }}
           >
             <Button
@@ -528,39 +525,33 @@ export default function Home() {
                 </svg>
               }
               sx={{
-                px: { xs: 2, sm: 3 },
-                py: { xs: 1, sm: 1.5 },
+                px: 3,
+                py: 1.5,
                 borderRadius: 3,
                 fontWeight: 500,
-                fontSize: { xs: "0.875rem", sm: "1rem" },
-                minHeight: { xs: "36px", sm: "auto" },
-                alignSelf: { xs: "flex-start", sm: "auto" },
                 "&:hover": {
                   boxShadow:
                     "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px rgba(252, 163, 17, 0.3)",
                 },
               }}
             >
-              <Box sx={{ display: { xs: "none", sm: "inline" } }}>Back to Home</Box>
-              <Box sx={{ display: { xs: "inline", sm: "none" } }}>Back</Box>
+              Back to Home
             </Button>
 
-            {/* Mobile-friendly breadcrumb */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
-                fontSize: { xs: "0.75rem", sm: "0.875rem" },
               }}
             >
-              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "inherit" }}>
+              <Typography variant="body2" color="text.secondary">
                 Home
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "inherit" }}>
+              <Typography variant="body2" color="text.secondary">
                 /
               </Typography>
-              <Typography variant="body2" color="primary.main" fontWeight={500} sx={{ fontSize: "inherit" }}>
+              <Typography variant="body2" color="primary.main" fontWeight={500}>
                 {selectedCalculator
                   ?.replace("-", " ")
                   .replace(/\b\w/g, (l) => l.toUpperCase())}{" "}
@@ -585,7 +576,6 @@ export default function Home() {
       sx={{
         minHeight: "100vh",
         backgroundColor: "background.default",
-        transition: "all 0.3s ease-in-out",
       }}
     >
       <Header
@@ -736,7 +726,18 @@ export default function Home() {
                 </Typography>
               </Box>
 
-              <Grid container spacing={{ xs: 2, sm: 2.5 }}>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "repeat(2, 1fr)",
+                    md: "repeat(3, 1fr)",
+                    lg: "repeat(4, 1fr)",
+                  },
+                  gap: { xs: 2, sm: 2.5 },
+                }}
+              >
                 {category.calculators.map((calculator, index) => {
                   const IconComponent = iconMap[calculator.icon];
                   const colors = [
@@ -750,52 +751,60 @@ export default function Home() {
                   const color = colors[index % colors.length];
 
                   return (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={calculator.id}>
+                    <Box key={calculator.id}>
                       <Card
-                        className="h-full cursor-pointer calculator-card"
+                        className="h-full cursor-pointer"
                         onClick={() => setSelectedCalculator(calculator.id)}
                         sx={{
-                          minHeight: { xs: "140px", sm: "160px" },
-                          position: "relative",
-                          overflow: "hidden",
-                          "&::before": {
-                            content: '""',
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            display: "none",
-                            background: `linear-gradient(90deg, ${color} 0%, ${color}80 100%)`,
+                          minHeight: { xs: "120px", sm: "140px" },
+                          borderRadius: 3,
+                          border: `2px solid ${color}20`,
+                          background: `linear-gradient(135deg, ${color}05 0%, ${color}02 100%)`,
+                          "&:hover": {
+                            transform: "translateY(-4px)",
+                            boxShadow: `0 8px 25px ${color}30`,
+                            border: `2px solid ${color}40`,
                           },
                         }}
                       >
                         <CardContent
-                          sx={{ p: { xs: 2, sm: 2.5 } }}
-                          className="h-full flex flex-col"
+                          sx={{
+                            p: { xs: 2, sm: 2.5 },
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
                         >
                           <Box
-                            className="flex items-start"
-                            sx={{ mb: { xs: 3, sm: 4 } }}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              mb: 2,
+                            }}
                           >
                             <Box
-                              className="text-white flex-shrink-0"
                               sx={{
-                                mr: { xs: 2, sm: 3 },
-                                p: { xs: 1.5, sm: 2 },
+                                width: 40,
+                                height: 40,
                                 borderRadius: 2,
-                                backgroundColor: color,
+                                background: `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                mr: 2,
                               }}
                             >
-                              {IconComponent && <IconComponent size={18} />}
+                              {IconComponent && (
+                                <IconComponent size={20} color="white" />
+                              )}
                             </Box>
                             <Typography
                               variant="h6"
-                              component="h3"
                               sx={{
-                                fontWeight: 600,
+                                fontWeight: 700,
                                 color: "text.primary",
+                                fontSize: { xs: "0.9rem", sm: "1rem" },
                                 lineHeight: 1.2,
-                                fontSize: { xs: "0.875rem", sm: "0.95rem" },
                               }}
                             >
                               {calculator.name}
@@ -806,50 +815,63 @@ export default function Home() {
                             variant="body2"
                             sx={{
                               color: "text.secondary",
-                              mb: { xs: 1.5, sm: 2 },
+                              fontSize: { xs: "0.8rem", sm: "0.85rem" },
                               lineHeight: 1.4,
                               flexGrow: 1,
-                              fontSize: { xs: "0.75rem", sm: "0.8rem" },
+                              mb: 2,
                             }}
                           >
                             {calculator.description}
                           </Typography>
 
-                          <Box className="flex justify-between items-center mt-auto">
-                            <Chip
-                              label={category.name.split(" ")[0]}
-                              size="small"
-                              sx={{
-                                backgroundColor: `${categoryColor}15`,
-                                color: categoryColor,
-                                fontWeight: 600,
-                                border: `1px solid ${categoryColor}30`,
-                                fontSize: { xs: "0.7rem", sm: "0.75rem" },
-                                borderRadius: 2,
-                              }}
-                            />
-                            <Box sx={{ color: "text.secondary", opacity: 0.7 }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Box sx={{ display: "flex", gap: 1 }}>
+                              <Chip
+                                label={category.name.split(" ")[0]}
+                                size="small"
+                                sx={{
+                                  backgroundColor: `${categoryColor}20`,
+                                  color: categoryColor,
+                                  fontWeight: 600,
+                                  fontSize: "0.65rem",
+                                  border: `1px solid ${categoryColor}40`,
+                                }}
+                              />
+                              <Chip
+                                label="Try Now"
+                                size="small"
+                                sx={{
+                                  backgroundColor: color,
+                                  color: "white",
+                                  fontWeight: 600,
+                                  fontSize: "0.65rem",
+                                  "&:hover": { backgroundColor: `${color}dd` },
+                                }}
+                              />
+                            </Box>
+                            <Box sx={{ color: color, opacity: 0.8 }}>
                               <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
                                 viewBox="0 0 24 24"
                               >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9 5l7 7-7 7"
-                                />
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
                               </svg>
                             </Box>
                           </Box>
                         </CardContent>
                       </Card>
-                    </Grid>
+                    </Box>
                   );
                 })}
-              </Grid>
+              </Box>
             </Box>
           );
         })}

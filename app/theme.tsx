@@ -136,7 +136,7 @@ export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({
         : "#e2e8f0" /* Slate-700 for dark, slate-200 for light */,
     },
     typography: {
-      fontFamily: "Inter, sans-serif",
+      fontFamily: "Quicksand, sans-serif",
       h1: { fontWeight: 700, fontSize: "2.5rem" },
       h2: { fontWeight: 600, fontSize: "2rem" },
       h3: { fontWeight: 600, fontSize: "1.75rem" },

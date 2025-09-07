@@ -346,11 +346,14 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
             <Typography
               onClick={onHomeClick}
               variant="h4"
+              component="a"
+              href="/"
               sx={{
                 fontWeight: 700,
                 color: "text.primary",
                 fontSize: "2rem",
                 cursor: "pointer",
+                textDecoration: "none",
               }}
             >
               Finly

@@ -74,9 +74,10 @@ export default function CalculatorCard({
             variant="contained"
             onClick={onCalculate}
             disabled={isCalculating}
-            className="flex-1 py-3 text-base font-semibold"
+            className="flex-1 font-semibold"
             size="large"
             sx={{
+              py: { xs: 2, sm: 3 },
               backgroundColor: "#1f7a99",
               borderRadius: "12px",
               textTransform: "none",
@@ -86,7 +87,6 @@ export default function CalculatorCard({
                 boxShadow: "0 6px 16px rgba(31, 122, 153, 0.4)",
                 transform: "translateY(-1px)",
               },
-              transition: "all 0.2s ease",
             }}
           >
             {isCalculating ? (
@@ -101,9 +101,10 @@ export default function CalculatorCard({
           <Button
             variant="outlined"
             onClick={onReset}
-            className="flex-1 py-3 text-base font-semibold"
+            className="flex-1 font-semibold"
             size="large"
             sx={{
+              py: { xs: 2, sm: 3 },
               borderColor: "#d1d5db",
               color: "#6b7280",
               borderRadius: "12px",
@@ -114,7 +115,6 @@ export default function CalculatorCard({
                 backgroundColor: "#f9fafb",
                 transform: "translateY(-1px)",
               },
-              transition: "all 0.2s ease",
             }}
           >
             Reset
