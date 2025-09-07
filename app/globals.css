@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 :root {
   --primary-color: #fca311;
@@ -56,7 +56,7 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Quicksand", sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
@@ -72,6 +72,10 @@ body {
       rgba(20, 33, 61, 0.02) 0%,
       transparent 50%
     );
+  /* Optimize for mobile */
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Dark theme body styling */
@@ -113,10 +117,16 @@ div {
 
 .modern-card {
   background: var(--bg-secondary);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 3px 0 var(--shadow-light), 0 1px 2px 0 var(--shadow-light);
   transition: all 0.2s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .modern-card {
+    border-radius: 8px;
+  }
 }
 
 .modern-card:hover {
@@ -131,10 +141,16 @@ div {
 
 .calculator-card {
   background: var(--bg-secondary);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 3px 0 var(--shadow-light), 0 1px 2px 0 var(--shadow-light);
   transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 640px) {
+  .calculator-card {
+    border-radius: 8px;
+  }
 }
 
 .calculator-card:hover {
@@ -431,6 +447,71 @@ html {
 
 .animate-slide-in-right {
   animation: slideInRight 0.4s ease-out;
+}
+
+/* Mobile-first utility classes */
+.mobile-compact {
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-compact {
+    padding: 1.5rem;
+  }
+}
+
+.mobile-text-sm {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-text-sm {
+    font-size: 1rem;
+  }
+}
+
+.mobile-gap-sm {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-gap-sm {
+    gap: 1rem;
+  }
+}
+
+/* Optimize touch targets for mobile */
+@media (max-width: 640px) {
+  button, .MuiButton-root {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .MuiIconButton-root {
+    padding: 12px;
+  }
+  
+  .MuiChip-root {
+    height: auto;
+    padding: 8px 12px;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Improve focus visibility on mobile */
+@media (max-width: 640px) {
+  *:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
 }
 
 /* Professional loading states */

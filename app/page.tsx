@@ -499,14 +499,22 @@ export default function Home() {
           onHomeClick={() => setSelectedCalculator(null)}
         />
 
-        <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box sx={{ mb: 4, display: "flex", alignItems: "center", gap: 2 }}>
+        <Container maxWidth="lg" sx={{ py: { xs: 1, sm: 3 } }}>
+          <Box
+            sx={{
+              mb: { xs: 1, sm: 3 },
+              display: "flex",
+              alignItems: { xs: "flex-start", sm: "center" },
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: 1, sm: 2 },
+            }}
+          >
             <Button
               onClick={handleBackToHome}
               variant="outlined"
               startIcon={
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -520,36 +528,39 @@ export default function Home() {
                 </svg>
               }
               sx={{
-                px: 3,
-                py: 1.5,
+                px: { xs: 2, sm: 3 },
+                py: { xs: 1, sm: 1.5 },
                 borderRadius: 3,
                 fontWeight: 500,
-                transition: "all 0.2s ease-in-out",
-                minWidth: { xs: "140px", sm: "auto" },
+                fontSize: { xs: "0.875rem", sm: "1rem" },
+                minHeight: { xs: "36px", sm: "auto" },
+                alignSelf: { xs: "flex-start", sm: "auto" },
                 "&:hover": {
                   boxShadow:
                     "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 20px rgba(252, 163, 17, 0.3), 0 4px 12px rgba(252, 163, 17, 0.3)",
                 },
               }}
             >
-              Back to Home
+              <Box sx={{ display: { xs: "none", sm: "inline" } }}>Back to Home</Box>
+              <Box sx={{ display: { xs: "inline", sm: "none" } }}>Back</Box>
             </Button>
 
             {/* Mobile-friendly breadcrumb */}
             <Box
               sx={{
-                display: { xs: "none", sm: "flex" },
+                display: "flex",
                 alignItems: "center",
                 gap: 1,
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
               }}
             >
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "inherit" }}>
                 Home
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" sx={{ fontSize: "inherit" }}>
                 /
               </Typography>
-              <Typography variant="body2" color="primary.main" fontWeight={500}>
+              <Typography variant="body2" color="primary.main" fontWeight={500} sx={{ fontSize: "inherit" }}>
                 {selectedCalculator
                   ?.replace("-", " ")
                   .replace(/\b\w/g, (l) => l.toUpperCase())}{" "}
@@ -589,16 +600,19 @@ export default function Home() {
         onHomeClick={() => setSelectedCalculator(null)}
       />
 
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        <Box sx={{ textAlign: "center", mb: 5 }}>
+      <Container
+        maxWidth="xl"
+        sx={{ py: { xs: 2, sm: 3 }, px: { xs: 2, sm: 3 } }}
+      >
+        <Box sx={{ textAlign: "center", mb: { xs: 3, sm: 4 } }}>
           <Typography
             variant="h2"
             component="h1"
             sx={{
-              mb: 3,
+              mb: { xs: 2, sm: 3 },
               fontWeight: 800,
               color: "text.primary",
-              fontSize: { xs: "2rem", sm: "2.5rem", md: "2.75rem" },
+              fontSize: { xs: "1.75rem", sm: "2.25rem", md: "2.5rem" },
               letterSpacing: "-0.025em",
               lineHeight: 1.1,
             }}
@@ -617,9 +631,9 @@ export default function Home() {
               color: "text.secondary",
               maxWidth: "700px",
               mx: "auto",
-              lineHeight: 1.7,
-              mb: 3,
-              fontSize: { xs: "1.1rem", md: "1.25rem" },
+              lineHeight: 1.6,
+              mb: { xs: 2, sm: 3 },
+              fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.2rem" },
               fontWeight: 400,
             }}
           >
@@ -629,11 +643,11 @@ export default function Home() {
           </Typography>
           <Box
             sx={{
-              mt: 4,
+              mt: { xs: 2, sm: 3 },
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: 2,
+              gap: { xs: 1, sm: 2 },
             }}
           >
             <Chip
@@ -642,9 +656,9 @@ export default function Home() {
                 backgroundColor: "primary.main",
                 color: "white",
                 fontWeight: 600,
-                px: 3,
-                py: 1.5,
-                fontSize: "0.875rem",
+                px: { xs: 2, sm: 3 },
+                py: { xs: 1, sm: 1.5 },
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
                 borderRadius: 3,
               }}
             />
@@ -654,9 +668,9 @@ export default function Home() {
                 backgroundColor: "primary.main",
                 color: "#ffffff",
                 fontWeight: 600,
-                px: 3,
-                py: 1.5,
-                fontSize: "0.875rem",
+                px: { xs: 2, sm: 3 },
+                py: { xs: 1, sm: 1.5 },
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
                 borderRadius: 3,
               }}
             />
@@ -666,9 +680,9 @@ export default function Home() {
                 backgroundColor: "primary.main",
                 color: "white",
                 fontWeight: 600,
-                px: 3,
-                py: 1.5,
-                fontSize: "0.875rem",
+                px: { xs: 2, sm: 3 },
+                py: { xs: 1, sm: 1.5 },
+                fontSize: { xs: "0.75rem", sm: "0.875rem" },
                 borderRadius: 3,
               }}
             />
@@ -688,11 +702,18 @@ export default function Home() {
             "#FCA311";
 
           return (
-            <Box key={category.id} sx={{ mb: 6 }} id={category.id}>
-              <Box className="flex items-center mb-3">
+            <Box
+              key={category.id}
+              sx={{ mb: { xs: 4, sm: 5 } }}
+              id={category.id}
+            >
+              <Box className="flex items-center" sx={{ mb: { xs: 2, sm: 3 } }}>
                 <Box
-                  className="mr-3 p-2.5 rounded-lg text-white"
+                  className="text-white"
                   sx={{
+                    mr: { xs: 2, sm: 3 },
+                    p: { xs: 2, sm: 2.5 },
+                    borderRadius: 2,
                     backgroundColor: categoryColor,
                     background: `linear-gradient(135deg, ${categoryColor} 0%, ${categoryColor}dd 100%)`,
                     boxShadow: `0 8px 32px ${categoryColor}40`,
@@ -707,7 +728,7 @@ export default function Home() {
                   sx={{
                     fontWeight: 700,
                     color: "text.primary",
-                    fontSize: { xs: "1.4rem", md: "1.6rem" },
+                    fontSize: { xs: "1.25rem", sm: "1.4rem", md: "1.5rem" },
                     letterSpacing: "-0.025em",
                   }}
                 >
@@ -715,7 +736,7 @@ export default function Home() {
                 </Typography>
               </Box>
 
-              <Grid container spacing={2.5}>
+              <Grid container spacing={{ xs: 2, sm: 2.5 }}>
                 {category.calculators.map((calculator, index) => {
                   const IconComponent = iconMap[calculator.icon];
                   const colors = [
@@ -729,12 +750,12 @@ export default function Home() {
                   const color = colors[index % colors.length];
 
                   return (
-                    <Grid item xs={12} sm={6} lg={3} key={calculator.id}>
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={calculator.id}>
                       <Card
                         className="h-full cursor-pointer calculator-card"
                         onClick={() => setSelectedCalculator(calculator.id)}
                         sx={{
-                          minHeight: "160px",
+                          minHeight: { xs: "140px", sm: "160px" },
                           position: "relative",
                           overflow: "hidden",
                           "&::before": {
@@ -749,13 +770,19 @@ export default function Home() {
                         }}
                       >
                         <CardContent
-                          sx={{ p: 2.5 }}
+                          sx={{ p: { xs: 2, sm: 2.5 } }}
                           className="h-full flex flex-col"
                         >
-                          <Box className="flex items-start mb-4">
+                          <Box
+                            className="flex items-start"
+                            sx={{ mb: { xs: 3, sm: 4 } }}
+                          >
                             <Box
-                              className="mr-3 p-2 rounded-lg text-white flex-shrink-0"
+                              className="text-white flex-shrink-0"
                               sx={{
+                                mr: { xs: 2, sm: 3 },
+                                p: { xs: 1.5, sm: 2 },
+                                borderRadius: 2,
                                 backgroundColor: color,
                               }}
                             >
@@ -768,7 +795,7 @@ export default function Home() {
                                 fontWeight: 600,
                                 color: "text.primary",
                                 lineHeight: 1.2,
-                                fontSize: "0.95rem",
+                                fontSize: { xs: "0.875rem", sm: "0.95rem" },
                               }}
                             >
                               {calculator.name}
@@ -779,10 +806,10 @@ export default function Home() {
                             variant="body2"
                             sx={{
                               color: "text.secondary",
-                              mb: 2,
+                              mb: { xs: 1.5, sm: 2 },
                               lineHeight: 1.4,
                               flexGrow: 1,
-                              fontSize: "0.8rem",
+                              fontSize: { xs: "0.75rem", sm: "0.8rem" },
                             }}
                           >
                             {calculator.description}
@@ -797,7 +824,7 @@ export default function Home() {
                                 color: categoryColor,
                                 fontWeight: 600,
                                 border: `1px solid ${categoryColor}30`,
-                                fontSize: "0.75rem",
+                                fontSize: { xs: "0.7rem", sm: "0.75rem" },
                                 borderRadius: 2,
                               }}
                             />

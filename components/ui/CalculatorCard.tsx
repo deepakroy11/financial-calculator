@@ -34,15 +34,16 @@ export default function CalculatorCard({
             : "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
       }}
     >
-      <CardContent sx={{ p: 3 }}>
-        <Box sx={{ mb: 3 }}>
+      <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+        <Box sx={{ mb: { xs: 2, sm: 3 } }}>
           <Typography
             variant="h5"
             component="h2"
             sx={{
-              mb: 1,
+              mb: { xs: 0.5, sm: 1 },
               fontWeight: 700,
               color: "text.primary",
+              fontSize: { xs: "1.25rem", sm: "1.5rem" },
             }}
           >
             {title}
@@ -60,12 +61,12 @@ export default function CalculatorCard({
           )}
         </Box>
 
-        <Box sx={{ mb: 3 }}>{children}</Box>
+        <Box sx={{ mb: { xs: 2, sm: 3 } }}>{children}</Box>
 
         <Box
           sx={{
             display: "flex",
-            gap: 2,
+            gap: { xs: 1.5, sm: 2 },
             flexDirection: { xs: "column", sm: "row" },
           }}
         >

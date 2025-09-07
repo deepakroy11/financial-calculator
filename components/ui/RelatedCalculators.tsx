@@ -278,7 +278,11 @@ export default function RelatedCalculators({
             return (
               <Box
                 key={calculator.id}
-                onClick={() => onCalculatorSelect(calculator.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onCalculatorSelect(calculator.id);
+                }}
                 sx={{
                   display: "flex",
                   alignItems: "center",
@@ -295,7 +299,6 @@ export default function RelatedCalculators({
                         ? "rgba(31, 122, 153, 0.1)"
                         : "rgba(31, 122, 153, 0.05)",
                     borderColor: "primary.main",
-                    transform: "translateY(-1px)",
                     boxShadow: 1,
                   },
                 }}

@@ -61,7 +61,7 @@ export default function InputField({
   const wordsDisplay = getValueInWords();
 
   return (
-    <Box sx={{ mb: 3 }}>
+    <Box sx={{ mb: { xs: 2, sm: 3 } }}>
       <TextField
         fullWidth
         label={label}
@@ -86,7 +86,7 @@ export default function InputField({
                     : "rgba(0, 0, 0, 0.05)",
                 border: 1,
                 borderColor: "divider",
-                px: 1.5,
+                px: { xs: 1, sm: 1.5 },
                 py: 0.5,
                 borderRadius: 1,
               }}
@@ -99,7 +99,7 @@ export default function InputField({
         size="medium"
         sx={{
           "& .MuiOutlinedInput-root": {
-            borderRadius: "12px",
+            borderRadius: { xs: "8px", sm: "12px" },
             backgroundColor: "background.paper",
             "& fieldset": {
               borderColor: "divider",
@@ -121,7 +121,7 @@ export default function InputField({
             },
           },
           "& .MuiOutlinedInput-input": {
-            padding: "16px 14px",
+            padding: { xs: "14px 12px", sm: "16px 14px" },
             fontSize: "16px",
             fontWeight: 500,
             color: "text.primary",
@@ -137,7 +137,7 @@ export default function InputField({
             mt: 1,
             px: 1,
             color: "text.secondary",
-            fontSize: "0.75rem",
+            fontSize: { xs: "0.7rem", sm: "0.75rem" },
             fontStyle: "italic",
             opacity: 0.8,
           }}

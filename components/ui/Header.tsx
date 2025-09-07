@@ -335,50 +335,26 @@ export default function Header({ onCategorySelect, onHomeClick }: HeaderProps) {
         }}
       >
         <Container maxWidth="lg">
-          <Toolbar sx={{ px: 0, py: 1.5, minHeight: "72px" }}>
+          <Toolbar
+            sx={{
+              px: 0,
+              py: { xs: 1, sm: 1.5 },
+              minHeight: { xs: "60px", sm: "72px" },
+            }}
+          >
             {/* Logo/Brand */}
-            <Box
+            <Typography
               onClick={onHomeClick}
+              variant="h4"
               sx={{
-                display: "flex",
-                alignItems: "center",
+                fontWeight: 700,
+                color: "text.primary",
+                fontSize: "2rem",
                 cursor: "pointer",
-                transition: "all 0.2s ease-in-out",
-                "&:hover": {
-                  boxShadow:
-                    "0 0 0 2px rgba(252, 163, 17, 0.2), 0 0 15px rgba(252, 163, 17, 0.3)",
-                  background: "rgba(252, 163, 17, 0.05)",
-                },
               }}
             >
-              <Box
-                sx={{
-                  mr: 2,
-                  display: "flex",
-                  alignItems: "center",
-                  p: 1,
-                  borderRadius: 2,
-                  backgroundColor:
-                    theme.palette.mode === "dark"
-                      ? "rgba(252, 163, 17, 0.1)"
-                      : "rgba(20, 33, 61, 0.05)",
-                  border: `1px solid ${
-                    theme.palette.mode === "dark"
-                      ? "rgba(252, 163, 17, 0.2)"
-                      : "rgba(20, 33, 61, 0.1)"
-                  }`,
-                }}
-              >
-                <img
-                  src="/logo/new-logo-2.png"
-                  alt="Finly Logo"
-                  style={{
-                    height: "36px",
-                    width: "auto",
-                  }}
-                />
-              </Box>
-            </Box>
+              Finly
+            </Typography>
 
             {/* Desktop Navigation */}
             {!isMobile && (

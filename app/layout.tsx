@@ -1,8 +1,8 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import ClientThemeProvider from "./ClientThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const quicksand = Quicksand({ subsets: ["latin"] });
 
 export const metadata = {
   metadataBase: new URL("https://finly-calculator.vercel.app"),
@@ -130,7 +130,7 @@ export default function RootLayout({
       <head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover"
         />
         <meta name="theme-color" content="#1f7a99" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -250,7 +250,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={quicksand.className}>
         <ClientThemeProvider>{children}</ClientThemeProvider>
         <script
           dangerouslySetInnerHTML={{
